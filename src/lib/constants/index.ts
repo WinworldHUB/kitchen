@@ -3,10 +3,12 @@ export const EMPTY_STRING = "";
 export const DEFAULT_APP_VAR: AppVars = {
   isUserLoggedIn: false,
   accessToken: "",
+  selectedMenuId: 0,
 };
 
 export enum PageRoutes {
   Home = "/",
+  Archives = "/archives",
   Login = "/signIn",
   SignUp = "/signUp",
 }
@@ -18,6 +20,10 @@ export const APP_SHORT_DATE_FORMAT = "dd MMM yyyy";
 export const APP_AWS_DATE_FORMAT = "yyyy-MM-dd";
 export const APP_LONG_DATE_FORMAT = "DDDD";
 export const APP_ORDER_NUMBER_FORMAT = "yyyy/dd/#";
+
+export const NO_ACTIVE_PROJECTS_MESSAGE =
+  "No projects to show, start by creating a project";
+export const NO_ARCHIVED_PROJECTS_MESSAGE = "No projects to show";
 
 export const GBP_SYMBOL = "£";
 export const DEFAULT_KITCHEN_IMAGE =

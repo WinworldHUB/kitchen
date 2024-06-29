@@ -1,10 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { AppContext } from "../contexts/appcontext";
 import useAuthentication from "../hooks/useAuthentication";
-import { Col, Image, Row } from "react-bootstrap";
+import { Image } from "react-bootstrap";
+import MainMenuItem from "./app.menuitem";
 
 interface MenuBarProps {
   onClick?: (menuIndex: number) => void;
@@ -55,7 +56,7 @@ const MenuBar = ({
                     onClick={() => onClick?.(index)}
                     href={item.route}
                   >
-                    {item.icon}&nbsp;{item.label}
+                    <MainMenuItem item={item} />
                   </Nav.Link>
                 ))}
                 <Nav.Link href="/" onClick={handleLogout}>

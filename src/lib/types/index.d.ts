@@ -1,6 +1,7 @@
 type AppVars = {
   isUserLoggedIn?: boolean;
   accessToken?: string;
+  selectedMenuId?: number;
 };
 
 interface AppState {
@@ -28,7 +29,6 @@ type MenuItem = {
 interface LayoutProps {
   isShowSideMenu?: boolean;
   children?: React.ReactNode;
-  selectedMenuId?: number;
   username?: string;
 }
 

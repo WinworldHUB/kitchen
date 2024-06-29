@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Container } from "react-bootstrap";
+import { Button, Card } from "react-bootstrap";
 
 interface ProjectTileProps {
   project: Project;
@@ -7,6 +7,17 @@ interface ProjectTileProps {
 }
 
 const ProjectTile: FC<ProjectTileProps> = ({ project, onClick }) => {
-  return <Container>{project.title}</Container>;
+  return (
+    <Card>
+      <Card.Img variant="top" src={project.featuredImage} />
+      <Card.Body>
+        <Card.Title className="text-truncate">{project.title}</Card.Title>
+        <Card.Text className="text-truncate">{project.description}</Card.Text>
+        <Button variant="outline-warning" onClick={onClick}>
+          View details
+        </Button>
+      </Card.Body>
+    </Card>
+  );
 };
 export default ProjectTile;

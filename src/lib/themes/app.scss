@@ -3,7 +3,10 @@
 /* make the customizations */
 $theme-colors: (
   "primary": #3c342f,
-  "wishLight": #feb941,
+  "danger": #ee4e4e,
+  "success": #36ba98,
+  "warning": #feb941,
+  "info": #80c4e9,
 );
 
 /* import bootstrap to set changes */
@@ -16,4 +19,9 @@ $theme-colors: (
 
 a {
   text-decoration: none;
+}
+
+.text-label {
+  font-size: 1.3rem;
+  font-weight: 200;
 }

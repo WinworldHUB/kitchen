@@ -18,6 +18,13 @@ const useAuthentication = (): UseAuthenticationState => {
   const [isUserSignedIn, setIsUserSignedIn] = useState<boolean>(false);
   const { appState, updateAppState } = useContext(AppContext);
 
+  useEffect(() => {
+    setAccessToken("");
+    setRefreshToken("");
+    setError("");
+    setIsUserSignedIn(false);
+  }, []);
+
   const signInUser = (credentials: {}) => {
     updateAppState({ ...appState, isUserLoggedIn: true });
   };

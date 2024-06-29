@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { Card, Col, Row } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 
 interface SimpleCardProps extends ComponentProps {
   title?: string;
@@ -16,17 +16,9 @@ const CardSimple: FC<SimpleCardProps> = ({
   return (
     <Card className="shadow">
       {title && (
-        <Card.Header className="bg-wishLight">
-          <Row className="align-items-center">
-            <Col>
-              <p className="card-title">{title}</p>
-            </Col>
-            {headerAction && (
-              <Col xs="auto" className="text-end">
-                {headerAction}
-              </Col>
-            )}
-          </Row>
+        <Card.Header className="bg-warning d-flex justify-content-between align-items-center">
+          <p className="card-title">{title}</p>
+          {headerAction}
         </Card.Header>
       )}
       {children && <Card.Body>{children}</Card.Body>}

@@ -1,21 +1,25 @@
-import React, { FC } from "react";
+import { FC, useContext } from "react";
 import { Container } from "react-bootstrap";
 import MenuBar from "./app.mainmenu";
 import { PageRoutes } from "../constants";
-import { FaHouse } from "react-icons/fa6";
+import { FaBoxArchive, FaHouse } from "react-icons/fa6";
+import { AppContext } from "../contexts/appcontext";
 
 const PageLayout: FC<LayoutProps> = ({
   isShowSideMenu = false,
   children,
-  selectedMenuId = 0,
   username = "",
 }: LayoutProps) => {
+  const { appState, updateAppState } = useContext(AppContext);
   return (
     <>
       <MenuBar
         menuItems={APP_MENU}
-        selectedItemId={selectedMenuId}
+        selectedItemId={appState.selectedMenuId ?? 0}
         username={username}
+        onClick={(itemId) =>
+          updateAppState({ ...appState, selectedMenuId: itemId })
+        }
       />
       <Container fluid className="pt-3 px-3">
         {children}
@@ -32,5 +36,11 @@ const APP_MENU: MenuItem[] = [
     label: "Home",
     route: PageRoutes.Home,
     icon: <FaHouse />,
+  },
+  {
+    id: 1,
+    label: "Archives",
+    route: PageRoutes.Archives,
+    icon: <FaBoxArchive stroke="1" />,
   },
 ];
