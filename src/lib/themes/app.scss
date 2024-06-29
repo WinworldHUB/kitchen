@@ -1,0 +1,19 @@
+/* The following block can be included in a custom.scss */
+
+/* make the customizations */
+$theme-colors: (
+  "primary": #3c342f,
+  "wishLight": #feb941,
+);
+
+/* import bootstrap to set changes */
+@import "~bootstrap/scss/bootstrap";
+
+.card-title {
+  font-size: 2rem;
+  font-weight: lighter;
+}
+
+a {
+  text-decoration: none;
+}
