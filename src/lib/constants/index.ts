@@ -4,11 +4,14 @@ export const DEFAULT_APP_VAR: AppVars = {
   isUserLoggedIn: false,
   accessToken: "",
   selectedMenuId: 0,
+  activeProjects: [],
+  selectedProjectId: null,
 };
 
 export enum PageRoutes {
   Home = "/",
   Archives = "/archives",
+  ProjectDetails = "/projectDetails",
   Login = "/signIn",
   SignUp = "/signUp",
 }
@@ -28,3 +31,15 @@ export const NO_ARCHIVED_PROJECTS_MESSAGE = "No projects to show";
 export const GBP_SYMBOL = "£";
 export const DEFAULT_KITCHEN_IMAGE =
   "https://images.unsplash.com/photo-1600585152220-90363fe7e115?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+
+export const enum ProjectStatus {
+  draft = "Draft",
+  inPlanning = "InPlanning",
+  planSubmitted = "PlanSubmitted",
+  discussion = "Discussion",
+  visitBooked = "VisitBooked",
+  visited = "Visited",
+  commenced = "Commenced",
+  completed = "Completed",
+  archived = "Archived",
+}

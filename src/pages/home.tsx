@@ -2,17 +2,25 @@ import { Button } from "react-bootstrap";
 import PageLayout from "../lib/components/app.layout";
 import CardSimple from "../lib/components/card.simple";
 import ProjectsGrid from "../lib/components/projects.grid";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import NewProjectModal from "../lib/components/new.project.modal";
-import { NO_ACTIVE_PROJECTS_MESSAGE } from "../lib/constants";
+import { NO_ACTIVE_PROJECTS_MESSAGE, PageRoutes } from "../lib/constants";
+import { AppContext } from "../lib/contexts/appcontext";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
+  const navigate = useNavigate();
   const [isShowCreateProject, setIsShowCreateProject] =
     useState<boolean>(false);
-  const [projects, updateProjects] = useState<Project[]>([]);
+  const { appState, updateAppState } = useContext(AppContext);
 
   const handleCreateProject = () => {
     setIsShowCreateProject(true);
+  };
+
+  const handleProjectClick = (projectId: string) => {
+    updateAppState({ ...appState, selectedProjectId: projectId });
+    navigate(PageRoutes.ProjectDetails);
   };
 
   return (
@@ -24,8 +32,8 @@ const HomePage = () => {
         }
       >
         <ProjectsGrid
-          projects={projects}
-          onProjectClick={() => {}}
+          projects={appState.activeProjects ?? []}
+          onProjectClick={handleProjectClick}
           emptyMessage={NO_ACTIVE_PROJECTS_MESSAGE}
         ></ProjectsGrid>
       </CardSimple>
@@ -34,7 +42,10 @@ const HomePage = () => {
         onCloseClick={() => setIsShowCreateProject(false)}
         onCreateClick={(project) => {
           setIsShowCreateProject(false);
-          updateProjects([...projects, project]);
+          updateAppState({
+            ...appState,
+            activeProjects: [...(appState.activeProjects ?? []), project],
+          });
         }}
       />
     </PageLayout>

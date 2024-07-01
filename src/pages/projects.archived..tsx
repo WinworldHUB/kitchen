@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import PageLayout from "../lib/components/app.layout";
 import CardSimple from "../lib/components/card.simple";
 import ProjectsGrid from "../lib/components/projects.grid";
-import { NO_ARCHIVED_PROJECTS_MESSAGE } from "../lib/constants";
+import { NO_ARCHIVED_PROJECTS_MESSAGE, ProjectStatus } from "../lib/constants";
 import { Form } from "react-bootstrap";
 import { dummyProjects, filterProjects } from "../lib/utils/project.utils";
 
@@ -13,7 +13,7 @@ const ArchivedProjectsPage = () => {
     () => filterProjects(projects, filterText),
     [filterText, projects]
   );
-  useEffect(() => updateProjects(dummyProjects()), []);
+  useEffect(() => updateProjects(dummyProjects(ProjectStatus.archived)), []);
 
   return (
     <PageLayout>

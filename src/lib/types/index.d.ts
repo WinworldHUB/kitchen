@@ -1,15 +1,3 @@
-type AppVars = {
-  isUserLoggedIn?: boolean;
-  accessToken?: string;
-  selectedMenuId?: number;
-};
-
-interface AppState {
-  appState: AppVars;
-
-  updateAppState: (appState: AppVars) => void;
-}
-
 interface DataTableProps<T> {
   title?: string;
   isEditable?: boolean;
@@ -34,6 +22,7 @@ interface LayoutProps {
 
 interface ComponentProps {
   children?: React.ReactNode;
+  className?: string;
 }
 
 type Project = {
@@ -41,4 +30,19 @@ type Project = {
   featuredImage?: string;
   title: string;
   description?: string;
+  status: string;
 };
+
+type AppVars = {
+  isUserLoggedIn?: boolean;
+  accessToken?: string;
+  selectedMenuId?: number;
+  activeProjects?: Project[];
+  selectedProjectId?: string;
+};
+
+interface AppState {
+  appState: AppVars;
+
+  updateAppState: (appState: AppVars) => void;
+}

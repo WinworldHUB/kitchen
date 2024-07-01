@@ -38,7 +38,7 @@ interface APIState<T> {
   deleteData: (url: string) => Promise<T>;
 }
 
-const useApi = <T,>(): APIState<T> => {
+const useApi = <T,>(baseUrl?: string): APIState<T> => {
   const [data, setData] = useState<T>();
   const { appState } = useContext(AppContext);
 
@@ -49,7 +49,7 @@ const useApi = <T,>(): APIState<T> => {
    */
   const getData = async (url: string) => {
     try {
-      const response = await fetch(`${API_BASE_URL}${url}`, {
+      const response = await fetch(`${baseUrl ?? API_BASE_URL}${url}`, {
         method: "GET",
         headers: DEFAULT_GET_API_HEADER(appState.accessToken),
       });
@@ -71,7 +71,7 @@ const useApi = <T,>(): APIState<T> => {
    */
   const postData = async (url: string, body: unknown) => {
     try {
-      const response = await fetch(`${API_BASE_URL}${url}`, {
+      const response = await fetch(`${baseUrl ?? API_BASE_URL}${url}`, {
         method: "POST",
         body: JSON.stringify(body),
         headers: DEFAULT_POST_API_HEADER(appState.accessToken),
@@ -94,7 +94,7 @@ const useApi = <T,>(): APIState<T> => {
    */
   const putData = async (url: string, body: unknown) => {
     try {
-      const response = await fetch(`${API_BASE_URL}${url}`, {
+      const response = await fetch(`${baseUrl ?? API_BASE_URL}${url}`, {
         method: "PUT",
         body: JSON.stringify(body),
         headers: DEFAULT_POST_API_HEADER(appState.accessToken),
@@ -118,7 +118,7 @@ const useApi = <T,>(): APIState<T> => {
    */
   const deleteData = async (url: string) => {
     try {
-      const response = await fetch(`${API_BASE_URL}${url}`, {
+      const response = await fetch(`${baseUrl ?? API_BASE_URL}${url}`, {
         method: "DELETE",
         headers: DEFAULT_POST_API_HEADER(appState.accessToken),
       });

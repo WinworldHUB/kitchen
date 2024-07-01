@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Button, Card } from "react-bootstrap";
+import { Button, Card, ProgressBar } from "react-bootstrap";
 
 interface ProjectTileProps {
   project: Project;
@@ -11,12 +11,17 @@ const ProjectTile: FC<ProjectTileProps> = ({ project, onClick }) => {
     <Card>
       <Card.Img variant="top" src={project.featuredImage} />
       <Card.Body>
-        <Card.Title className="text-truncate">{project.title}</Card.Title>
+        <Card.Title className="text-truncate">{project.title} </Card.Title>
         <Card.Text className="text-truncate">{project.description}</Card.Text>
         <Button variant="outline-warning" onClick={onClick}>
           View details
         </Button>
       </Card.Body>
+      <Card.Footer className="p-0">
+        <ProgressBar style={{ height: "3px" }}>
+          <ProgressBar variant="info" now={100} />
+        </ProgressBar>
+      </Card.Footer>
     </Card>
   );
 };

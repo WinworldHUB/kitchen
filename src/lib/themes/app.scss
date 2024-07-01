@@ -7,6 +7,7 @@ $theme-colors: (
   "success": #36ba98,
   "warning": #feb941,
   "info": #80c4e9,
+  "light": #f6f5f2,
 );
 
 /* import bootstrap to set changes */
@@ -24,4 +25,20 @@ a {
 .text-label {
   font-size: 1.3rem;
   font-weight: 200;
+}
+
+.text-title {
+  font-size: 1.3rem;
+  font-weight: 400;
+}
+
+.floating-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  font-variant: small-caps;
+  position: relative;
+  top: -15px;
+  left: 10px;
+  background-color: white;
+  width: max-content;
 }
