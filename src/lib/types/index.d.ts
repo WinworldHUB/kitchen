@@ -33,6 +33,19 @@ type Project = {
   status: string;
 };
 
+type AddressSummary = {
+  city: string;
+  postcode: string;
+  addresses: Address[];
+};
+
+type Address = {
+  bn: string;
+  hn: string;
+  fn: string;
+  st: string;
+};
+
 type AppVars = {
   isUserLoggedIn?: boolean;
   accessToken?: string;
