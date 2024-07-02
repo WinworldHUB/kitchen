@@ -1,13 +1,6 @@
 import { FC, useState } from "react";
-import {
-  Button,
-  FloatingLabel,
-  Form,
-  InputGroup,
-  ListGroup,
-  Modal,
-} from "react-bootstrap";
-import { FaLocationDot } from "react-icons/fa6";
+import { Button, Form, InputGroup, ListGroup, Modal } from "react-bootstrap";
+import { FaLocationDot, FaMagnifyingGlass } from "react-icons/fa6";
 import useApi from "../../hooks/useApi";
 
 interface ProjectContactsProps {
@@ -17,23 +10,24 @@ interface ProjectContactsProps {
 
 const ProjectContacts: FC<ProjectContactsProps> = ({ project, onSave }) => {
   const { getData: getAddresses, data: addressSummary } =
-    useApi<AddressSummary>("https://www.192.com/addressesForPostcode/?");
+    useApi<AddressSummary>("https://postcode.apitier.com/v1/postcodes/");
   const [isShowAddressesModal, setIsShowAddressesModal] =
     useState<boolean>(false);
+  const [postcode, setPostcode] = useState<string>();
+  const [address, setAddress] = useState<string>();
 
-  const searchAddress = async (postcode: string) => {
-    if (postcode.length >= 5 && postcode.length <= 7) {
-      fetch(
-        `https://www.192.com/addressesForPostcode/?postcode=${postcode}`
-      ).then((response) => response.json().then((data) => console.log(data)));
-      // await getAddresses(
-
-      // );
-    }
+  const searchAddress = async () => {
+    await getAddresses(
+      `${postcode ?? ""}?x-api-key=WQjGYGswUwaUAk3lAzF305NcmGLa4Yyh2UYD2w7q`
+    );
   };
 
   const handleAddressesModalClose = () => setIsShowAddressesModal(false);
-  const handleAddressChange = () => {};
+  const handleAddressChange = (selectedAddress: string) => {
+    setAddress(selectedAddress);
+    handleAddressesModalClose();
+  };
+
   return (
     <>
       <Form>
@@ -54,6 +48,7 @@ const ProjectContacts: FC<ProjectContactsProps> = ({ project, onSave }) => {
               aria-describedby="basic-addon2"
               readOnly
               disabled
+              value={address}
             />
             <Button
               variant="outline-info"
@@ -86,25 +81,34 @@ const ProjectContacts: FC<ProjectContactsProps> = ({ project, onSave }) => {
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3" controlId="findAddressForm.postcode">
-              <FloatingLabel
-                controlId="floatingInput"
-                label="Type your postcode here ..."
-                className="mb-3"
-              >
+              <InputGroup className="mb-3">
                 <Form.Control
-                  type="text"
-                  placeholder="postcode"
-                  onChange={(e) => searchAddress(e.target.value)}
+                  placeholder="Postcode"
+                  aria-label="Postcode"
+                  aria-describedby="Postcode"
+                  value={postcode}
+                  onChange={(e) => setPostcode(e.target.value)}
                 />
-              </FloatingLabel>
+                <Button
+                  variant="outline-primary"
+                  id="btnPostcode"
+                  onClick={searchAddress}
+                >
+                  <FaMagnifyingGlass />
+                </Button>
+              </InputGroup>
             </Form.Group>
           </Form>
           <br />
           <h6>Addresses</h6>
-          <ListGroup>
-            {(addressSummary?.addresses ?? []).map((address) => (
-              <ListGroup.Item action key={address.bn}>
-                {address.st}
+          <ListGroup className="list-container-400">
+            {(addressSummary?.result?.addresses ?? []).map((address) => (
+              <ListGroup.Item
+                action
+                key={address.delivery_point_suffix}
+                onClick={() => handleAddressChange(address.address)}
+              >
+                {address.address}
               </ListGroup.Item>
             ))}
           </ListGroup>
@@ -112,9 +116,6 @@ const ProjectContacts: FC<ProjectContactsProps> = ({ project, onSave }) => {
         <Modal.Footer>
           <Button variant="outline-danger" onClick={handleAddressesModalClose}>
             Cancel
-          </Button>
-          <Button variant="primary" onClick={() => handleAddressChange()}>
-            Create
           </Button>
         </Modal.Footer>
       </Modal>

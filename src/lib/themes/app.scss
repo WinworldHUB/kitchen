@@ -42,3 +42,29 @@ a {
   background-color: white;
   width: max-content;
 }
+
+.form-control:focus {
+  display: block;
+  //width: 100%;
+  //padding: 0.625rem 1rem;
+  //font-size: 0.875rem;
+  font-weight: 400;
+  //line-height: 1.6;
+  color: #585c7b;
+  background-color: #fff;
+  border: 1px solid #d4d7e5;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: 0.375rem;
+  -webkit-box-shadow: 10px 10px 20px 0px rgba(245, 245, 245, 1);
+  -moz-box-shadow: 10px 10px 20px 0px rgba(245, 245, 245, 1);
+  box-shadow: 10px 10px 20px 0px rgba(245, 245, 245, 1);
+  transition: border-color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
+}
+
+.list-container-400 {
+  max-height: 400px;
+  overflow-y: auto;
+}
