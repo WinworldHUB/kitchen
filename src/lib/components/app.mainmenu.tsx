@@ -59,12 +59,12 @@ const MenuBar = ({
                     <MainMenuItem item={item} />
                   </Nav.Link>
                 ))}
-                <Nav.Link href="/" onClick={handleLogout}>
+                {/* <Nav.Link href="/" onClick={handleLogout}>
                   Logout{" "}
                   <strong className="text-white">
                     <em>{username ?? "user"}</em>
                   </strong>
-                </Nav.Link>
+                </Nav.Link> */}
               </Nav>
             </>
           )}

@@ -6,7 +6,7 @@ import { ProjectStatus } from "../lib/constants";
 import { Col, Row } from "react-bootstrap";
 import CreateProjectContainer from "../lib/components/create.project/create.project.container";
 
-const ProjectDetails = () => {
+const ProjectProfilePage = () => {
   const { appState } = useContext(AppContext);
 
   const [project, setProject] = useState<Project>(null);
@@ -32,4 +32,4 @@ const ProjectDetails = () => {
   );
 };
 
-export default ProjectDetails;
+export default ProjectProfilePage;

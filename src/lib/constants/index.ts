@@ -14,6 +14,7 @@ export enum PageRoutes {
   ProjectDetails = "/projectDetails",
   Login = "/signIn",
   SignUp = "/signUp",
+  UserProfile = "/userProfile",
 }
 
 export const DEFAULT_LOCAL_STORAGE_KEY_FOR_APP_STATE = "W4R_LS_APP_STATE";

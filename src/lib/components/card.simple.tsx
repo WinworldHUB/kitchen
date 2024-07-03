@@ -5,6 +5,8 @@ interface SimpleCardProps extends ComponentProps {
   title?: string;
   footer?: React.ReactNode;
   headerAction?: React.ReactNode;
+  variant?: string;
+  noShadow?: boolean;
 }
 
 const CardSimple: FC<SimpleCardProps> = ({
@@ -12,16 +14,21 @@ const CardSimple: FC<SimpleCardProps> = ({
   children,
   footer,
   headerAction,
+  className,
+  variant = "warning",
+  noShadow = false,
 }) => {
   return (
-    <Card className="shadow">
+    <Card className={!noShadow && "shadow"}>
       {title && (
-        <Card.Header className="bg-warning d-flex justify-content-between align-items-center">
+        <Card.Header
+          className={`d-flex justify-content-between align-items-center bg-${variant}`}
+        >
           <p className="card-title">{title}</p>
           {headerAction}
         </Card.Header>
       )}
-      {children && <Card.Body>{children}</Card.Body>}
+      {children && <Card.Body className={className}>{children}</Card.Body>}
       {footer && <Card.Footer>{footer}</Card.Footer>}
     </Card>
   );

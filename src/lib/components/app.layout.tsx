@@ -2,7 +2,7 @@ import { FC, useContext } from "react";
 import { Container } from "react-bootstrap";
 import MenuBar from "./app.mainmenu";
 import { PageRoutes } from "../constants";
-import { FaBoxArchive, FaHouse } from "react-icons/fa6";
+import { FaBoxArchive, FaHouse, FaUserGear } from "react-icons/fa6";
 import { AppContext } from "../contexts/appcontext";
 
 const PageLayout: FC<LayoutProps> = ({
@@ -42,5 +42,11 @@ const APP_MENU: MenuItem[] = [
     label: "Archives",
     route: PageRoutes.Archives,
     icon: <FaBoxArchive stroke="1" />,
+  },
+  {
+    id: 2,
+    label: "User Profile",
+    route: PageRoutes.UserProfile,
+    icon: <FaUserGear stroke="1" />,
   },
 ];

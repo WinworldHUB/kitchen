@@ -6,7 +6,8 @@ import SignUpPage from "./pages/signup";
 import { useContext } from "react";
 import { AppContext } from "./lib/contexts/appcontext";
 import ArchivedProjectsPage from "./pages/projects.archived.";
-import ProjectDetails from "./pages/project.details";
+import UserProfilePage from "./pages/user.profile";
+import ProjectProfilePage from "./pages/project.profile";
 
 const App = () => {
   const { appState } = useContext(AppContext);
@@ -26,7 +27,13 @@ const App = () => {
         <Route
           path={PageRoutes.ProjectDetails}
           element={
-            appState.isUserLoggedIn ? <ProjectDetails /> : <SignInPage />
+            appState.isUserLoggedIn ? <ProjectProfilePage /> : <SignInPage />
+          }
+        />
+        <Route
+          path={PageRoutes.UserProfile}
+          element={
+            appState.isUserLoggedIn ? <UserProfilePage /> : <SignInPage />
           }
         />
         <Route path={PageRoutes.Login} element={<SignInPage />} />
