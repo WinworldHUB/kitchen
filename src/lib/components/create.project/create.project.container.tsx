@@ -4,9 +4,17 @@ import CardSimple from "../card.simple";
 import ProjectContacts from "./create.project.contacts";
 import NavigatorButtons from "../app.navigator";
 import ProjectTypes from "./create.project.type";
-import ProjectOtherDetails from "./create.project.other";
+import ProjectPropertyDetails from "./create.project.property";
+import ProjectLayoutDetails from "./create.project.layout";
+import ProjectAttachments from "./create.project.attachments";
 
-const PAGE_TITLES = ["Contact Details", "Type of project", "Other details"];
+const PAGE_TITLES = [
+  "Contact Details",
+  "Type of project",
+  "Property details",
+  "Layout details",
+  "Attachments",
+];
 
 interface CreateProjectContainerProps {
   project: Project;
@@ -17,6 +25,7 @@ const CreateProjectContainer: FC<CreateProjectContainerProps> = ({
   project,
   onCreate,
 }) => {
+  const TOTAL_PAGES = PAGE_TITLES.length - 1;
   const [pageIndex, setPageIndex] = useState<number>(0);
 
   const handlePrevClick = () => {
@@ -25,7 +34,7 @@ const CreateProjectContainer: FC<CreateProjectContainerProps> = ({
     }
   };
   const handleNextClick = () => {
-    if (pageIndex < PAGE_TITLES.length) {
+    if (pageIndex < TOTAL_PAGES) {
       setPageIndex(pageIndex + 1);
     }
   };
@@ -37,6 +46,11 @@ const CreateProjectContainer: FC<CreateProjectContainerProps> = ({
         <NavigatorButtons
           onNextClick={handleNextClick}
           onPreviousClick={handlePrevClick}
+          isFirstPage={pageIndex === 0}
+          buttonTitles={[
+            "Previous",
+            pageIndex === TOTAL_PAGES ? "Submit" : "Next",
+          ]}
         />
       }
       headerAction={<h6 className="text-title">{PAGE_TITLES[pageIndex]}</h6>}
@@ -55,7 +69,13 @@ const CreateProjectContainer: FC<CreateProjectContainerProps> = ({
           <ProjectTypes project={project} onSave={onCreate} />
         </Carousel.Item>
         <Carousel.Item>
-          <ProjectOtherDetails project={project} onSave={onCreate} />
+          <ProjectPropertyDetails project={project} onSave={onCreate} />
+        </Carousel.Item>
+        <Carousel.Item>
+          <ProjectLayoutDetails project={project} onSave={onCreate} />
+        </Carousel.Item>
+        <Carousel.Item>
+          <ProjectAttachments project={project} onSave={onCreate} />
         </Carousel.Item>
       </Carousel>
     </CardSimple>

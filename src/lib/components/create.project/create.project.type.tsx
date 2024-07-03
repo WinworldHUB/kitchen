@@ -23,11 +23,7 @@ const ProjectTypes: FC<ProjectTypesProps> = ({ project, onSave }) => {
                 <Form.Label htmlFor="knockWalls">
                   Are you planning to knock down any walls?
                 </Form.Label>
-                <Form.Check // prettier-ignore
-                  type="switch"
-                  id="knockWalls"
-                  label="No"
-                />
+                <SwitchCheck id="knockWalls" onSwitch={() => {}} />
               </FlexBox>
 
               <Form.Label>If yes let us know where?</Form.Label>

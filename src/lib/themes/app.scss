@@ -8,6 +8,7 @@ $theme-colors: (
   "warning": #feb941,
   "info": #80c4e9,
   "light": #f6f5f2,
+  "blue": dodgerblue,
 );
 
 /* import bootstrap to set changes */
@@ -43,13 +44,10 @@ a {
   width: max-content;
 }
 
-.form-control:focus {
+.form-control:focus,
+.form-select:focus {
   display: block;
-  //width: 100%;
-  //padding: 0.625rem 1rem;
-  //font-size: 0.875rem;
   font-weight: 400;
-  //line-height: 1.6;
   color: #585c7b;
   background-color: #fff;
   border: 1px solid #d4d7e5;
@@ -67,4 +65,27 @@ a {
 .list-container-400 {
   max-height: 400px;
   overflow-y: auto;
+}
+
+.wish-tile {
+  min-height: 150px;
+  width: 150px;
+  padding: 10px;
+  border: dodgerblue 2px dashed;
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.text-truncate {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: inherit;
+  padding: inherit;
+}
+
+.clickable {
+  cursor: pointer;
 }

@@ -1,13 +1,14 @@
 import { FC } from "react";
 import { Form } from "react-bootstrap";
 import FlexBox from "../app.flex.box";
+import SwitchCheck from "../app.switch";
 
-interface ProjectOtherDetailsProps {
+interface ProjectPropertyDetailsProps {
   project: Project;
   onSave: (projectId: string) => void;
 }
 
-const ProjectOtherDetails: FC<ProjectOtherDetailsProps> = ({
+const ProjectPropertyDetails: FC<ProjectPropertyDetailsProps> = ({
   project,
   onSave,
 }) => {
@@ -18,11 +19,7 @@ const ProjectOtherDetails: FC<ProjectOtherDetailsProps> = ({
           <Form.Label htmlFor="appointedBuilder">
             Have you appointed a builder?
           </Form.Label>
-          <Form.Check // prettier-ignore
-            type="switch"
-            id="appointedBuilder"
-            label="No"
-          />
+          <SwitchCheck id="appointedBuilder" onSwitch={() => {}} />
         </FlexBox>
 
         <Form.Label htmlFor="architectName">Please enter the name</Form.Label>
@@ -36,11 +33,7 @@ const ProjectOtherDetails: FC<ProjectOtherDetailsProps> = ({
           <Form.Label htmlFor="appointedInteriorDesigner">
             Have you appointed an interior designer?
           </Form.Label>
-          <Form.Check // prettier-ignore
-            type="switch"
-            id="appointedInteriorDesigner"
-            label="No"
-          />
+          <SwitchCheck id="appointedInteriorDesigner" onSwitch={() => {}} />
         </FlexBox>
 
         <Form.Label htmlFor="architectName">Please enter the name</Form.Label>
@@ -66,4 +59,4 @@ const ProjectOtherDetails: FC<ProjectOtherDetailsProps> = ({
   );
 };
 
-export default ProjectOtherDetails;
+export default ProjectPropertyDetails;
