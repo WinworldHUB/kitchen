@@ -9,6 +9,7 @@ $theme-colors: (
   "info": #80c4e9,
   "light": #f6f5f2,
   "blue": dodgerblue,
+  "secondary": #a8dadc,
 );
 
 /* import bootstrap to set changes */
@@ -88,4 +89,15 @@ a {
 
 .clickable {
   cursor: pointer;
+}
+
+.h-400 {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.remove-badge {
+  position: relative;
+  left: 60px;
+  top: -10px;
 }

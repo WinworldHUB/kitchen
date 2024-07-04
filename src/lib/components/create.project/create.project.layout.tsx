@@ -34,7 +34,7 @@ const ProjectLayoutDetails: FC<ProjectLayoutDetailsProps> = ({
             id="ceilingHeight"
             type="text"
             placeholder=""
-            className="w-25"
+            className="w-sm-25"
           />
         </FlexBox>
       </Form.Group>
@@ -57,7 +57,7 @@ const ProjectLayoutDetails: FC<ProjectLayoutDetailsProps> = ({
             id="numberOfSkylights"
             type="text"
             placeholder=""
-            className="w-25"
+            className="w-sm-25"
           />
         </FlexBox>
         <FlexBox className="py-2">
@@ -68,7 +68,7 @@ const ProjectLayoutDetails: FC<ProjectLayoutDetailsProps> = ({
             id="skylightsLocation"
             type="text"
             placeholder=""
-            className="w-25"
+            className="w-sm-25"
           />
         </FlexBox>
       </Form.Group>
@@ -90,7 +90,7 @@ const ProjectLayoutDetails: FC<ProjectLayoutDetailsProps> = ({
             id="stepsLocation"
             type="text"
             placeholder=""
-            className="w-25"
+            className="w-sm-25"
           />
         </FlexBox>
       </Form.Group>

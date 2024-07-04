@@ -18,7 +18,7 @@ const ProjectsGrid: FC<ProjectsGridProps> = ({
       {projects?.length > 0 ? (
         <Row className="g-4">
           {(projects ?? []).map((project) => (
-            <Col sm="3" xs="6" key={project.id}>
+            <Col sm="3" key={project.id}>
               <ProjectTile
                 project={project}
                 onClick={() => onProjectClick(project.id)}

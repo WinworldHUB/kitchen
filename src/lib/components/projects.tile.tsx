@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { Button, Card, ProgressBar } from "react-bootstrap";
+import { ProjectStatus } from "../constants";
 
 interface ProjectTileProps {
   project: Project;
@@ -19,7 +20,12 @@ const ProjectTile: FC<ProjectTileProps> = ({ project, onClick }) => {
       </Card.Body>
       <Card.Footer className="p-0">
         <ProgressBar style={{ height: "3px" }}>
-          <ProgressBar variant="info" now={100} />
+          <ProgressBar
+            variant={
+              project.status === ProjectStatus.archived ? "secondary" : "blue"
+            }
+            now={100}
+          />
         </ProgressBar>
       </Card.Footer>
     </Card>

@@ -10,7 +10,7 @@ const FlexBox: FC<FlexBoxProps> = ({
   justifyContent = "between",
 }) => (
   <div
-    className={`d-flex align-items-center justify-content-${justifyContent} ${className}`}
+    className={`d-sm-flex align-items-center justify-content-${justifyContent} ${className}`}
   >
     {children}
   </div>

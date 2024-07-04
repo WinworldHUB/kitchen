@@ -11,12 +11,19 @@ const ProjectAttachments: FC<ProjectAttachmentsProps> = ({
   onSave,
 }) => {
   const [attachments, setAttachments] = useState<File[]>([]);
+  const handleAttachmentRemove = (attachmentIndex: number) => {
+    setAttachments(
+      attachments.filter((attachment, index) => index !== attachmentIndex)
+    );
+  };
+  const handleAddAttachment = (newAttachment: File) =>
+    setAttachments([newAttachment, ...(attachments ?? [])]);
+
   return (
     <AttachmentsContainer
       attachments={attachments}
-      onChange={(newAttachment) =>
-        setAttachments([newAttachment, ...attachments])
-      }
+      onChange={handleAddAttachment}
+      onRemove={handleAttachmentRemove}
     />
   );
 };

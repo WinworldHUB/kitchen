@@ -22,7 +22,7 @@ const CardSimple: FC<SimpleCardProps> = ({
     <Card className={!noShadow && "shadow"}>
       {title && (
         <Card.Header
-          className={`d-flex justify-content-between align-items-center bg-${variant}`}
+          className={`d-sm-flex justify-content-between align-items-center bg-${variant}`}
         >
           <p className="card-title">{title}</p>
           {headerAction}

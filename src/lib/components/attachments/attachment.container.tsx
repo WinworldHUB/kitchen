@@ -7,24 +7,30 @@ interface AttachmentsContainerProps {
   attachments: File[];
   canAddAttachment?: boolean;
   onChange: (attachment: File) => void;
+  onRemove: (index: number) => void;
 }
 
 const AttachmentsContainer: FC<AttachmentsContainerProps> = ({
   attachments,
   canAddAttachment = true,
   onChange,
+  onRemove,
 }) => {
   return (
-    <Container fluid className="border p-5 bg-light rounded">
-      <Row className="gx-2 gy-4">
+    <Container fluid className="border p-5 bg-light rounded h-400">
+      <Row className="gx-sm-2 gy-4">
         {canAddAttachment && (
-          <Col sm="3" xs="2">
+          <Col sm="3" className="mx-xs-auto">
             <AddAttachmentTile onChange={onChange} />
           </Col>
         )}
-        {(attachments ?? []).map((attachment) => (
-          <Col sm="3" xs="2">
-            <AttachmentTile key={attachment.name} attachment={attachment} />
+        {(attachments ?? []).map((attachment, index) => (
+          <Col sm="3" className="text-center" key={attachment.name + index}>
+            <AttachmentTile
+              key={attachment.name}
+              attachment={attachment}
+              onRemove={() => onRemove(index)}
+            />
           </Col>
         ))}
       </Row>

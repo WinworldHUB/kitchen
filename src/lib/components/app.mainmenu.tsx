@@ -3,7 +3,6 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { AppContext } from "../contexts/appcontext";
-import useAuthentication from "../hooks/useAuthentication";
 import { Image } from "react-bootstrap";
 import MainMenuItem from "./app.menuitem";
 
@@ -22,15 +21,10 @@ const MenuBar = ({
 }: MenuBarProps) => {
   const [currentMenuId, setCurrentMenuId] = useState<number>(0);
   const { appState } = useContext(AppContext);
-  const { signOutUser } = useAuthentication();
 
   useEffect(() => {
     setCurrentMenuId(selectedItemId);
   }, [selectedItemId]);
-
-  const handleLogout = () => {
-    signOutUser();
-  };
 
   return (
     <Navbar
@@ -59,12 +53,6 @@ const MenuBar = ({
                     <MainMenuItem item={item} />
                   </Nav.Link>
                 ))}
-                {/* <Nav.Link href="/" onClick={handleLogout}>
-                  Logout{" "}
-                  <strong className="text-white">
-                    <em>{username ?? "user"}</em>
-                  </strong>
-                </Nav.Link> */}
               </Nav>
             </>
           )}
