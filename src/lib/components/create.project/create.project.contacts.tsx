@@ -35,10 +35,6 @@ const ProjectContacts: FC<ProjectContactsProps> = ({ project, onSave }) => {
           <Form.Label>Title</Form.Label>
           <Form.Control type="text" placeholder="Test project 1" />
         </Form.Group>
-        <Form.Group className="mb-3" controlId="createProjectForm.Description">
-          <Form.Label>Description</Form.Label>
-          <Form.Control type="text" placeholder="This is test project 1" />
-        </Form.Group>
         <Form.Group className="mb-3" controlId="createProjectForm.PostCode">
           <Form.Label>Address</Form.Label>
           <InputGroup className="mb-3">
