@@ -3,15 +3,15 @@ import { DEFAULT_KITCHEN_IMAGE, ProjectStatus } from "../constants";
 
 export const createProject = (
   title?: string,
-  description?: string,
+  address?: string,
   status?: string
 ): Project => {
   return {
     id: uuidv4(),
     title: title ?? "",
-    description: description ?? "",
+    address: address ?? "",
     featuredImage: DEFAULT_KITCHEN_IMAGE,
-    status: status ?? ProjectStatus.draft.toString(),
+    status: status ?? ProjectStatus.designBrief.toString(),
   };
 };
 
@@ -22,7 +22,7 @@ export const dummyProjects = (status?: string): Project[] => {
     projects.push(
       createProject(
         `Test Project ${index + 1}`,
-        `This is Test Project ${index + 1}`,
+        `19 Temple Fortune Parade, Finchley Rd, London NW11 0QS, United Kingdom`,
         status
       )
     );
@@ -38,7 +38,7 @@ export const filterProjects = (
   (projects ?? []).filter(
     (project) =>
       project.title.includes(filterText) ||
-      project.description.includes(filterText) ||
+      project.address.includes(filterText) ||
       project.status.toString().includes(filterText)
   ) ?? [];
 

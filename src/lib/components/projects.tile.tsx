@@ -12,8 +12,8 @@ const ProjectTile: FC<ProjectTileProps> = ({ project, onClick }) => {
     <Card>
       <Card.Img variant="top" src={project.featuredImage} />
       <Card.Body>
-        <Card.Title className="text-truncate">{project.title} </Card.Title>
-        <Card.Text className="text-truncate">{project.description}</Card.Text>
+        <Card.Title className="text-truncate p-0">{project.title} </Card.Title>
+        <Card.Text className="text-truncate p-1">{project.address}</Card.Text>
         <Button variant="outline-warning" onClick={onClick}>
           View details
         </Button>

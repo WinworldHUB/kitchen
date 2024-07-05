@@ -101,3 +101,9 @@ a {
   left: 60px;
   top: -10px;
 }
+
+.w-content {
+  width: fit-content !important;
+  width: -moz-fit-content !important;
+  text-wrap: nowrap !important;
+}

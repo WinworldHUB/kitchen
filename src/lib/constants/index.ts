@@ -19,6 +19,9 @@ export enum PageRoutes {
 
 export const DEFAULT_LOCAL_STORAGE_KEY_FOR_APP_STATE = "W4R_LS_APP_STATE";
 
+export const DEFAULT_PROJECT_ADDRESS =
+  "19 Temple Fortune Parade, Finchley Rd, London NW11 0QS";
+
 export const APP_CONVERSION_DATE_FORMAT = "dd/MM/yyyy";
 export const APP_SHORT_DATE_FORMAT = "dd MMM yyyy";
 export const APP_AWS_DATE_FORMAT = "yyyy-MM-dd";
@@ -35,12 +38,19 @@ export const DEFAULT_KITCHEN_IMAGE =
 
 export const enum ProjectStatus {
   draft = "Draft",
-  inPlanning = "InPlanning",
-  planSubmitted = "PlanSubmitted",
-  discussion = "Discussion",
-  visitBooked = "VisitBooked",
-  visited = "Visited",
-  commenced = "Commenced",
+  designBrief = "Design brief",
+  designQuotation = "Design & Quotation",
+  order = "Order",
+  install = "Install",
+  onHold = "On Hold",
   completed = "Completed",
   archived = "Archived",
 }
+
+export const PROJECT_FILTERS = [
+  ProjectStatus.designBrief,
+  ProjectStatus.designQuotation,
+  ProjectStatus.order,
+  ProjectStatus.install,
+  ProjectStatus.completed,
+];

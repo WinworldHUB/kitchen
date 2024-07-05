@@ -1,6 +1,7 @@
 import { FC, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { createProject } from "../utils/project.utils";
+import { DEFAULT_PROJECT_ADDRESS } from "../constants";
 
 interface NewProjectModalProps {
   isShow: boolean;
@@ -35,18 +36,11 @@ const NewProjectModal: FC<NewProjectModalProps> = ({
               placeholder="Test Project"
               value={project.title}
               onChange={(e) =>
-                setProject({ ...project, title: e.target.value })
-              }
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="newProjectForm.description">
-            <Form.Label>Description</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="This is test project"
-              value={project.description}
-              onChange={(e) =>
-                setProject({ ...project, description: e.target.value })
+                setProject({
+                  ...project,
+                  title: e.target.value,
+                  address: DEFAULT_PROJECT_ADDRESS,
+                })
               }
             />
           </Form.Group>

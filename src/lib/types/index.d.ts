@@ -29,7 +29,7 @@ type Project = {
   id: string;
   featuredImage?: string;
   title: string;
-  description?: string;
+  address?: string;
   status: string;
 };
 
