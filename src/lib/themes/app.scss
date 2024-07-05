@@ -1,6 +1,7 @@
 /* The following block can be included in a custom.scss */
 
 /* make the customizations */
+
 $theme-colors: (
   "primary": #3c342f,
   "danger": #ee4e4e,
@@ -9,8 +10,16 @@ $theme-colors: (
   "info": #80c4e9,
   "light": #f6f5f2,
   "blue": dodgerblue,
-  "secondary": #a8dadc,
+  "secondary": #936639,
 );
+
+$primary: #3c342f;
+$danger: #ee4e4e;
+$success: #36ba98;
+$warning: #feb941;
+$info: #80c4e9;
+$light: #f6f5f2;
+$secondary: #936639;
 
 /* import bootstrap to set changes */
 @import "~bootstrap/scss/bootstrap";

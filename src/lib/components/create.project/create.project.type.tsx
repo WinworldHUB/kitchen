@@ -1,7 +1,8 @@
-import { FC } from "react";
-import { Accordion, Form } from "react-bootstrap";
+import { FC, useState } from "react";
+import { Accordion, Alert, Card, Form } from "react-bootstrap";
 import FlexBox from "../app.flex.box";
 import RadioGroup from "../app.radio.group";
+import CardSimple from "../card.simple";
 
 interface ProjectTypesProps {
   project: Project;
@@ -9,72 +10,82 @@ interface ProjectTypesProps {
 }
 
 const ProjectTypes: FC<ProjectTypesProps> = ({ project, onSave }) => {
+  const [isExistingProject, setIsExistingProject] = useState<boolean>(null);
   return (
     <Form>
-      <Accordion defaultActiveKey="0" className="pb-2">
-        <Accordion.Item eventKey="0">
-          <Accordion.Header>Existing / Renovation Project</Accordion.Header>
-          <Accordion.Body>
-            <Form.Group
-              className=""
-              controlId="createProjectForm.knockAnyWalls"
-            >
-              <FlexBox>
-                <Form.Label htmlFor="knockWalls">
-                  Are you planning to knock down any walls?
-                </Form.Label>
-                {/* <SwitchCheck id="knockWalls" onSwitch={() => {}} /> */}
-                <RadioGroup
-                  id="knockWalls"
-                  options={["Yes", "No"]}
-                  onChange={console.log}
-                />
-              </FlexBox>
+      <FlexBox className="py-3">
+        <Form.Label>What is the type of project?</Form.Label>
+        <RadioGroup
+          id="projectType"
+          options={["Existing / Renovation Project", "New / Extension Project"]}
+          onChange={(option) =>
+            setIsExistingProject(option === "Existing / Renovation Project")
+          }
+        />
+      </FlexBox>
 
-              <Form.Label>If yes let us know where?</Form.Label>
-              <Form.Control type="text" placeholder="" />
-            </Form.Group>
-          </Accordion.Body>
-        </Accordion.Item>
-        <Accordion.Item eventKey="1">
-          <Accordion.Header>New / Extension Project</Accordion.Header>
-          <Accordion.Body>
-            <Form.Group
-              className=""
-              controlId="createProjectForm.knockAnyWalls"
-            >
-              <FlexBox>
-                <Form.Label htmlFor="appointedArchitect">
-                  Have you appointed an architect?
-                </Form.Label>
-                {/* <SwitchCheck id="appointedArchitect" onSwitch={() => {}} /> */}
-                <RadioGroup
-                  id="appointedArchitect"
-                  options={["Yes", "No"]}
-                  onChange={console.log}
-                />
-              </FlexBox>
-
-              <Form.Label htmlFor="architectName">
-                Please enter the name
+      {isExistingProject === true && (
+        <CardSimple>
+          <Alert variant="secondary">Existing / Renovation Project</Alert>
+          <Form.Group
+            className="p-2"
+            controlId="createProjectForm.knockAnyWalls"
+          >
+            <FlexBox>
+              <Form.Label htmlFor="knockWalls">
+                Are you planning to knock down any walls?
               </Form.Label>
-              <Form.Control id="architectName" type="text" placeholder="" />
+              {/* <SwitchCheck id="knockWalls" onSwitch={() => {}} /> */}
+              <RadioGroup
+                id="knockWalls"
+                options={["Yes", "No"]}
+                onChange={console.log}
+              />
+            </FlexBox>
 
-              <FlexBox className="pt-3">
-                <Form.Label htmlFor="planningApplication">
-                  Have your planning application been approved?
-                </Form.Label>
-                {/* <SwitchCheck id="planningApplication" onSwitch={() => {}} /> */}
-                <RadioGroup
-                  id="planningApplication"
-                  options={["Yes", "No"]}
-                  onChange={console.log}
-                />
-              </FlexBox>
-            </Form.Group>
-          </Accordion.Body>
-        </Accordion.Item>
-      </Accordion>
+            <Form.Label>If yes let us know where?</Form.Label>
+            <Form.Control type="text" placeholder="" />
+          </Form.Group>
+        </CardSimple>
+      )}
+      {isExistingProject === false && (
+        <CardSimple>
+          <Alert variant="secondary">New / Extension Project</Alert>
+          <Form.Group
+            className="p-2"
+            controlId="createProjectForm.appointedArchitect"
+          >
+            <FlexBox>
+              <Form.Label htmlFor="appointedArchitect">
+                Have you appointed an architect?
+              </Form.Label>
+              {/* <SwitchCheck id="appointedArchitect" onSwitch={() => {}} /> */}
+              <RadioGroup
+                id="appointedArchitect"
+                options={["Yes", "No"]}
+                onChange={console.log}
+              />
+            </FlexBox>
+
+            <Form.Label htmlFor="architectName">
+              Please enter the name
+            </Form.Label>
+            <Form.Control id="architectName" type="text" placeholder="" />
+
+            <FlexBox className="pt-3">
+              <Form.Label htmlFor="planningApplication">
+                Have your planning application been approved?
+              </Form.Label>
+              {/* <SwitchCheck id="planningApplication" onSwitch={() => {}} /> */}
+              <RadioGroup
+                id="planningApplication"
+                options={["Yes", "No"]}
+                onChange={console.log}
+              />
+            </FlexBox>
+          </Form.Group>
+        </CardSimple>
+      )}
     </Form>
   );
 };
