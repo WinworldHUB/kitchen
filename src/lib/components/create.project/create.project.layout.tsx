@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Form } from "react-bootstrap";
 import FlexBox from "../app.flex.box";
-import SwitchCheck from "../app.switch";
+import RadioGroup from "../app.radio.group";
 
 interface ProjectLayoutDetailsProps {
   project: Project;
@@ -19,10 +19,15 @@ const ProjectLayoutDetails: FC<ProjectLayoutDetailsProps> = ({
           <Form.Label htmlFor="ceilingType">
             What is your ceiling type?
           </Form.Label>
-          <SwitchCheck
+          {/* <SwitchCheck
             id="ceilingType"
             onSwitch={() => {}}
             valueTitles={["Vaulted Ceiling", "Pitched Ceiling"]}
+          /> */}
+          <RadioGroup
+            id="ceilingType"
+            options={["Vaulted Ceiling", "Pitched Ceiling"]}
+            onChange={console.log}
           />
         </FlexBox>
 
@@ -46,7 +51,12 @@ const ProjectLayoutDetails: FC<ProjectLayoutDetailsProps> = ({
           <Form.Label htmlFor="skylights">
             Are there any skylights in the kitchen area?
           </Form.Label>
-          <SwitchCheck id="skylights" onSwitch={() => {}} />
+          {/* <SwitchCheck id="skylights" onSwitch={() => {}} /> */}
+          <RadioGroup
+            id="skylights"
+            options={["Yes", "No"]}
+            onChange={console.log}
+          />
         </FlexBox>
 
         <FlexBox className="py-2">
@@ -80,7 +90,12 @@ const ProjectLayoutDetails: FC<ProjectLayoutDetailsProps> = ({
           <Form.Label htmlFor="anySteps">
             Are there any steps in the kitchen area?
           </Form.Label>
-          <SwitchCheck id="anySteps" onSwitch={() => {}} />
+          {/* <SwitchCheck id="anySteps" onSwitch={() => {}} /> */}
+          <RadioGroup
+            id="anySteps"
+            options={["Yes", "No"]}
+            onChange={console.log}
+          />
         </FlexBox>
         <FlexBox className="py-2">
           <Form.Label htmlFor="stepsLocation">

@@ -30,6 +30,28 @@ type Project = {
   featuredImage?: string;
   title: string;
   address?: string;
+  phone?: string;
+
+  isExistingProject?: boolean;
+  isKnockDownWall?: boolean;
+  isArchitectAppointed?: boolean;
+  isPlanningApproved?: boolean;
+  isBuilderAppointed?: boolean;
+  isInteriorDesignerAppointed?: boolean;
+  isPitchedCeiling?: boolean;
+  isSkylights?: boolean;
+  isStepInKitchen?: boolean;
+
+  knockDownWallDetails?: string;
+  architectName?: string;
+  builderName?: string;
+  interiorDesignerName?: string;
+  ceilingHeight?: string;
+  numberOfSkylights?: string;
+  skylightDetails?: string;
+  kitchenStepsDetails?: string;
+
+  propertyType?: string;
   status: string;
 };
 

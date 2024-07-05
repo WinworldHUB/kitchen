@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Form } from "react-bootstrap";
 import FlexBox from "../app.flex.box";
-import SwitchCheck from "../app.switch";
+import RadioGroup from "../app.radio.group";
 
 interface ProjectPropertyDetailsProps {
   project: Project;
@@ -19,7 +19,12 @@ const ProjectPropertyDetails: FC<ProjectPropertyDetailsProps> = ({
           <Form.Label htmlFor="appointedBuilder">
             Have you appointed a builder?
           </Form.Label>
-          <SwitchCheck id="appointedBuilder" onSwitch={() => {}} />
+          {/* <SwitchCheck id="appointedBuilder" onSwitch={() => {}} /> */}
+          <RadioGroup
+            id="appointedBuilder"
+            options={["Yes", "No"]}
+            onChange={console.log}
+          />
         </FlexBox>
 
         <Form.Label htmlFor="architectName">Please enter the name</Form.Label>
@@ -33,7 +38,13 @@ const ProjectPropertyDetails: FC<ProjectPropertyDetailsProps> = ({
           <Form.Label htmlFor="appointedInteriorDesigner">
             Have you appointed an interior designer?
           </Form.Label>
-          <SwitchCheck id="appointedInteriorDesigner" onSwitch={() => {}} />
+          {/* <SwitchCheck id="appointedInteriorDesigner" onSwitch={() => {}} /
+          > */}
+          <RadioGroup
+            id="appointedInteriorDesigner"
+            options={["Yes", "No"]}
+            onChange={console.log}
+          />
         </FlexBox>
 
         <Form.Label htmlFor="architectName">Please enter the name</Form.Label>
