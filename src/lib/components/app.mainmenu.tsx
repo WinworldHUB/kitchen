@@ -35,7 +35,7 @@ const MenuBar = ({
       bg="primary"
     >
       <Container fluid className="px-3">
-        <Navbar.Brand href="/">
+        <Navbar.Brand href="/" onClick={() => onClick?.(0)}>
           <Image src="/assets/images/moiety-kitchens-london-225w.png" />
         </Navbar.Brand>
         <Navbar.Toggle />
