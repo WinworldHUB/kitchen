@@ -55,7 +55,7 @@ export const getProjectStatusSteps = (
   PROJECT_STATUS_STEPS_DATA.map((step) => {
     return {
       ...step,
-      isDone: currentStatus === step.status,
-      isActive: false,
+      isDone: step.status <= currentStatus,
+      isActive: step.status <= currentStatus,
     };
   });
