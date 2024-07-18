@@ -1,6 +1,10 @@
 import { FC } from "react";
 import { Button, Card, ProgressBar } from "react-bootstrap";
 import { ProjectStatus } from "../constants";
+import FlexBox from "./app.flex.box";
+//import Steps from "react-steps";
+import Steps from "react-steps";
+import { getProjectStatusSteps } from "../utils/project.utils";
 
 interface ProjectTileProps {
   project: Project;
@@ -10,13 +14,21 @@ interface ProjectTileProps {
 const ProjectTile: FC<ProjectTileProps> = ({ project, onClick }) => {
   return (
     <Card>
-      <Card.Img variant="top" src={project.featuredImage} />
+      {/* <Card.Img variant="top" src={project.featuredImage} /> */}
       <Card.Body>
+        <Steps
+          items={getProjectStatusSteps(project.status)}
+          type={"point"}
+          flat={true}
+        />
+
         <Card.Title className="text-truncate p-0">{project.title} </Card.Title>
         <Card.Text className="text-truncate p-1">{project.address}</Card.Text>
-        <Button variant="outline-warning" onClick={onClick}>
-          View details
-        </Button>
+        <FlexBox>
+          <Button variant="outline-warning" onClick={onClick}>
+            View details
+          </Button>
+        </FlexBox>
       </Card.Body>
       <Card.Footer className="p-0">
         <ProgressBar style={{ height: "3px" }}>

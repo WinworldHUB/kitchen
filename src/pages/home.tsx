@@ -34,7 +34,7 @@ const HomePage = () => {
     () =>
       (appState.activeProjects ?? []).filter(
         (project) =>
-          project.status.toString() === PROJECT_FILTERS[selectedFilterIndex]
+          project.status === PROJECT_FILTERS[selectedFilterIndex].value
       ),
     [appState.activeProjects, selectedFilterIndex]
   );

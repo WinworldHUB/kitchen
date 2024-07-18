@@ -10,8 +10,8 @@ const ProjectFilters: FC<ProjectFiltersProps> = ({ onChange }) => {
   return (
     <Form.Select onChange={(e) => onChange(e.target.selectedIndex)}>
       {PROJECT_FILTERS.map((filter, index) => (
-        <option value={index} key={filter}>
-          {filter}
+        <option value={filter.value} key={filter.value}>
+          {filter.title}
         </option>
       ))}
     </Form.Select>

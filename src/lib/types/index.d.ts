@@ -1,3 +1,14 @@
+type ProjectFilter = {
+  title: string;
+  value: number;
+};
+
+type ProjectStatusStep = {
+  text: string;
+  isActive: boolean;
+  isDone: boolean;
+  status: number;
+};
 interface DataTableProps<T> {
   title?: string;
   isEditable?: boolean;
@@ -52,7 +63,7 @@ type Project = {
   kitchenStepsDetails?: string;
 
   propertyType?: string;
-  status: string;
+  status: number;
 };
 
 type AddressSummary = {
