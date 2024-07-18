@@ -32,10 +32,12 @@ const HomePage = () => {
 
   const filteredProjects = useMemo(
     () =>
-      (appState.activeProjects ?? []).filter(
-        (project) =>
-          project.status === PROJECT_FILTERS[selectedFilterIndex].value
-      ),
+      selectedFilterIndex === 0
+        ? appState.activeProjects ?? []
+        : (appState.activeProjects ?? []).filter(
+            (project) =>
+              project.status === PROJECT_FILTERS[selectedFilterIndex - 1].value
+          ),
     [appState.activeProjects, selectedFilterIndex]
   );
 
