@@ -3,13 +3,9 @@ import AttachmentsContainer from "../attachments/attachment.container";
 
 interface ProjectAttachmentsProps {
   project: Project;
-  onSave: (projectId: string) => void;
 }
 
-const ProjectAttachments: FC<ProjectAttachmentsProps> = ({
-  project,
-  onSave,
-}) => {
+const ProjectAttachments: FC<ProjectAttachmentsProps> = ({ project }) => {
   const [attachments, setAttachments] = useState<File[]>([]);
   const handleAttachmentRemove = (attachmentIndex: number) => {
     setAttachments(

@@ -1,26 +1,41 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import PageLayout from "../lib/components/app.layout";
 import { AppContext } from "../lib/contexts/appcontext";
 import { getProjectById } from "../lib/utils/project.utils";
 import { Col, Row } from "react-bootstrap";
-import CreateProjectContainer from "../lib/components/create.project/create.project.container";
+import { PageRoutes, ProjectStatus } from "../lib/constants";
+import { useNavigate } from "react-router-dom";
+import ProjectProfileSwitcher from "../lib/components/profile.project/profile.project.switcher";
 
 const ProjectProfilePage = () => {
-  const { appState } = useContext(AppContext);
+  const { appState, updateAppState } = useContext(AppContext);
+  const navigate = useNavigate();
+  const [project, setProject] = useState<Project>(
+    getProjectById(appState.activeProjects, appState.selectedProjectId)
+  );
 
-  const [project, setProject] = useState<Project>(null);
-
-  useEffect(() => {
-    setProject(
-      getProjectById(appState.activeProjects, appState.selectedProjectId)
+  const updateProject = () => {
+    const updatedProject = {
+      ...project,
+      status: ProjectStatus.designQuotation,
+    };
+    setProject(updatedProject);
+    const activeProjects = (appState.activeProjects ?? []).map((project) =>
+      project.id === project?.id ? updatedProject : project
     );
-  }, [appState.activeProjects, appState.selectedProjectId]);
+
+    updateAppState({ ...appState, activeProjects: activeProjects });
+    navigate(PageRoutes.Home);
+  };
 
   return (
     <PageLayout>
       <Row className="justify-content-center">
         <Col sm="8">
-          <CreateProjectContainer project={project} onCreate={() => {}} />
+          <ProjectProfileSwitcher
+            project={project}
+            onProjectUpdate={updateProject}
+          />
         </Col>
       </Row>
     </PageLayout>

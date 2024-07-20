@@ -6,10 +6,9 @@ import CardSimple from "../card.simple";
 
 interface ProjectTypesProps {
   project: Project;
-  onSave: (projectId: string) => void;
 }
 
-const ProjectTypes: FC<ProjectTypesProps> = ({ project, onSave }) => {
+const ProjectTypes: FC<ProjectTypesProps> = ({ project }) => {
   const [isExistingProject, setIsExistingProject] = useState<boolean>(null);
   return (
     <Form>

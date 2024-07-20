@@ -9,6 +9,7 @@ type ProjectStatusStep = {
   isDone: boolean;
   status: number;
 };
+
 interface DataTableProps<T> {
   title?: string;
   isEditable?: boolean;
@@ -65,6 +66,11 @@ type Project = {
   propertyType?: string;
   status: number;
 };
+
+interface ProjectProps {
+  project: Project;
+  onProjectUpdate: (project: Project) => void;
+}
 
 type AddressSummary = {
   status: number;

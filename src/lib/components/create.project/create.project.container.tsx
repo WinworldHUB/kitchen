@@ -36,6 +36,8 @@ const CreateProjectContainer: FC<CreateProjectContainerProps> = ({
   const handleNextClick = () => {
     if (pageIndex < TOTAL_PAGES) {
       setPageIndex(pageIndex + 1);
+    } else {
+      onCreate(project.id);
     }
   };
 
@@ -89,19 +91,19 @@ const CreateProjectContainer: FC<CreateProjectContainerProps> = ({
             interval={null}
           >
             <Carousel.Item>
-              <ProjectContacts project={project} onSave={onCreate} />
+              <ProjectContacts project={project} />
             </Carousel.Item>
             <Carousel.Item>
-              <ProjectTypes project={project} onSave={onCreate} />
+              <ProjectTypes project={project} />
             </Carousel.Item>
             <Carousel.Item>
-              <ProjectPropertyDetails project={project} onSave={onCreate} />
+              <ProjectPropertyDetails project={project} />
             </Carousel.Item>
             <Carousel.Item>
-              <ProjectLayoutDetails project={project} onSave={onCreate} />
+              <ProjectLayoutDetails project={project} />
             </Carousel.Item>
             <Carousel.Item>
-              <ProjectAttachments project={project} onSave={onCreate} />
+              <ProjectAttachments project={project} />
             </Carousel.Item>
           </Carousel>
         </Col>

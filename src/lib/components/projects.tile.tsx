@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Button, Card, ProgressBar } from "react-bootstrap";
+import { Button, Card, Container, ProgressBar } from "react-bootstrap";
 import { ProjectStatus } from "../constants";
 import FlexBox from "./app.flex.box";
 //import Steps from "react-steps";
@@ -16,11 +16,13 @@ const ProjectTile: FC<ProjectTileProps> = ({ project, onClick }) => {
     <Card>
       {/* <Card.Img variant="top" src={project.featuredImage} /> */}
       <Card.Body>
-        <Steps
-          items={getProjectStatusSteps(project.status)}
-          type={"point"}
-          flat={true}
-        />
+        <div className="py-3">
+          <Steps
+            items={getProjectStatusSteps(project.status)}
+            type={"point"}
+            flat={true}
+          />
+        </div>
 
         <Card.Title className="text-truncate p-0">{project.title} </Card.Title>
         <Card.Text className="text-truncate p-1">{project.address}</Card.Text>

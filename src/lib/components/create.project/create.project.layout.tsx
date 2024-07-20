@@ -5,13 +5,9 @@ import RadioGroup from "../app.radio.group";
 
 interface ProjectLayoutDetailsProps {
   project: Project;
-  onSave: (projectId: string) => void;
 }
 
-const ProjectLayoutDetails: FC<ProjectLayoutDetailsProps> = ({
-  project,
-  onSave,
-}) => {
+const ProjectLayoutDetails: FC<ProjectLayoutDetailsProps> = ({ project }) => {
   return (
     <Form>
       <Form.Group className="mb-3" controlId="createProjectForm.Title">

@@ -5,12 +5,10 @@ import RadioGroup from "../app.radio.group";
 
 interface ProjectPropertyDetailsProps {
   project: Project;
-  onSave: (projectId: string) => void;
 }
 
 const ProjectPropertyDetails: FC<ProjectPropertyDetailsProps> = ({
   project,
-  onSave,
 }) => {
   return (
     <Form>

@@ -5,10 +5,9 @@ import useApi from "../../hooks/useApi";
 
 interface ProjectContactsProps {
   project: Project;
-  onSave: (projectId: string) => void;
 }
 
-const ProjectContacts: FC<ProjectContactsProps> = ({ project, onSave }) => {
+const ProjectContacts: FC<ProjectContactsProps> = ({ project }) => {
   const { getData: getAddresses, data: addressSummary } =
     useApi<AddressSummary>("https://postcode.apitier.com/v1/postcodes/");
   const [isShowAddressesModal, setIsShowAddressesModal] =
