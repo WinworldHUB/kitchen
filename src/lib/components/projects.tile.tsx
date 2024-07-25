@@ -1,8 +1,7 @@
 import { FC } from "react";
-import { Button, Card, Container, ProgressBar } from "react-bootstrap";
+import { Button, Card, ProgressBar } from "react-bootstrap";
 import { ProjectStatus } from "../constants";
 import FlexBox from "./app.flex.box";
-//import Steps from "react-steps";
 import Steps from "react-steps";
 import { getProjectStatusSteps } from "../utils/project.utils";
 
