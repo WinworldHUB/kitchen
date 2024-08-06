@@ -95,3 +95,16 @@ export const PROJECT_STATUS_STEPS_DATA = [
     status: ProjectStatus.install,
   },
 ];
+
+
+export const STYTCH_PROJECT_ID = {
+  MINOR: "project-",
+  MODE: "test-",
+  MAJOR: "bb21c0a2-7d1a-4629-963b-771202ed4ed4",
+};
+
+export const STYTCH_API_KEY = {
+  MINOR: "secret-",
+  MODE: "test-",
+  MAJOR: "e0zi6WmKfPeoetLQDGeJ8nSOjeQzu6vmflo=",
+};
