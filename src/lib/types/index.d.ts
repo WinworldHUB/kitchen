@@ -153,6 +153,7 @@ type LoginRequest = {
 type GeneralAPIResponse = {
   success: boolean;
   message: string;
+  error? : unknown;
 };
 
 type LoginResponse = GeneralAPIResponse & {

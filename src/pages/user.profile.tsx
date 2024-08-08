@@ -5,12 +5,36 @@ import FlexBox from "../lib/components/app.flex.box";
 import useAuthentication from "../lib/hooks/useAuthentication";
 import ChangePasswordForm from "../lib/components/user.profile/user.change.password";
 import UserProfileUpdateForm from "../lib/components/user.profile/user.profile.update";
+import useLocalStorage from "../lib/hooks/useLocalStorage";
+import {
+  DEFAULT_LOCAL_STORAGE_KEY_FOR_APP_STATE,
+  PageRoutes,
+} from "../lib/constants";
+import useApi from "../lib/hooks/useApi";
+import { USER_APIS } from "../lib/constants/api-constants";
+import { useNavigate } from "react-router-dom";
 
 const UserProfilePage = () => {
+  const navigate = useNavigate();
   const { signOutUser } = useAuthentication();
+  const { getValue: getAppData } = useLocalStorage<AppVars>();
+  const { postData: sendLogoutRequest } = useApi<GeneralAPIResponse>();
 
-  const handleLogout = () => {
-    signOutUser();
+  const handleLogout = async () => {
+    try {
+      const appData = getAppData(DEFAULT_LOCAL_STORAGE_KEY_FOR_APP_STATE);
+      const response = await sendLogoutRequest(USER_APIS.LOGOUT_USER_API, {
+        session_token: appData.accessToken,
+      });
+      if (response.error) {
+        console.error(response.error);
+        return;
+      }
+      navigate(PageRoutes.Login);
+      signOutUser();
+    } catch (error) {
+      console.error("Error while logging out", error);
+    }
   };
   return (
     <PageLayout>
