@@ -3,6 +3,7 @@ export const EMPTY_STRING = "";
 export const DEFAULT_APP_VAR: AppVars = {
   isUserLoggedIn: false,
   accessToken: "",
+  accessJWT: "",
   selectedMenuId: 0,
   activeProjects: [],
   selectedProjectId: null,
@@ -17,7 +18,7 @@ export enum PageRoutes {
   UserProfile = "/userProfile",
 }
 
-export const DEFAULT_LOCAL_STORAGE_KEY_FOR_APP_STATE = "W4R_LS_APP_STATE";
+export const DEFAULT_LOCAL_STORAGE_KEY_FOR_APP_STATE = "MOIETY_APP_STATE";
 
 export const DEFAULT_PROJECT_ADDRESS =
   "19 Temple Fortune Parade, Finchley Rd, London NW11 0QS";

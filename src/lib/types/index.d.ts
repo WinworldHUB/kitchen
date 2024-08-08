@@ -126,6 +126,7 @@ type Address = {
 type AppVars = {
   isUserLoggedIn?: boolean;
   accessToken?: string;
+  accessJWT?: string;
   selectedMenuId?: number;
   activeProjects?: Project[];
   selectedProjectId?: string;
@@ -142,6 +143,12 @@ type SignUpRequest = {
   email: string;
   password: string;
 };
+
+type LoginRequest = {
+  email: string;
+  password: string;
+};
+
 
 type GeneralAPIResponse = {
   success: boolean;

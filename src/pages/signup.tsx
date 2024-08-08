@@ -1,16 +1,18 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import PageLayout from "../lib/components/app.layout";
 import CardSimple from "../lib/components/card.simple";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { PageRoutes } from "../lib/constants";
 import useAuthentication from "../lib/hooks/useAuthentication";
 import useApi from "../lib/hooks/useApi";
 import { USER_APIS } from "../lib/constants/api-constants";
-import stytchClient from "../stytchClient";
+import { AppContext } from "../lib/contexts/appcontext";
 const SignUpPage = () => {
+  const navigate = useNavigate();
   const { postData: sendSignUpData } = useApi<SignUpResponse>();
   const { signInUser } = useAuthentication();
+  const { updateAppState } = useContext(AppContext);
 
   // State for form data
   const [formData, setFormData] = useState<SignUpRequest>({
@@ -31,15 +33,20 @@ const SignUpPage = () => {
   // Handle form submission
   const onSignUp = async () => {
     try {
-      // Send sign-up data
+      
+      // Check password strength, currently disabled because of cors issues
+      // const stytchResponse = await stytchClient.passwords.strengthCheck({
+      //   password: formData.password,
+      // });
+      // if (stytchResponse.score < 3) {
+      //   console.error("Password is too weak");
+      //   return;
+      // }
 
-      const stytchResponse = await stytchClient.passwords.strengthCheck({password:formData.password})
-      if(stytchResponse.score < 3){
-        console.error("Password is too weak")
-        return
-      }
-
-      const response = await sendSignUpData(USER_APIS.SIGNUP_USER_API, formData);
+      const response = await sendSignUpData(
+        USER_APIS.SIGNUP_USER_API,
+        formData
+      );
 
       // Handle successful response
       if (response.success) {
@@ -47,10 +54,15 @@ const SignUpPage = () => {
 
         signInUser({
           email: formData.email,
-          password: formData.password,
           sessionToken: response.session_token,
           sessionJwt: response.session_jwt,
         });
+        updateAppState({
+          isUserLoggedIn: true,
+          accessToken: response.session_token,
+          accessJWT: response.session_jwt,
+        });
+        navigate(PageRoutes.Home);
       } else {
         // Handle error cases with various response types
         if ("error" in response) {
