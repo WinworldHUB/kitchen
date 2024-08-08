@@ -9,6 +9,14 @@ export const DEFAULT_APP_VAR: AppVars = {
   selectedProjectId: null,
 };
 
+export const DEFAULT_USER_STATE: User = {
+  fullName: "",
+  email: "",
+  phoneNo: "",
+  address: "",
+};
+
+
 export enum PageRoutes {
   Home = "/",
   Archives = "/archives",
@@ -19,7 +27,7 @@ export enum PageRoutes {
 }
 
 export const DEFAULT_LOCAL_STORAGE_KEY_FOR_APP_STATE = "MOIETY_APP_STATE";
-
+export const DEFAULT_LOCAL_STORAGE_KEY_FOR_USER_STATE = "MOIETY_USER_STATE";
 export const DEFAULT_PROJECT_ADDRESS =
   "19 Temple Fortune Parade, Finchley Rd, London NW11 0QS";
 

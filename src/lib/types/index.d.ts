@@ -176,3 +176,16 @@ type SignUpResponse = GeneralAPIResponse & {
   session_jwt: string;
   error: unknown;
 };
+
+type User = {
+  fullName: string;
+  email: string;
+  phoneNo?: string;
+  address?: string;
+}
+
+type ResetPasswordRequest = {
+  email: string;
+  oldPassword: string;
+  newPassword: string;
+};

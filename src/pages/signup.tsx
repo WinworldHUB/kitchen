@@ -3,14 +3,16 @@ import { Button, Col, Form, Row } from "react-bootstrap";
 import PageLayout from "../lib/components/app.layout";
 import CardSimple from "../lib/components/card.simple";
 import { Link, useNavigate } from "react-router-dom";
-import { PageRoutes } from "../lib/constants";
+import { DEFAULT_LOCAL_STORAGE_KEY_FOR_USER_STATE, PageRoutes } from "../lib/constants";
 import useAuthentication from "../lib/hooks/useAuthentication";
 import useApi from "../lib/hooks/useApi";
 import { USER_APIS } from "../lib/constants/api-constants";
 import { AppContext } from "../lib/contexts/appcontext";
+import useLocalStorage from "../lib/hooks/useLocalStorage";
 const SignUpPage = () => {
   const navigate = useNavigate();
   const { postData: sendSignUpData } = useApi<SignUpResponse>();
+  const {setValue: setUserState} = useLocalStorage<User>();
   const { signInUser } = useAuthentication();
   const { updateAppState } = useContext(AppContext);
 
@@ -60,6 +62,12 @@ const SignUpPage = () => {
           isUserLoggedIn: true,
           accessToken: response.session_token,
           accessJWT: response.session_jwt,
+        });
+        setUserState(DEFAULT_LOCAL_STORAGE_KEY_FOR_USER_STATE,{
+          fullName: formData.fullName,
+          email: formData.email,
+          phoneNo: "",
+          address: "",
         });
         navigate(PageRoutes.Home);
       } else {

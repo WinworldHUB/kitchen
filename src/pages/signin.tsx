@@ -2,19 +2,23 @@ import { Button, Col, Form, Row } from "react-bootstrap";
 import PageLayout from "../lib/components/app.layout";
 import CardSimple from "../lib/components/card.simple";
 import { Link, useNavigate } from "react-router-dom";
-import { PageRoutes } from "../lib/constants";
+import {
+  DEFAULT_LOCAL_STORAGE_KEY_FOR_USER_STATE,
+  PageRoutes,
+} from "../lib/constants";
 import useAuthentication from "../lib/hooks/useAuthentication";
 import { useContext, useState } from "react";
 import { USER_APIS } from "../lib/constants/api-constants";
 import { AppContext } from "../lib/contexts/appcontext";
 import useApi from "../lib/hooks/useApi";
+import useLocalStorage from "../lib/hooks/useLocalStorage";
 
 const SignInPage = () => {
   const navigate = useNavigate();
   const { postData: sendSignUpData } = useApi<SignUpResponse>();
   const { signInUser } = useAuthentication();
   const { updateAppState } = useContext(AppContext);
-
+  const { setValue: setUserState } = useLocalStorage<User>();
   // State for form data
   const [formData, setFormData] = useState<LoginRequest>({
     email: "",
@@ -55,6 +59,10 @@ const SignInPage = () => {
           isUserLoggedIn: true,
           accessToken: response.session_token,
           accessJWT: response.session_jwt,
+        });
+        setUserState(DEFAULT_LOCAL_STORAGE_KEY_FOR_USER_STATE, {
+          email: formData.email,
+          fullName: response.fullName,
         });
         navigate(PageRoutes.Home);
       } else {
