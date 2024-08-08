@@ -23,11 +23,14 @@ export const PRODUCTS_APIS = {
   IMPORT_PRODUCTS_API: "/products/imports",
 };
 
-export const MEMBERS_APIS = {
-  GET_ALL_MEMBERS_API: "/members",
-  GET_MEMBER_BY_EMAIL_API: "/members",
-  ADD_MEMBER_API: "/members",
-  IMPORT_MEMBERS_API: "/members/imports",
+export const USER_APIS = {
+    SIGNUP_USER_API: "/user/signup",
+    LOGIN_USER_API: "/user/login",
+    GET_USER_BY_EMAIL_API: "/user/email",
+    GET_USER_BY_ID_API: "/user",
+    UPDATE_USER_API: "/user",
+    CHANGE_PASSWORD_API: "/user/reset-password",
+    LOGOUT_USER_API: "/user/logout",
 };
 
 export const ORDERS_APIS = {

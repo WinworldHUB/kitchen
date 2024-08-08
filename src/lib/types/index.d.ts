@@ -136,3 +136,35 @@ interface AppState {
 
   updateAppState: (appState: AppVars) => void;
 }
+
+type SignUpRequest = {
+  fullName: string;
+  email: string;
+  password: string;
+};
+
+type GeneralAPIResponse = {
+  success: boolean;
+  message: string;
+};
+
+type LoginResponse = GeneralAPIResponse & {
+  pfiId: number;
+  fullName: string;
+  session_duration: string;
+  session_token: string;
+  session_jwt: string;
+  error: unknown;
+  userRole: string;
+  orgAddress: string;
+  orgName: string;
+};
+
+type SignUpResponse = GeneralAPIResponse & {
+  fullName: string;
+  pfiId: number;
+  session_duration: string;
+  session_token: string;
+  session_jwt: string;
+  error: unknown;
+};
