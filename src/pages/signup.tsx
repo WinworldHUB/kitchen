@@ -50,7 +50,6 @@ const SignUpPage = () => {
 
       // Handle successful response
       if (response.success) {
-        console.log("User signed up successfully:", response.message);
 
         signInUser({
           email: formData.email,
