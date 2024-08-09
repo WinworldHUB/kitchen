@@ -58,11 +58,7 @@ const UserProfilePage = () => {
               <CardSimple
                 title="Change Password"
                 className="p-4"
-                footer={
-                  <FlexBox justifyContent="end" className="pe-2">
-                    <Button variant="outline-primary">Update password</Button>
-                  </FlexBox>
-                }
+              
               >
                 <ChangePasswordForm />
               </CardSimple>
