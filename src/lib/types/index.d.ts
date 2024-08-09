@@ -157,20 +157,18 @@ type GeneralAPIResponse = {
 };
 
 type LoginResponse = GeneralAPIResponse & {
-  pfiId: number;
   fullName: string;
+  user_id: string;
   session_duration: string;
   session_token: string;
   session_jwt: string;
   error: unknown;
-  userRole: string;
-  orgAddress: string;
-  orgName: string;
 };
 
 type SignUpResponse = GeneralAPIResponse & {
   fullName: string;
   pfiId: number;
+  user_id: string;
   session_duration: string;
   session_token: string;
   session_jwt: string;
