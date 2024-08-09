@@ -47,11 +47,13 @@ const SignUpPage = () => {
 
         signInUser({
           email: formData.email,
+          user_id: response.user_id,
           sessionToken: response.session_token,
           sessionJwt: response.session_jwt,
         });
         updateAppState({
           isUserLoggedIn: true,
+          user_id: response.user_id,
           accessToken: response.session_token,
           accessJWT: response.session_jwt,
         });

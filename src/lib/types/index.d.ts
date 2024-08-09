@@ -127,6 +127,7 @@ type AppVars = {
   isUserLoggedIn?: boolean;
   accessToken?: string;
   accessJWT?: string;
+  user_id?: string;
   selectedMenuId?: number;
   activeProjects?: Project[];
   selectedProjectId?: string;

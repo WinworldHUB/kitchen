@@ -3,6 +3,7 @@ export const EMPTY_STRING = "";
 export const DEFAULT_APP_VAR: AppVars = {
   isUserLoggedIn: false,
   accessToken: "",
+  user_id: "",
   accessJWT: "",
   selectedMenuId: 0,
   activeProjects: [],
