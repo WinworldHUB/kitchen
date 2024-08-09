@@ -126,6 +126,8 @@ type Address = {
 type AppVars = {
   isUserLoggedIn?: boolean;
   accessToken?: string;
+  accessJWT?: string;
+  user_id?: string;
   selectedMenuId?: number;
   activeProjects?: Project[];
   selectedProjectId?: string;
@@ -136,3 +138,53 @@ interface AppState {
 
   updateAppState: (appState: AppVars) => void;
 }
+
+type SignUpRequest = {
+  fullName: string;
+  email: string;
+  password: string;
+};
+
+type LoginRequest = {
+  email: string;
+  password: string;
+};
+
+
+type GeneralAPIResponse = {
+  success: boolean;
+  message: string;
+  error? : unknown;
+};
+
+type LoginResponse = GeneralAPIResponse & {
+  fullName: string;
+  user_id: string;
+  session_duration: string;
+  session_token: string;
+  session_jwt: string;
+  error: unknown;
+};
+
+type SignUpResponse = GeneralAPIResponse & {
+  fullName: string;
+  pfiId: number;
+  user_id: string;
+  session_duration: string;
+  session_token: string;
+  session_jwt: string;
+  error: unknown;
+};
+
+type User = {
+  fullName: string;
+  email: string;
+  phoneNo?: string;
+  address?: string;
+}
+
+type ResetPasswordRequest = {
+  email: string;
+  oldPassword: string;
+  newPassword: string;
+};
