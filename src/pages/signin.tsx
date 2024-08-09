@@ -37,14 +37,6 @@ const SignInPage = () => {
   // Handle form submission
   const onSignIn = async () => {
     try {
-      // Check password strength, currently disabled because of cors issues
-      // const stytchResponse = await stytchClient.passwords.strengthCheck({
-      //   password: formData.password,
-      // });
-      // if (stytchResponse.score < 3) {
-      //   console.error("Password is too weak");
-      //   return;
-      // }
 
       const response = await sendSignUpData(USER_APIS.LOGIN_USER_API, formData);
 
