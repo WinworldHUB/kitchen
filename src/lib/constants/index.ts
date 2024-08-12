@@ -3,10 +3,20 @@ export const EMPTY_STRING = "";
 export const DEFAULT_APP_VAR: AppVars = {
   isUserLoggedIn: false,
   accessToken: "",
+  user_id: "",
+  accessJWT: "",
   selectedMenuId: 0,
   activeProjects: [],
   selectedProjectId: null,
 };
+
+export const DEFAULT_USER_STATE: User = {
+  fullName: "",
+  email: "",
+  phoneNo: "",
+  address: "",
+};
+
 
 export enum PageRoutes {
   Home = "/",
@@ -17,8 +27,8 @@ export enum PageRoutes {
   UserProfile = "/userProfile",
 }
 
-export const DEFAULT_LOCAL_STORAGE_KEY_FOR_APP_STATE = "W4R_LS_APP_STATE";
-
+export const DEFAULT_LOCAL_STORAGE_KEY_FOR_APP_STATE = "MOIETY_APP_STATE";
+export const DEFAULT_LOCAL_STORAGE_KEY_FOR_USER_STATE = "MOIETY_USER_STATE";
 export const DEFAULT_PROJECT_ADDRESS =
   "19 Temple Fortune Parade, Finchley Rd, London NW11 0QS";
 
@@ -95,3 +105,16 @@ export const PROJECT_STATUS_STEPS_DATA = [
     status: ProjectStatus.install,
   },
 ];
+
+
+export const STYTCH_PROJECT_ID = {
+  MINOR: "project-",
+  MODE: "test-",
+  MAJOR: "bb21c0a2-7d1a-4629-963b-771202ed4ed4",
+};
+
+export const STYTCH_SECRET_KEY = {
+  MINOR: "secret-",
+  MODE: "test-",
+  MAJOR: "e0zi6WmKfPeoetLQDGeJ8nSOjeQzu6vmflo=",
+};
