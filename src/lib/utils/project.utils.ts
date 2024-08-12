@@ -15,7 +15,7 @@ export const createProject = (
     title: title ?? "",
     address: address ?? "",
     featuredImage: DEFAULT_KITCHEN_IMAGE,
-    status: status ?? ProjectStatus.designBrief,
+    status: status ?? ProjectStatus.draft,
   };
 };
 
