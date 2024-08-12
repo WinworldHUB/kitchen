@@ -7,7 +7,7 @@ import {
   PageRoutes,
 } from "../lib/constants";
 import useAuthentication from "../lib/hooks/useAuthentication";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { USER_APIS } from "../lib/constants/api-constants";
 import { AppContext } from "../lib/contexts/appcontext";
 import useApi from "../lib/hooks/useApi";
