@@ -126,3 +126,10 @@ a {
   color: white;
   border-radius: 3;
 }
+
+.form-field-error {
+  color: $danger;
+  font-size: small;
+  font-style: italic;
+  white-space: pre-line;
+}
