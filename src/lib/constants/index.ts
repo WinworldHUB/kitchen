@@ -119,3 +119,5 @@ export const STYTCH_SECRET_KEY = {
   MODE: "test-",
   MAJOR: "e0zi6WmKfPeoetLQDGeJ8nSOjeQzu6vmflo=",
 };
+
+export const ENCODER_SECRET_KEY = "2ff493499f93c38bbd00f4a64941dc4e"
