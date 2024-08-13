@@ -10,7 +10,7 @@ import { USER_APIS } from "../lib/constants/api-constants";
 import { Formik } from "formik";
 import FormFieldError from "../lib/components/form.field.error";
 import { SIGN_IN_VALIDATION_SCHEME } from "../lib/constants/validation-constants";
-import { EncodeBase64Aes } from "../lib/utils/Encrypt";
+import { EncodeBase64Aes } from "../lib/utils/encrypt";
 
 const DEFAULT_SIGN_UP_VALUES: SignUpRequest = {
   fullName: "",
@@ -32,17 +32,18 @@ const SignUpPage = () => {
             <Formik
               initialValues={DEFAULT_SIGN_UP_VALUES}
               validationSchema={SIGN_IN_VALIDATION_SCHEME}
-              onSubmit={async (values, { setSubmitting }) => {
+              onSubmit={async (values: SignUpRequest, { setSubmitting }) => {
                 try {
                   // Encrypt form values
-                  const encryptedValues = EncodeBase64Aes(
-                    JSON.stringify(values, null, 2)
-                  );
-
+                  const encryptedPassword = EncodeBase64Aes(values.password);
                   // Send the encrypted data to the API
                   const response = await sendSignupData(
                     USER_APIS.LOGIN_USER_API,
-                    encryptedValues
+                    {
+                      fullName: values.fullName,
+                      email: values.email,
+                      password: encryptedPassword,
+                    }
                   );
 
                   // Handle successful response
