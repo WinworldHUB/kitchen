@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../contexts/appcontext";
-import { DEFAULT_APP_VAR, DEFAULT_LOCAL_STORAGE_KEY_FOR_USER_STATE } from "../constants";
+import { DEFAULT_APP_VAR, DEFAULT_LOCAL_STORAGE_KEY_FOR_USER_STATE, DEFAULT_USER_STATE } from "../constants";
 import useLocalStorage from "./useLocalStorage";
 
 interface UseAuthenticationState {
@@ -13,7 +13,7 @@ interface UseAuthenticationState {
 }
 
 const useAuthentication = (): UseAuthenticationState => {
-  const { setValue: setUserState } = useLocalStorage<User>();
+  const { setValue: setUserState,  clearAll } = useLocalStorage<User>();
   const [accessToken, setAccessToken] = useState<string>(null);
   const [refreshToken, setRefreshToken] = useState<string>(null);
   const [error, setError] = useState<string>(null);
@@ -32,10 +32,11 @@ const useAuthentication = (): UseAuthenticationState => {
     updateAppState({ ...appState, isUserLoggedIn: true });
   };
   const signOutUser = () => { 
+    setUserState(DEFAULT_LOCAL_STORAGE_KEY_FOR_USER_STATE, DEFAULT_USER_STATE);
     updateAppState(DEFAULT_APP_VAR);
   };
 
-  return {
+  return {  
     accessToken,
     refreshToken,
     isUserSignedIn,
