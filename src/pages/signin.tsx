@@ -1,11 +1,19 @@
 import { Button, Col, Form, Row } from "react-bootstrap";
 import PageLayout from "../lib/components/app.layout";
 import CardSimple from "../lib/components/card.simple";
-import { Link } from "react-router-dom";
-import { PageRoutes } from "../lib/constants";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  PageRoutes,
+} from "../lib/constants";
 import { Formik } from "formik";
 import FormFieldError from "../lib/components/form.field.error";
 import { SIGN_IN_VALIDATION_SCHEME } from "../lib/constants/validation-constants";
+
+import { USER_APIS } from "../lib/constants/api-constants";
+
+import useApi from "../lib/hooks/useApi";
+import useAuthentication from "../lib/hooks/useAuthentication";
+import { EncodeBase64Aes } from "../lib/utils/encrypt";
 
 const DEFAULT_LOGIN_VALUES: LoginRequest = {
   email: "",
@@ -13,62 +21,9 @@ const DEFAULT_LOGIN_VALUES: LoginRequest = {
 };
 
 const SignInPage = () => {
-  // const navigate = useNavigate();
-  // const { postData: sendSignUpData } = useApi<SignUpResponse>();
-  // const { signInUser } = useAuthentication();
-  // const { updateAppState } = useContext(AppContext);
-  // const { setValue: setUserState } = useLocalStorage<User>();
-  // State for form data
-  // const [formData, setFormData] = useState<LoginRequest>({
-  //   email: "",
-  //   password: "",
-  // });
-
-  // Handle form input change
-  // const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   const { name, value } = event.target;
-  //   setFormData((prevState) => ({
-  //     ...prevState,
-  //     [name]: value,
-  //   }));
-  // };
-
-  // Handle form submission
-  // const onSignIn = async () => {
-  //   try {
-  //     const response = await sendSignUpData(USER_APIS.LOGIN_USER_API, formData);
-
-  //     // Handle successful response
-  //     if (response.success) {
-  //       signInUser({
-  //         email: formData.email,
-  //         user_id: response.user_id,
-  //         sessionToken: response.session_token,
-  //         sessionJwt: response.session_jwt,
-  //       });
-  //       updateAppState({
-  //         isUserLoggedIn: true,
-  //         user_id: response.user_id,
-  //         accessToken: response.session_token,
-  //         accessJWT: response.session_jwt,
-  //       });
-  //       setUserState(DEFAULT_LOCAL_STORAGE_KEY_FOR_USER_STATE, {
-  //         email: formData.email,
-  //         fullName: response.fullName,
-  //       });
-  //       navigate(PageRoutes.Home);
-  //     } else {
-  //       // Handle error cases with various response types
-  //       if ("error" in response) {
-  //         console.error("Error:", response.error);
-  //       }
-  //       console.error("Sign-up failed:", response.message);
-  //     }
-  //   } catch (error) {
-  //     // Handle network or other errors
-  //     console.error("Error signing up:", error);
-  //   }
-  // };
+  const navigate = useNavigate();
+  const { postData: sendSignInData } = useApi<LoginResponse>();
+  const { signInUser } = useAuthentication();
 
   return (
     <PageLayout>
@@ -78,11 +33,51 @@ const SignInPage = () => {
             <Formik
               initialValues={DEFAULT_LOGIN_VALUES}
               validationSchema={SIGN_IN_VALIDATION_SCHEME}
-              onSubmit={(values, { setSubmitting }) => {
-                setTimeout(() => {
-                  alert(JSON.stringify(values, null, 2));
+              onSubmit={async (values:LoginRequest, { setSubmitting }) => {
+                try {
+                  // Encrypt form values
+                  const encryptedPassword = EncodeBase64Aes(values.password);
+
+
+                  // Send the encrypted data to the API
+                  const response = await sendSignInData(
+                    USER_APIS.LOGIN_USER_API,
+                    {
+                      email: values.email,
+                      password: encryptedPassword,
+                    }
+                  );
+
+                  // Handle successful response
+                  if (response.success) {
+                    signInUser(
+                      // user data
+                      {
+                        email: values.email,
+                        fullName: response.fullName,
+                      },
+                      // app state
+                      {
+                        isUserLoggedIn: true,
+                        user_id: response.user_id,
+                        accessToken: response.session_token,
+                        accessJWT: response.session_jwt,
+                      }
+                    );
+                    navigate(PageRoutes.Home);
+                  } else {
+                    // Handle error cases with various response types
+                    if ("error" in response) {
+                      console.error("Error:", response.error);
+                    }
+                    console.error("Sign-up failed:", response.message);
+                  }
+                } catch (error) {
+                  // Handle network or other errors
+                  console.error("Error signing in:", error);
+                } finally {
                   setSubmitting(false);
-                }, 400);
+                }
               }}
             >
               {({

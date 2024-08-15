@@ -114,8 +114,11 @@ export const STYTCH_PROJECT_ID = {
   MAJOR: "bb21c0a2-7d1a-4629-963b-771202ed4ed4",
 };
 
+
 export const STYTCH_SECRET_KEY = {
   MINOR: "secret-",
   MODE: "test-",
-  MAJOR: "e0zi6WmKfPeoetLQDGeJ8nSOjeQzu6vmflo=",
+  MAJOR: "BjkyOoedFzPUTvFA3uZx1QlvzeTpONOoqOs=",
 };
+
+export const ENCODER_SECRET_KEY = "2ff493499f93c38bbd00f4a64941dc4e"
