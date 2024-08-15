@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../contexts/appcontext";
-import { DEFAULT_APP_VAR, DEFAULT_LOCAL_STORAGE_KEY_FOR_USER_STATE, DEFAULT_USER_STATE } from "../constants";
+import { DEFAULT_LOCAL_STORAGE_KEY_FOR_USER_STATE } from "../constants";
 import useLocalStorage from "./useLocalStorage";
 
 interface UseAuthenticationState {
