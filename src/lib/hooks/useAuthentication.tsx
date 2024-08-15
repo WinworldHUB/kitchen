@@ -32,8 +32,7 @@ const useAuthentication = (): UseAuthenticationState => {
     updateAppState({ ...appState, isUserLoggedIn: true });
   };
   const signOutUser = () => { 
-    setUserState(DEFAULT_LOCAL_STORAGE_KEY_FOR_USER_STATE, DEFAULT_USER_STATE);
-    updateAppState(DEFAULT_APP_VAR);
+    clearAll();
   };
 
   return {  

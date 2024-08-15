@@ -1,17 +1,22 @@
+import { EncodeBase64Aes, DecodeBase64Aes } from "../utils/encrypt";
+
 interface UseLocalStorageState<T> {
   setValue: (key: string, value: T) => void;
-  getValue: (key: string) => T;
+  getValue: (key: string) => T | null;
   clearAll: VoidFunction;
 }
 
 const useLocalStorage = <T,>(): UseLocalStorageState<T> => {
   const setValue = (key: string, value: T) => {
-    localStorage.setItem(key, JSON.stringify(value));
+    const encodedValue = EncodeBase64Aes(JSON.stringify(value));
+    localStorage.setItem(key, encodedValue);
   };
 
-  const getValue = (key: string): T => {
+  const getValue = (key: string): T | null => {
     const value = localStorage.getItem(key);
-    return value ? (JSON.parse(value) as T) : null;
+    if (!value) return null;
+    const decodedValue = DecodeBase64Aes(value);
+    return JSON.parse(decodedValue);
   };
 
   const clearAll = () => {

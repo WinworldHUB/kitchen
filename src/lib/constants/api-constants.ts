@@ -1,11 +1,11 @@
-export const DEFAULT_GET_API_HEADER = (accessToken: string) => {
+export const DEFAULT_GET_API_HEADER = (session_jwt: string) => {
   return {
-    Authorization: `Bearer ${accessToken}`,
+    Authorization: `Bearer ${session_jwt}`,
   };
 };
-export const DEFAULT_POST_API_HEADER = (accessToken: string) => {
+export const DEFAULT_POST_API_HEADER = (session_jwt: string) => {
   return {
-    Authorization: `Bearer ${accessToken}`,
+    Authorization: `Bearer ${session_jwt}`,
     "Content-Type": "application/json",
   };
 };

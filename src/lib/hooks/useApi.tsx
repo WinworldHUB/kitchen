@@ -51,7 +51,7 @@ const useApi = <T,>(baseUrl?: string): APIState<T> => {
     try {
       const response = await fetch(`${baseUrl ?? API_BASE_URL}${url}`, {
         method: "GET",
-        headers: DEFAULT_GET_API_HEADER(appState.accessToken),
+        headers: DEFAULT_GET_API_HEADER(appState.accessJWT),
       });
       const data = await response.json();
       setData(data);
@@ -74,7 +74,7 @@ const useApi = <T,>(baseUrl?: string): APIState<T> => {
       const response = await fetch(`${baseUrl ?? API_BASE_URL}${url}`, {
         method: "POST",
         body: JSON.stringify(body),
-        headers: DEFAULT_POST_API_HEADER(appState.accessToken),
+        headers: DEFAULT_POST_API_HEADER(appState.accessJWT),
       });
       const data = await response.json();
       setData(data);
@@ -97,7 +97,7 @@ const useApi = <T,>(baseUrl?: string): APIState<T> => {
       const response = await fetch(`${baseUrl ?? API_BASE_URL}${url}`, {
         method: "PUT",
         body: JSON.stringify(body),
-        headers: DEFAULT_POST_API_HEADER(appState.accessToken),
+        headers: DEFAULT_POST_API_HEADER(appState.accessJWT),
       });
       const data = await response.json();
       setData(data);
@@ -120,7 +120,7 @@ const useApi = <T,>(baseUrl?: string): APIState<T> => {
     try {
       const response = await fetch(`${baseUrl ?? API_BASE_URL}${url}`, {
         method: "DELETE",
-        headers: DEFAULT_POST_API_HEADER(appState.accessToken),
+        headers: DEFAULT_POST_API_HEADER(appState.accessJWT),
       });
       const data = await response.json();
       setData(data);
