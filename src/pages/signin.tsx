@@ -2,9 +2,7 @@ import { Button, Col, Form, Row } from "react-bootstrap";
 import PageLayout from "../lib/components/app.layout";
 import CardSimple from "../lib/components/card.simple";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  PageRoutes,
-} from "../lib/constants";
+import { PageRoutes } from "../lib/constants";
 import { Formik } from "formik";
 import FormFieldError from "../lib/components/form.field.error";
 import { SIGN_IN_VALIDATION_SCHEME } from "../lib/constants/validation-constants";
@@ -13,7 +11,7 @@ import { USER_APIS } from "../lib/constants/api-constants";
 
 import useApi from "../lib/hooks/useApi";
 import useAuthentication from "../lib/hooks/useAuthentication";
-import { EncodeBase64Aes } from "../lib/utils/encrypt";
+import { EncodeBase64Aes } from "../lib/utils/encrypt.utils";
 
 const DEFAULT_LOGIN_VALUES: LoginRequest = {
   email: "",
@@ -33,11 +31,10 @@ const SignInPage = () => {
             <Formik
               initialValues={DEFAULT_LOGIN_VALUES}
               validationSchema={SIGN_IN_VALIDATION_SCHEME}
-              onSubmit={async (values:LoginRequest, { setSubmitting }) => {
+              onSubmit={async (values: LoginRequest, { setSubmitting }) => {
                 try {
                   // Encrypt form values
                   const encryptedPassword = EncodeBase64Aes(values.password);
-
 
                   // Send the encrypted data to the API
                   const response = await sendSignInData(

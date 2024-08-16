@@ -1,4 +1,4 @@
-import { EncodeBase64Aes, DecodeBase64Aes } from "../utils/encrypt";
+import { EncodeBase64Aes, DecodeBase64Aes } from "../utils/encrypt.utils";
 
 interface UseLocalStorageState<T> {
   setValue: (key: string, value: T) => void;

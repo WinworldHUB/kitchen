@@ -10,7 +10,7 @@ import { USER_APIS } from "../lib/constants/api-constants";
 import { Formik } from "formik";
 import FormFieldError from "../lib/components/form.field.error";
 import { SIGN_IN_VALIDATION_SCHEME } from "../lib/constants/validation-constants";
-import { EncodeBase64Aes } from "../lib/utils/encrypt";
+import { EncodeBase64Aes } from "../lib/utils/encrypt.utils";
 
 const DEFAULT_SIGN_UP_VALUES: SignUpRequest = {
   fullName: "",
