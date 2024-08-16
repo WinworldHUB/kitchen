@@ -11,6 +11,7 @@ import { Formik } from "formik";
 import FormFieldError from "../lib/components/form.field.error";
 import { SIGN_IN_VALIDATION_SCHEME } from "../lib/constants/validation-constants";
 import { EncodeBase64Aes } from "../lib/utils/encrypt.utils";
+import { useState } from "react";
 
 const DEFAULT_SIGN_UP_VALUES: SignUpRequest = {
   fullName: "",
@@ -20,7 +21,7 @@ const DEFAULT_SIGN_UP_VALUES: SignUpRequest = {
 
 const SignUpPage = () => {
   const navigate = useNavigate();
-
+  const [error, setError] = useState<string | null>(null);
   const { signInUser } = useAuthentication();
   const { postData: sendSignupData } = useApi<SignUpResponse>();
 
@@ -28,7 +29,7 @@ const SignUpPage = () => {
     <PageLayout>
       <Row className="justify-content-center">
         <Col md="8" lg="6" xl="4">
-          <CardSimple title="Sign Up">
+          <CardSimple title="Sign Up" error={error ?? ""}>
             <Formik
               initialValues={DEFAULT_SIGN_UP_VALUES}
               validationSchema={SIGN_IN_VALIDATION_SCHEME}
@@ -38,7 +39,7 @@ const SignUpPage = () => {
                   const encryptedPassword = EncodeBase64Aes(values.password);
                   // Send the encrypted data to the API
                   const response = await sendSignupData(
-                    USER_APIS.LOGIN_USER_API,
+                    USER_APIS.SIGNUP_USER_API,
                     {
                       fullName: values.fullName,
                       email: values.email,
@@ -66,12 +67,15 @@ const SignUpPage = () => {
                   } else {
                     // Handle error cases with various response types
                     if ("error" in response) {
+                      setError(response.error as string);
                       console.error("Error:", response.error);
                     }
                     console.error("Sign-up failed:", response.message);
+                    setError(response.message);
                   }
                 } catch (error) {
                   // Handle network or other errors
+                  setError("Error signing up. Please try again later.");
                   console.error("Error signing in:", error);
                 } finally {
                   setSubmitting(false);
@@ -88,6 +92,21 @@ const SignUpPage = () => {
                 isSubmitting,
               }) => (
                 <Form onSubmit={handleSubmit}>
+                  <Form.Group className="mb-3" controlId="signInForm.fullName">
+                    <Form.Label>Full Name</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="fullName"
+                      placeholder="John Doe"
+                      value={values.fullName}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      required
+                    />
+                    <FormFieldError
+                      error={errors.email && touched.email && errors.email}
+                    />
+                  </Form.Group>
                   <Form.Group className="mb-3" controlId="signInForm.email">
                     <Form.Label>Email address</Form.Label>
                     <Form.Control
@@ -121,8 +140,8 @@ const SignUpPage = () => {
                   </Form.Group>
                   <Row>
                     <Col xs="8">
-                      Not registered yet?{" "}
-                      <Link to={PageRoutes.SignUp}>Register now</Link>
+                      Already registered?{" "}
+                      <Link to={PageRoutes.Login}>Sign In</Link>
                     </Col>
                     <Col xs="4" className="text-end">
                       <Button
@@ -130,7 +149,7 @@ const SignUpPage = () => {
                         type="submit"
                         disabled={isSubmitting}
                       >
-                        Sign in
+                        Sign Up
                       </Button>
                     </Col>
                   </Row>

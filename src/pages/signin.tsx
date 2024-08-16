@@ -12,6 +12,7 @@ import { USER_APIS } from "../lib/constants/api-constants";
 import useApi from "../lib/hooks/useApi";
 import useAuthentication from "../lib/hooks/useAuthentication";
 import { EncodeBase64Aes } from "../lib/utils/encrypt.utils";
+import { useState } from "react";
 
 const DEFAULT_LOGIN_VALUES: LoginRequest = {
   email: "",
@@ -21,13 +22,14 @@ const DEFAULT_LOGIN_VALUES: LoginRequest = {
 const SignInPage = () => {
   const navigate = useNavigate();
   const { postData: sendSignInData } = useApi<LoginResponse>();
+  const [error, setError] = useState<string | null>(null);
   const { signInUser } = useAuthentication();
 
   return (
     <PageLayout>
       <Row className="justify-content-center">
         <Col md="8" lg="6" xl="4">
-          <CardSimple title="Sign In" error="Some error">
+          <CardSimple title="Sign In" error={error ?? ""}>
             <Formik
               initialValues={DEFAULT_LOGIN_VALUES}
               validationSchema={SIGN_IN_VALIDATION_SCHEME}
@@ -66,12 +68,15 @@ const SignInPage = () => {
                     // Handle error cases with various response types
                     if ("error" in response) {
                       console.error("Error:", response.error);
+                      setError(response.error as string);
                     }
                     console.error("Sign-up failed:", response.message);
+                    setError(response.message);
                   }
                 } catch (error) {
                   // Handle network or other errors
                   console.error("Error signing in:", error);
+                  setError("Error signing in. Please try again.");
                 } finally {
                   setSubmitting(false);
                 }
