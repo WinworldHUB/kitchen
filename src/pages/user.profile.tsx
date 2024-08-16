@@ -23,8 +23,9 @@ const UserProfilePage = () => {
   const handleLogout = async () => {
     try {
       const appData = getAppData(DEFAULT_LOCAL_STORAGE_KEY_FOR_APP_STATE);
+
       const response = await sendLogoutRequest(USER_APIS.LOGOUT_USER_API, {
-        session_token: appData.accessToken,
+        session_token: appData?.accessToken,
       });
       if (response.error) {
         console.error(response.error);

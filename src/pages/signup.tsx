@@ -10,7 +10,6 @@ import { USER_APIS } from "../lib/constants/api-constants";
 import { Formik } from "formik";
 import FormFieldError from "../lib/components/form.field.error";
 import { SIGN_IN_VALIDATION_SCHEME } from "../lib/constants/validation-constants";
-import { EncodeBase64Aes } from "../lib/utils/encrypt.utils";
 import { useState } from "react";
 
 const DEFAULT_SIGN_UP_VALUES: SignUpRequest = {
@@ -35,15 +34,13 @@ const SignUpPage = () => {
               validationSchema={SIGN_IN_VALIDATION_SCHEME}
               onSubmit={async (values: SignUpRequest, { setSubmitting }) => {
                 try {
-                  // Encrypt form values
-                  const encryptedPassword = EncodeBase64Aes(values.password);
                   // Send the encrypted data to the API
                   const response = await sendSignupData(
                     USER_APIS.SIGNUP_USER_API,
                     {
                       fullName: values.fullName,
                       email: values.email,
-                      password: encryptedPassword,
+                      password: values.password,
                     }
                   );
 

@@ -11,7 +11,6 @@ import { USER_APIS } from "../lib/constants/api-constants";
 
 import useApi from "../lib/hooks/useApi";
 import useAuthentication from "../lib/hooks/useAuthentication";
-import { EncodeBase64Aes } from "../lib/utils/encrypt.utils";
 import { useState } from "react";
 
 const DEFAULT_LOGIN_VALUES: LoginRequest = {
@@ -35,20 +34,19 @@ const SignInPage = () => {
               validationSchema={SIGN_IN_VALIDATION_SCHEME}
               onSubmit={async (values: LoginRequest, { setSubmitting }) => {
                 try {
-                  // Encrypt form values
-                  const encryptedPassword = EncodeBase64Aes(values.password);
+          
 
                   // Send the encrypted data to the API
                   const response = await sendSignInData(
                     USER_APIS.LOGIN_USER_API,
                     {
                       email: values.email,
-                      password: encryptedPassword,
+                      password: values.password,
                     }
                   );
 
                   // Handle successful response
-                  if (response.success) {
+                  if (response?.success) {
                     signInUser(
                       // user data
                       {
