@@ -5,6 +5,7 @@ import {
   DEFAULT_POST_API_HEADER,
 } from "../constants/api-constants";
 import { AppContext } from "../contexts/appcontext";
+import { getEncodedJson } from "../utils/encrypt.utils";
 
 interface APIState<T> {
   data: T;
@@ -73,7 +74,7 @@ const useApi = <T,>(baseUrl?: string): APIState<T> => {
     try {
       const response = await fetch(`${baseUrl ?? API_BASE_URL}${url}`, {
         method: "POST",
-        body: JSON.stringify(body),
+        body: getEncodedJson(body),
         headers: DEFAULT_POST_API_HEADER(appState.accessJWT),
       });
       const data = await response.json();
@@ -96,7 +97,7 @@ const useApi = <T,>(baseUrl?: string): APIState<T> => {
     try {
       const response = await fetch(`${baseUrl ?? API_BASE_URL}${url}`, {
         method: "PUT",
-        body: JSON.stringify(body),
+        body: getEncodedJson(body),
         headers: DEFAULT_POST_API_HEADER(appState.accessJWT),
       });
       const data = await response.json();

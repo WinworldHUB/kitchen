@@ -4,6 +4,7 @@ interface UseLocalStorageState<T> {
   setValue: (key: string, value: T) => void;
   getValue: (key: string) => T | null;
   clearAll: VoidFunction;
+  removeValue: (key: string) => void;
 }
 
 const useLocalStorage = <T,>(): UseLocalStorageState<T> => {
@@ -16,6 +17,8 @@ const useLocalStorage = <T,>(): UseLocalStorageState<T> => {
     const value = localStorage.getItem(key);
     if (!value) return null;
     const decodedValue = DecodeBase64Aes(value);
+    if (value === decodedValue) localStorage.removeItem(key);
+
     return JSON.parse(decodedValue);
   };
 
@@ -23,10 +26,15 @@ const useLocalStorage = <T,>(): UseLocalStorageState<T> => {
     localStorage.clear();
   };
 
+  const removeValue = (key: string) => {
+    localStorage.removeItem(key);
+  }
+
   return {
     getValue,
     setValue,
     clearAll,
+    removeValue,
   };
 };
 
