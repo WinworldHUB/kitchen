@@ -7,6 +7,8 @@ import ProjectTypes from "./create.project.type";
 import ProjectPropertyDetails from "./create.project.property";
 import ProjectLayoutDetails from "./create.project.layout";
 import ProjectAttachments from "./create.project.attachments";
+import useApi from "../../hooks/useApi";
+import { PROJECT_APIS } from "../../constants/api-constants";
 
 const PAGE_TITLES = [
   "Contact Details",
@@ -25,6 +27,7 @@ const CreateProjectContainer: FC<CreateProjectContainerProps> = ({
   project,
   onCreate,
 }) => {
+  const { postData: sendCreateProject } = useApi<CreateProjectResponse>();
   const TOTAL_PAGES = PAGE_TITLES.length - 1;
   const [pageIndex, setPageIndex] = useState<number>(0);
 
@@ -37,7 +40,29 @@ const CreateProjectContainer: FC<CreateProjectContainerProps> = ({
     if (pageIndex < TOTAL_PAGES) {
       setPageIndex(pageIndex + 1);
     } else {
-      onCreate(project.id);
+      createProject();
+    }
+  };
+
+  const handlePropertyTypeChange = (propertyType: string) => {
+    project.propertyType = propertyType
+  };
+  
+
+  const createProject = async () => {
+    try {
+      console.log("Creating project", project.propertyType);
+      
+      const response = await sendCreateProject(
+        PROJECT_APIS.CREATE_PROJECT_API,
+        {...project, propertyType: project.propertyType}
+      );
+      if (!response.success) {
+        console.error(response.message);
+      }
+      onCreate(response.projectId);
+    } catch (e) {
+      console.error(e);
     }
   };
 
@@ -97,7 +122,7 @@ const CreateProjectContainer: FC<CreateProjectContainerProps> = ({
               <ProjectTypes project={project} />
             </Carousel.Item>
             <Carousel.Item>
-              <ProjectPropertyDetails project={project} />
+              <ProjectPropertyDetails project={project} onPropertyTypeChange={handlePropertyTypeChange} />
             </Carousel.Item>
             <Carousel.Item>
               <ProjectLayoutDetails project={project} />
