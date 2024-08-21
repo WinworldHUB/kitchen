@@ -5,11 +5,16 @@ import RadioGroup from "../app.radio.group";
 
 interface ProjectPropertyDetailsProps {
   project: Project;
+  onPropertyTypeChange: (propertyType: string) => void;
 }
 
 const ProjectPropertyDetails: FC<ProjectPropertyDetailsProps> = ({
   project,
+  onPropertyTypeChange,
 }) => {
+  const handlePropertyTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    onPropertyTypeChange(e.target.value);
+  };
   return (
     <Form>
       <Form.Group className="mb-3" controlId="createProjectForm.Title">
@@ -55,7 +60,7 @@ const ProjectPropertyDetails: FC<ProjectPropertyDetailsProps> = ({
         <Form.Label htmlFor="kindOfProperty">
           What kind of property is it?
         </Form.Label>
-        <Form.Select id="kindOfProperty">
+        <Form.Select id="kindOfProperty" onChange={handlePropertyTypeChange}>
           <option disabled>Select the appropriate option</option>
           <option value="1">Cottage</option>
           <option value="2">Apartment</option>

@@ -17,32 +17,21 @@ export const TEST_APIS = {
   POST_API: "https://reqres.in/api/users",
 };
 
-export const PRODUCTS_APIS = {
-  GET_ALL_PRODUCTS_API: "/products",
-  ADD_PRODUCT_API: "/products",
-  IMPORT_PRODUCTS_API: "/products/imports",
-};
-
 export const USER_APIS = {
     SIGNUP_USER_API: "/user/signup",
     LOGIN_USER_API: "/user/login",
-    GET_USER_BY_EMAIL_API: "/user/email",
     GET_USER_BY_ID_API: "/user",
-    UPDATE_USER_API: "/user",
     CHANGE_PASSWORD_API: "/user/reset-password",
     LOGOUT_USER_API: "/user/logout",
 };
 
-export const ORDERS_APIS = {
-  GET_ALL_ORDERS_API: "/orders",
-  ADD_ORDER_API: "/orders",
-  UPDATE_ORDER_API: "/orders",
+export const PROJECT_APIS = {
+  CREATE_PROJECT_API: "/project/create",
+  GET_PROJECT_API: "/project",
+  UPDATE_PROJECT_API: "/project",
+  DELETE_PROJECT_API: "/project",
 };
 
-export const INVOICES_APIS = {
-  GET_ALL_INVOICES_API: "/invoices",
-  UPDATE_INVOICE_API: "/invoices",
-};
 
 export const COGNITO_ERROR_CODE = [
   "CONFIRM_SIGN_IN_WITH_NEW_PASSWORD_REQUIRED",
