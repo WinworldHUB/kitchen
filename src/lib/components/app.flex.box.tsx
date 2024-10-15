@@ -7,7 +7,6 @@ interface FlexBoxProps extends ComponentProps {
 
 const FlexBox: FC<FlexBoxProps> = ({
   children,
-  direction = "row",
   className,
   justifyContent = "between",
 }) => (

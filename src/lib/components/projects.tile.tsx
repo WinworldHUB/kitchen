@@ -11,7 +11,7 @@ interface ProjectTileProps {
 
 const ProjectTile: FC<ProjectTileProps> = ({ project, onClick }) => {
   return (
-    <Card style={{height:350, width:300}}>
+    <Card style={{height:350, width:320}}>
       {/* <Card.Img variant="top" src={project.featuredImage} /> */}
       <Card.Body>
         <div className="py-3">
