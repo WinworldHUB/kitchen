@@ -1,25 +1,16 @@
-import { Button } from "react-bootstrap";
-import PageLayout from "../lib/components/app.layout";
-import CardSimple from "../lib/components/card.simple";
-import ProjectsGrid from "../lib/components/projects.grid";
-import { useContext, useMemo, useState } from "react";
-import NewProjectModal from "../lib/components/new.project.modal";
-import {
-  NO_ACTIVE_PROJECTS_MESSAGE,
-  PageRoutes,
-  PROJECT_FILTERS,
-} from "../lib/constants";
-import { AppContext } from "../lib/contexts/appcontext";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ProjectFilters from "../lib/components/projects.filters";
+import PageLayout from "../lib/components/app.layout";
+import ProjectsGrid from "../lib/components/projects.grid";
+import NewProjectModal from "../lib/components/new.project.modal";
+import { AppContext } from "../lib/contexts/appcontext";
+import { NO_ACTIVE_PROJECTS_MESSAGE, PageRoutes } from "../lib/constants";
 import FlexBox from "../lib/components/app.flex.box";
 
 const HomePage = () => {
   const navigate = useNavigate();
-  const [isShowCreateProject, setIsShowCreateProject] =
-    useState<boolean>(false);
+  const [isShowCreateProject, setIsShowCreateProject] = useState(false);
   const { appState, updateAppState } = useContext(AppContext);
-  const [selectedFilterIndex, setSelectedFilterIndex] = useState<number>(0);
 
   const handleCreateProject = () => {
     setIsShowCreateProject(true);
@@ -30,47 +21,35 @@ const HomePage = () => {
     navigate(PageRoutes.ProjectDetails);
   };
 
-  const filteredProjects = useMemo(
-    () =>
-      selectedFilterIndex === 0
-        ? appState.activeProjects ?? []
-        : (appState.activeProjects ?? []).filter(
-            (project) =>
-              project.status === PROJECT_FILTERS[selectedFilterIndex - 1].value
-          ),
-    [appState.activeProjects, selectedFilterIndex]
-  );
-
   return (
     <PageLayout>
-      <CardSimple
-        title="Active Projects"
-        headerAction={
-          <FlexBox>
-            <ProjectFilters onChange={setSelectedFilterIndex} />
-            <Button className="w-content ms-sm-3" onClick={handleCreateProject}>
-              Create Project
-            </Button>
-          </FlexBox>
-        }
-      >
+      <FlexBox justifyContent="start">
         <ProjectsGrid
-          projects={filteredProjects ?? []}
+          projects={appState.activeProjects ?? []} // Directly use activeProjects
           onProjectClick={handleProjectClick}
           emptyMessage={NO_ACTIVE_PROJECTS_MESSAGE}
-        ></ProjectsGrid>
-      </CardSimple>
-      <NewProjectModal
-        isShow={isShowCreateProject}
-        onCloseClick={() => setIsShowCreateProject(false)}
-        onCreateClick={(project) => {
-          setIsShowCreateProject(false);
-          updateAppState({
-            ...appState,
-            activeProjects: [...(appState.activeProjects ?? []), project],
-          });
-        }}
-      />
+          onProjectCreate={handleCreateProject}
+        />
+
+        <NewProjectModal
+          isShow={isShowCreateProject}
+          onCloseClick={() => setIsShowCreateProject(false)}
+          onCreateClick={(newProject) => {
+            const existingProjects = appState.activeProjects ?? [];
+            const projectExists = existingProjects.some(project => project.id === newProject.id);
+
+            if (!projectExists) {
+              updateAppState({
+                ...appState,
+                activeProjects: [...existingProjects, newProject],
+              });
+              setIsShowCreateProject(false);
+            } else {
+              alert("Project already exists!");
+            }
+          }}
+        />
+      </FlexBox>
     </PageLayout>
   );
 };
