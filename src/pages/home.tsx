@@ -23,13 +23,13 @@ const HomePage = () => {
 
   return (
     <PageLayout>
-      <FlexBox justifyContent="center">
-          <ProjectsGrid
-            projects={appState.activeProjects ?? []} // Directly use activeProjects
-            onProjectClick={handleProjectClick}
-            emptyMessage={NO_ACTIVE_PROJECTS_MESSAGE}
-            onProjectCreate={handleCreateProject}
-          />
+      <FlexBox justifyContent="center" className="mx-auto">
+        <ProjectsGrid
+          projects={appState.activeProjects ?? []}
+          onProjectClick={handleProjectClick}
+          emptyMessage={NO_ACTIVE_PROJECTS_MESSAGE}
+          onProjectCreate={handleCreateProject}
+        />
       </FlexBox>
       <NewProjectModal
         isShow={isShowCreateProject}

@@ -21,7 +21,7 @@ const PageLayout: FC<LayoutProps> = ({
           updateAppState({ ...appState, selectedMenuId: itemId })
         }
       />
-      <Container fluid className="py-3 px-3">
+      <Container fluid className="py-3 px-3 d-flex justify-content-center align-items-center">
         {children}
       </Container>
     </>
