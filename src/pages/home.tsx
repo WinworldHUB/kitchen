@@ -24,35 +24,33 @@ const HomePage = () => {
   return (
     <PageLayout>
       <FlexBox justifyContent="center">
-        
-        <ProjectsGrid
-          projects={appState.activeProjects ?? []} // Directly use activeProjects
-          onProjectClick={handleProjectClick}
-          emptyMessage={NO_ACTIVE_PROJECTS_MESSAGE}
-          onProjectCreate={handleCreateProject}
-        />
-
-        <NewProjectModal
-          isShow={isShowCreateProject}
-          onCloseClick={() => setIsShowCreateProject(false)}
-          onCreateClick={(newProject) => {
-            const existingProjects = appState.activeProjects ?? [];
-            const projectExists = existingProjects.some(
-              (project) => project.id === newProject.id
-            );
-
-            if (!projectExists) {
-              updateAppState({
-                ...appState,
-                activeProjects: [...existingProjects, newProject],
-              });
-              setIsShowCreateProject(false);
-            } else {
-              alert("Project already exists!");
-            }
-          }}
-        />
+          <ProjectsGrid
+            projects={appState.activeProjects ?? []} // Directly use activeProjects
+            onProjectClick={handleProjectClick}
+            emptyMessage={NO_ACTIVE_PROJECTS_MESSAGE}
+            onProjectCreate={handleCreateProject}
+          />
       </FlexBox>
+      <NewProjectModal
+        isShow={isShowCreateProject}
+        onCloseClick={() => setIsShowCreateProject(false)}
+        onCreateClick={(newProject) => {
+          const existingProjects = appState.activeProjects ?? [];
+          const projectExists = existingProjects.some(
+            (project) => project.id === newProject.id
+          );
+
+          if (!projectExists) {
+            updateAppState({
+              ...appState,
+              activeProjects: [...existingProjects, newProject],
+            });
+            setIsShowCreateProject(false);
+          } else {
+            alert("Project already exists!");
+          }
+        }}
+      />
     </PageLayout>
   );
 };

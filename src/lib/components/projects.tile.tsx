@@ -11,7 +11,7 @@ interface ProjectTileProps {
 
 const ProjectTile: FC<ProjectTileProps> = ({ project, onClick }) => {
   return (
-    <Card style={{height:350, width:320}}>
+    <Card style={{height:320, width:300}}>
       {/* <Card.Img variant="top" src={project.featuredImage} /> */}
       <Card.Body>
         <div className="py-3">
@@ -25,7 +25,7 @@ const ProjectTile: FC<ProjectTileProps> = ({ project, onClick }) => {
         <Card.Title className="text-truncate p-0">{project.title} </Card.Title>
         <Card.Text className="text-truncate p-1">{project.address}</Card.Text>
         <FlexBox>
-          <Button variant="outline-warning" onClick={onClick}>
+          <Button style={{backgroundColor:"#7F56D9"}} onClick={onClick}>
             View details
           </Button>
         </FlexBox>
