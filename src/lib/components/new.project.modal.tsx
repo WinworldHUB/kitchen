@@ -21,7 +21,8 @@ const NewProjectModal: FC<NewProjectModalProps> = ({
     useApi<AddressSummary>("https://postcode.apitier.com/v1/postcodes/");
   const [postcode, setPostcode] = useState<string>();
   const [address, setAddress] = useState<string>();
-  const [projectType, setProjectType] = useState<string>("");
+  const [projectType, setProjectType] = useState<string>("new-extension");
+  const [propertyType, setPropertyType] = useState<string>("cottage");
 
   const searchAddress = async () => {
     await getAddresses(
@@ -68,7 +69,40 @@ const NewProjectModal: FC<NewProjectModalProps> = ({
             />
           </Form.Group>
 
-          {/* Moved Address Search Section Directly Below */}
+          <Form.Group
+            className="mb-3"
+            controlId="createProjectForm.ProjectType"
+          >
+            <Form.Label>Type of Project</Form.Label>
+            <Form.Select
+              aria-label="Select project type"
+              value={projectType}
+              onChange={(e) => setProjectType(e.target.value)}
+            >
+              <option value="new-extension">New/Extension</option>
+              <option value="existing-renovation">Existing/Renovation</option>
+            </Form.Select>
+          </Form.Group>
+
+          {/* New Dropdown for Type of Property */}
+          <Form.Group
+            className="mb-3"
+            controlId="createProjectForm.PropertyType"
+          >
+            <Form.Label>Type of Property</Form.Label>
+            <Form.Select
+              aria-label="Select property type"
+              value={propertyType}
+              onChange={(e) => setPropertyType(e.target.value)}
+            >
+              <option value="cottage">Cottage</option>
+              <option value="apartment">Apartment</option>
+              <option value="loft-mills">Loft Mills</option>
+              <option value="modern">Modern</option>
+              <option value="period">Period</option>
+            </Form.Select>
+          </Form.Group>
+
           <Form.Group className="mb-3" controlId="createProjectForm.PostCode">
             <Form.Label>Address</Form.Label>
             <InputGroup className="mb-3">
@@ -105,30 +139,17 @@ const NewProjectModal: FC<NewProjectModalProps> = ({
               </Form.Group>
             )}
           </Form.Group>
-
-          {/* New Dropdown for Project Type */}
-          <Form.Group
-            className="mb-3"
-            controlId="createProjectForm.ProjectType"
-          >
-            <Form.Label>Project Type</Form.Label>
-            <Form.Select
-              aria-label="Select project type"
-              value={projectType}
-              onChange={(e) => setProjectType(e.target.value)}
-            >
-              <option value="">Select project type...</option>
-              <option value="new-extension">New/Extension</option>
-              <option value="existing-renovation">Existing/Renovation</option>
-            </Form.Select>
-          </Form.Group>
         </Form>
       </Modal.Body>
+
       <Modal.Footer className="d-flex justify-content-between">
         <Button variant="outline-danger" onClick={onCloseClick}>
           Cancel
         </Button>
-        <Button variant="primary" onClick={() => onCreateClick(project)}>
+        <Button
+          style={{ backgroundColor: "#7F56D9" }}
+          onClick={() => onCreateClick(project)}
+        >
           Create
         </Button>
       </Modal.Footer>
