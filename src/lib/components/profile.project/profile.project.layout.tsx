@@ -4,13 +4,18 @@ import { useParams } from "react-router-dom"; // Import useParams
 import PageLayout from "../app.layout";
 import FlexBox from "../app.flex.box";
 import { PageRoutes } from "../../constants";
+import { replaceProjectId } from "../../utils/replacer";
 
 interface NavLink {
   name: string;
   href: string;
 }
 
-const ProfileProjectLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+interface ProfileProjectLayoutProps {
+  children: React.ReactNode;
+}
+
+const ProfileProjectLayout: React.FC<ProfileProjectLayoutProps> = ({ children }) => {
   const [activeLink, setActiveLink] = useState<string>("");
   const { projectId } = useParams(); // Get the projectId from the URL
 
@@ -30,26 +35,40 @@ const ProfileProjectLayout: React.FC<{ children: React.ReactNode }> = ({ childre
     setActiveLink(href);
   };
 
-  const replaceProjectId = (route: string, projectId: string | undefined) => {
-    return route.replace(":projectId", projectId || "");
-  };
-  
   // Define the links, replacing :projectId with the actual projectId
   const linksTop: NavLink[] = [
-    { name: "Overview", href: replaceProjectId(PageRoutes.Overview, projectId) },
-    { name: "Contractors", href: replaceProjectId(PageRoutes.Contractors, projectId) },
-    { name: "Design Brief", href: replaceProjectId(PageRoutes.DesignBrief, projectId) },
+    {
+      name: "Overview",
+      href: replaceProjectId(PageRoutes.Overview, projectId),
+    },
+    {
+      name: "Contractors",
+      href: replaceProjectId(PageRoutes.Contractors, projectId),
+    },
+    {
+      name: "Design Brief",
+      href: replaceProjectId(PageRoutes.DesignBrief, projectId),
+    },
   ];
-  
+
   const linksBottom: NavLink[] = [
-    { name: "Payments", href: replaceProjectId(PageRoutes.Payments, projectId) },
-    { name: "My Documents", href: replaceProjectId(PageRoutes.Documents, projectId) },
-    { name: "Project Report", href: replaceProjectId(PageRoutes.ProjectReports, projectId) },
+    {
+      name: "Payments",
+      href: replaceProjectId(PageRoutes.Payments, projectId),
+    },
+    {
+      name: "My Documents",
+      href: replaceProjectId(PageRoutes.Documents, projectId),
+    },
+    {
+      name: "Project Report",
+      href: replaceProjectId(PageRoutes.ProjectReports, projectId),
+    },
   ];
-  
+
   return (
     <PageLayout>
-      <Container fluid className="d-flex flex-column">
+      <Container fluid className="d-flex flex-column min-vh-100">
         <Row className="flex-grow-1">
           <Col
             xs={2}
@@ -65,7 +84,8 @@ const ProfileProjectLayout: React.FC<{ children: React.ReactNode }> = ({ childre
                     href={link.href}
                     className="text-white"
                     style={{
-                      backgroundColor: activeLink === link.href ? "#ffc000" : "transparent",
+                      backgroundColor:
+                        activeLink === link.href ? "#ffc000" : "transparent",
                       fontWeight: activeLink === link.href ? "bold" : "normal",
                     }}
                     onMouseEnter={handleMouseEnter}
@@ -83,7 +103,8 @@ const ProfileProjectLayout: React.FC<{ children: React.ReactNode }> = ({ childre
                     href={link.href}
                     className="text-white"
                     style={{
-                      backgroundColor: activeLink === link.href ? "#ffc000" : "transparent",
+                      backgroundColor:
+                        activeLink === link.href ? "#ffc000" : "transparent",
                       fontWeight: activeLink === link.href ? "bold" : "normal",
                     }}
                     onMouseEnter={handleMouseEnter}
@@ -108,7 +129,9 @@ const ProfileProjectLayout: React.FC<{ children: React.ReactNode }> = ({ childre
           <FlexBox justifyContent="end">
             {/* Footer */}
             <span>Email</span>
-            <Button variant="warning" className="mx-4">Book a Call</Button>
+            <Button variant="warning" className="mx-4">
+              Book a Call
+            </Button>
           </FlexBox>
         </Row>
       </Container>

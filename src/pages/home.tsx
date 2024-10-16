@@ -6,6 +6,7 @@ import NewProjectModal from "../lib/components/new.project.modal";
 import { AppContext } from "../lib/contexts/appcontext";
 import { NO_ACTIVE_PROJECTS_MESSAGE, PageRoutes } from "../lib/constants";
 import FlexBox from "../lib/components/app.flex.box";
+import { replaceProjectId } from "../lib/utils/replacer";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -18,7 +19,8 @@ const HomePage = () => {
 
   const handleProjectClick = (projectId: string) => {
     updateAppState({ ...appState, selectedProjectId: projectId });
-    navigate(`${PageRoutes.Overview}/${projectId}`);
+    const url = `${replaceProjectId(PageRoutes.Overview, projectId)}`;
+    navigate(url);
   };
 
   return (
