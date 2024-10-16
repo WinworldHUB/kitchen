@@ -21,7 +21,12 @@ export const DEFAULT_USER_STATE: User = {
 export enum PageRoutes {
   Home = "/",
   Archives = "/archives",
-  ProjectDetails = "/projectDetails",
+  Overview = "/projectDetails/overview/:projectId",
+  Contractors = "/projectDetails/contractors/:projectId",
+  DesignBrief = "/projectDetails/designBrief/:projectId",
+  Payments = "/projectDetails/payments/:projectId",
+  Documents = "/projectDetails/documents/:projectId",
+  ProjectReports = "/projectDetails/projectReports/:projectId",
   Login = "/signIn",
   SignUp = "/signUp",
   UserProfile = "/userProfile",

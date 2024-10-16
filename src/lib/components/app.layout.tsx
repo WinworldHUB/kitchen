@@ -4,7 +4,7 @@ import MenuBar from "./app.mainmenu";
 import { PageRoutes } from "../constants";
 import { FaHouse, FaUserGear } from "react-icons/fa6";
 import { AppContext } from "../contexts/appcontext";
-import { useLocation } from "react-router-dom";
+import { matchPath, useLocation } from "react-router-dom";
 
 const PageLayout: FC<LayoutProps> = ({
   isShowSideMenu = false,
@@ -15,7 +15,7 @@ const PageLayout: FC<LayoutProps> = ({
   const location = useLocation();
   
   // Determine if the current route is ProjectDetails
-  const isProjectDetails = location.pathname === PageRoutes.ProjectDetails;
+  const isProjectDetails = !!matchPath(PageRoutes.Overview.replace(":projectId", "*"), location.pathname);
 
   return (
     <>

@@ -18,7 +18,7 @@ const HomePage = () => {
 
   const handleProjectClick = (projectId: string) => {
     updateAppState({ ...appState, selectedProjectId: projectId });
-    navigate(PageRoutes.ProjectDetails);
+    navigate(`${PageRoutes.Overview}/${projectId}`);
   };
 
   return (

@@ -25,7 +25,7 @@ const App = () => {
           }
         />
         <Route
-          path={PageRoutes.ProjectDetails}
+          path={PageRoutes.Overview}
           element={
             appState.isUserLoggedIn ? <ProjectProfilePage /> : <SignInPage />
           }

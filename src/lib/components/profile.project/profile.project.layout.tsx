@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Button, Nav } from "react-bootstrap";
+import { useParams } from "react-router-dom"; // Import useParams
 import PageLayout from "../app.layout";
 import FlexBox from "../app.flex.box";
+import { PageRoutes } from "../../constants";
 
 interface NavLink {
   name: string;
@@ -10,6 +12,7 @@ interface NavLink {
 
 const ProfileProjectLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [activeLink, setActiveLink] = useState<string>("");
+  const { projectId } = useParams(); // Get the projectId from the URL
 
   const handleMouseEnter = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.currentTarget.style.backgroundColor = "#ffc000";
@@ -27,21 +30,26 @@ const ProfileProjectLayout: React.FC<{ children: React.ReactNode }> = ({ childre
     setActiveLink(href);
   };
 
+  const replaceProjectId = (route: string, projectId: string | undefined) => {
+    return route.replace(":projectId", projectId || "");
+  };
+  
+  // Define the links, replacing :projectId with the actual projectId
   const linksTop: NavLink[] = [
-    { name: "Overview", href: "#" },
-    { name: "Contractors", href: "#" },
-    { name: "Design Brief", href: "#" }
+    { name: "Overview", href: replaceProjectId(PageRoutes.Overview, projectId) },
+    { name: "Contractors", href: replaceProjectId(PageRoutes.Contractors, projectId) },
+    { name: "Design Brief", href: replaceProjectId(PageRoutes.DesignBrief, projectId) },
   ];
-
+  
   const linksBottom: NavLink[] = [
-    { name: "Payments", href: "#" },
-    { name: "My Documents", href: "#" },
-    { name: "Project Report", href: "#" }
+    { name: "Payments", href: replaceProjectId(PageRoutes.Payments, projectId) },
+    { name: "My Documents", href: replaceProjectId(PageRoutes.Documents, projectId) },
+    { name: "Project Report", href: replaceProjectId(PageRoutes.ProjectReports, projectId) },
   ];
-
+  
   return (
     <PageLayout>
-      <Container fluid className="d-flex flex-column min-vh-100">
+      <Container fluid className="d-flex flex-column">
         <Row className="flex-grow-1">
           <Col
             xs={2}

@@ -7,6 +7,7 @@ import { PageRoutes, ProjectStatus } from "../lib/constants";
 import { useNavigate } from "react-router-dom";
 import ProjectProfileSwitcher from "../lib/components/profile.project/profile.project.switcher";
 import ProfileProjectLayout from "../lib/components/profile.project/profile.project.layout";
+import ProjectOverview from "../lib/components/profile.project/project.overview";
 
 const ProjectProfilePage = () => {
   const { appState, updateAppState } = useContext(AppContext);
@@ -32,12 +33,7 @@ const ProjectProfilePage = () => {
   return (
     <ProfileProjectLayout>
       <Row className="justify-content-center">
-        <Col sm="8">
-          <ProjectProfileSwitcher
-            project={project}
-            onProjectUpdate={updateProject}
-          />
-        </Col>
+        <ProjectOverview project={project}/>
       </Row>
     </ProfileProjectLayout>
   );
