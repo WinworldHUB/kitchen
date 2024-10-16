@@ -4,6 +4,7 @@ import MenuBar from "./app.mainmenu";
 import { PageRoutes } from "../constants";
 import { FaHouse, FaUserGear } from "react-icons/fa6";
 import { AppContext } from "../contexts/appcontext";
+import { useLocation } from "react-router-dom";
 
 const PageLayout: FC<LayoutProps> = ({
   isShowSideMenu = false,
@@ -11,6 +12,11 @@ const PageLayout: FC<LayoutProps> = ({
   username = "",
 }: LayoutProps) => {
   const { appState, updateAppState } = useContext(AppContext);
+  const location = useLocation();
+  
+  // Determine if the current route is ProjectDetails
+  const isProjectDetails = location.pathname === PageRoutes.ProjectDetails;
+
   return (
     <>
       <MenuBar
@@ -21,7 +27,7 @@ const PageLayout: FC<LayoutProps> = ({
           updateAppState({ ...appState, selectedMenuId: itemId })
         }
       />
-      <Container fluid className="py-3 px-3">
+      <Container fluid className={!isProjectDetails ? "py-3 px-3" : "py-0 px-0"}>
         {children}
       </Container>
     </>
