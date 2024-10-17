@@ -4,7 +4,7 @@ import FlexBox from "../app.flex.box";
 import RadioGroup from "../app.radio.group";
 
 interface ProjectLayoutDetailsProps {
-  project: Project;
+  project?: Project;
 }
 
 const ProjectLayoutDetails: FC<ProjectLayoutDetailsProps> = ({ project }) => {

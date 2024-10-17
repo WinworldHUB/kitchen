@@ -15,7 +15,7 @@ const PageLayout: FC<LayoutProps> = ({
   const location = useLocation();
   
   // Determine if the current route is ProjectDetails
-  const isProjectDetails = !!matchPath(PageRoutes.Overview.replace(":projectId", "*"), location.pathname);
+  const isProjectDetails = !!matchPath("/projectDetails/*", location.pathname);
 
   return (
     <>
