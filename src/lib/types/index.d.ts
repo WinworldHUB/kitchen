@@ -188,3 +188,12 @@ type ResetPasswordRequest = {
   oldPassword: string;
   newPassword: string;
 };
+
+type Contractor = {
+  name: string;
+  company: string;
+  contact: string;
+  website: string;
+  email: string;
+  address: string;
+};

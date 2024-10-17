@@ -17,7 +17,6 @@ export const DEFAULT_USER_STATE: User = {
   address: "",
 };
 
-
 export enum PageRoutes {
   Home = "/",
   Archives = "/archives",
@@ -112,13 +111,11 @@ export const PROJECT_STATUS_STEPS_DATA = [
   },
 ];
 
-
 export const STYTCH_PROJECT_ID = {
   MINOR: "project-",
   MODE: "test-",
   MAJOR: "bb21c0a2-7d1a-4629-963b-771202ed4ed4",
 };
-
 
 export const STYTCH_SECRET_KEY = {
   MINOR: "secret-",
@@ -126,4 +123,134 @@ export const STYTCH_SECRET_KEY = {
   MAJOR: "BjkyOoedFzPUTvFA3uZx1QlvzeTpONOoqOs=",
 };
 
-export const ENCODER_SECRET_KEY = "2ff493499f93c38bbd00f4a64941dc4e"
+export const ENCODER_SECRET_KEY = "2ff493499f93c38bbd00f4a64941dc4e";
+
+export const architectFormControls = [
+  {
+    controlId: "architectName",
+    label: "Name",
+    placeholder: "John Doe",
+    type: "text",
+  },
+  {
+    controlId: "architectCompany",
+    label: "Company",
+    placeholder: "Example XYZ",
+    type: "text",
+  },
+  {
+    controlId: "architectContact",
+    label: "Contact",
+    placeholder: "123456789",
+    type: "text",
+  },
+  {
+    controlId: "architectWebsite",
+    label: "Website",
+    placeholder: "www.example.com",
+    type: "text",
+
+  },
+  {
+    controlId: "architectEmail",
+    label: "Email",
+    placeholder: "john@example.com",
+    type: "email",
+
+  },
+  {
+    controlId: "architectAddress",
+    label: "Address",
+    placeholder: "XYZ street, XYZ area, 123456",
+    type: "text",
+
+  },
+];
+
+export const builderFormControls = [
+  {
+    controlId: "builderName",
+    label: "Name",
+    placeholder: "John Doe",
+    type: "text",
+  },
+  {
+    controlId: "builderCompany",
+    label: "Company",
+    placeholder: "Example XYZ",
+    type: "text",
+ 
+  },
+  {
+    controlId: "builderContact",
+    label: "Contact",
+    placeholder: "123456789",
+    type: "text",
+
+  },
+  {
+    controlId: "builderWebsite",
+    label: "Website",
+    placeholder: "www.example.com",
+    type: "text",
+
+  },
+  {
+    controlId: "builderEmail",
+    label: "Email",
+    placeholder: "john@example.com",
+    type: "email",
+
+  },
+  {
+    controlId: "builderAddress",
+    label: "Address",
+    placeholder: "XYZ street, XYZ area, 123456",
+    type: "text",
+
+  },
+];
+
+export const interiorDesignerFormControls = [
+  {
+    controlId: "interiorDesignerName",
+    label: "Name",
+    placeholder: "John Doe",
+    type: "text",
+  },
+  {
+    controlId: "interiorDesignerCompany",
+    label: "Company",
+    placeholder: "Example XYZ",
+    type: "text",
+ 
+  },
+  {
+    controlId: "interiorDesignerContact",
+    label: "Contact",
+    placeholder: "123456789",
+    type: "text",
+
+  },
+  {
+    controlId: "interiorDesignerWebsite",
+    label: "Website",
+    placeholder: "www.example.com",
+    type: "text",
+
+  },
+  {
+    controlId: "interiorDesignerEmail",
+    label: "Email",
+    placeholder: "john@example.com",
+    type: "email",
+
+  },
+  {
+    controlId: "interiorDesignerAddress",
+    label: "Address",
+    placeholder: "XYZ street, XYZ area, 123456",
+    type: "text",
+
+  },
+];
