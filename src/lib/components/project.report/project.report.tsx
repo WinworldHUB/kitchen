@@ -1,8 +1,15 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 
+
+interface TimelineData {
+    date: string
+    title: string
+    description:string
+}
+
 const ProjectReport = () => {
-  const timelineData = [
+  const timelineData:TimelineData[] = [
     {
       date: "October 1, 2024",
       title: "Project Kickoff",
