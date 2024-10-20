@@ -10,6 +10,8 @@ import UserProfilePage from "./pages/user.profile";
 import ProjectProfilePage from "./pages/project.profile";
 import ProjectContractorPage from "./pages/project.contractor.page";
 import ProjectDesignBriefPage from "./pages/project.design.brief.page";
+import ProjectReport from "./lib/components/project.report/project.report";
+import ProjectReportPage from "./pages/project.report.page";
 
 const App = () => {
   const { appState } = useContext(AppContext);
@@ -48,6 +50,12 @@ const App = () => {
           path={PageRoutes.UserProfile}
           element={
             appState.isUserLoggedIn ? <UserProfilePage /> : <SignInPage />
+          }
+        />
+        <Route
+          path={PageRoutes.ProjectReports}
+          element={
+            appState.isUserLoggedIn ? <ProjectReportPage /> : <SignInPage />
           }
         />
         <Route path={PageRoutes.Login} element={<SignInPage />} />
