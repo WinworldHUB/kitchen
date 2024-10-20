@@ -10,7 +10,6 @@ import UserProfilePage from "./pages/user.profile";
 import ProjectProfilePage from "./pages/project.profile";
 import ProjectContractorPage from "./pages/project.contractor.page";
 import ProjectDesignBriefPage from "./pages/project.design.brief.page";
-import ProjectReport from "./lib/components/project.report/project.report";
 import ProjectReportPage from "./pages/project.report.page";
 
 const App = () => {

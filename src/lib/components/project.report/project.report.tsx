@@ -36,12 +36,12 @@ const ProjectReport = () => {
   ];
 
   return (
-    <Container className="my-4 position-relative">
+    <Container fluid className="my-4 position-relative">
       {/* Vertical Line */}
       <div
-        className="position-absolute bg-primary"
+        className="position-absolute bg-primary mx-2 "
         style={{
-          left: "18%", // Adjusted to ensure it sits between the columns
+          left: "calc(25% - 1px)",
           top: "0",
           bottom: "0",
           width: "2px",
@@ -50,11 +50,10 @@ const ProjectReport = () => {
       />
       {timelineData.map((event, index) => (
         <Row key={index} className="d-flex align-items-start mb-4">
-          <Col md={2} className="text-md-end text-center">
+          <Col xs={4} md={3} className="text-end">
             <div className="fw-bold">{event.date}</div>
           </Col>
-
-          <Col md={9} className="bg-light p-3 rounded shadow-sm mx-5">
+          <Col xs={8} md={7} className="bg-light p-3 rounded shadow-sm position-relative mx-4">
             <h5>{event.title}</h5>
             <p className="mb-0">{event.description}</p>
           </Col>

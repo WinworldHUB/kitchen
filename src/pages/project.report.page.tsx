@@ -5,6 +5,7 @@ import ProjectReport from "../lib/components/project.report/project.report";
 const ProjectReportPage = () => {
   return (
     <ProfileProjectLayout>
+        <h1>Project Report</h1>
       <ProjectReport />
     </ProfileProjectLayout>
   );
