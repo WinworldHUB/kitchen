@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../lib/contexts/appcontext";
 import { getProjectById } from "../lib/utils/project.utils";
 import { Row } from "react-bootstrap";
@@ -28,10 +28,16 @@ const ProjectProfilePage = () => {
     navigate(PageRoutes.Home);
   };
 
+  useEffect(() => {
+    if (appState && appState.user_id === "101") {
+      updateProject();
+    }
+  });
+
   return (
     <ProfileProjectLayout>
       <Row className="justify-content-center">
-        <ProjectOverview project={project}/>
+        <ProjectOverview project={project} />
       </Row>
     </ProfileProjectLayout>
   );

@@ -34,6 +34,8 @@ const NewProjectModal: FC<NewProjectModalProps> = ({
     setAddress(selectedAddress);
   };
 
+  console.log(address);
+
   return (
     <Modal
       show={isShow}
