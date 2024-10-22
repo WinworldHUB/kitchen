@@ -31,6 +31,7 @@ const ArchivedProjectsPage = () => {
         }
       >
         <ProjectsGrid
+          onProjectCreate={() => {}}
           projects={filteredProjects}
           onProjectClick={() => {}}
           emptyMessage={NO_ARCHIVED_PROJECTS_MESSAGE}

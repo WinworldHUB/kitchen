@@ -8,6 +8,9 @@ import { AppContext } from "./lib/contexts/appcontext";
 import ArchivedProjectsPage from "./pages/projects.archived.";
 import UserProfilePage from "./pages/user.profile";
 import ProjectProfilePage from "./pages/project.profile";
+import ProjectContractorPage from "./pages/project.contractor.page";
+import ProjectDesignBriefPage from "./pages/project.design.brief.page";
+import ProjectReportPage from "./pages/project.report.page";
 
 const App = () => {
   const { appState } = useContext(AppContext);
@@ -25,15 +28,33 @@ const App = () => {
           }
         />
         <Route
-          path={PageRoutes.ProjectDetails}
+          path={PageRoutes.Overview}
           element={
             appState.isUserLoggedIn ? <ProjectProfilePage /> : <SignInPage />
+          }
+        />
+        <Route
+          path={PageRoutes.Contractors}
+          element={
+            appState.isUserLoggedIn ? <ProjectContractorPage /> : <SignInPage />
+          }
+        />
+        <Route
+          path={PageRoutes.DesignBrief}
+          element={
+            appState.isUserLoggedIn ? <ProjectDesignBriefPage /> : <SignInPage />
           }
         />
         <Route
           path={PageRoutes.UserProfile}
           element={
             appState.isUserLoggedIn ? <UserProfilePage /> : <SignInPage />
+          }
+        />
+        <Route
+          path={PageRoutes.ProjectReports}
+          element={
+            appState.isUserLoggedIn ? <ProjectReportPage /> : <SignInPage />
           }
         />
         <Route path={PageRoutes.Login} element={<SignInPage />} />

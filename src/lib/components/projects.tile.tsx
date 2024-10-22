@@ -1,9 +1,6 @@
 import { FC } from "react";
-import { Button, Card, ProgressBar } from "react-bootstrap";
-import { ProjectStatus } from "../constants";
+import { Button, Card } from "react-bootstrap";
 import FlexBox from "./app.flex.box";
-import Steps from "react-steps";
-import { getProjectStatusSteps } from "../utils/project.utils";
 
 interface ProjectTileProps {
   project: Project;
@@ -12,36 +9,21 @@ interface ProjectTileProps {
 
 const ProjectTile: FC<ProjectTileProps> = ({ project, onClick }) => {
   return (
-    <Card>
-      {/* <Card.Img variant="top" src={project.featuredImage} /> */}
-      <Card.Body>
-        <div className="py-3">
-          <Steps
-            items={getProjectStatusSteps(project.status)}
-            type={"point"}
-            flat={true}
-          />
+    <Card style={{ height: 350, width: 350 }}>
+      <Card.Img variant="top" height={200} src="assets/images/kitch.jpg" />
+      <Card.Body style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+        <div>
+          <Card.Text className="text-truncate m-0 fs-5 fw-semibold">{project.title}</Card.Text>
+          <Card.Text className="text-truncate m-0 fs-5 fw-semibold">{project.address}</Card.Text>
         </div>
-
-        <Card.Title className="text-truncate p-0">{project.title} </Card.Title>
-        <Card.Text className="text-truncate p-1">{project.address}</Card.Text>
-        <FlexBox>
-          <Button variant="outline-warning" onClick={onClick}>
+        <FlexBox className="mt-2">
+          <Button style={{ backgroundColor: "#7F56D9", }} onClick={onClick}>
             View details
           </Button>
         </FlexBox>
       </Card.Body>
-      <Card.Footer className="p-0">
-        <ProgressBar style={{ height: "3px" }}>
-          <ProgressBar
-            variant={
-              project.status === ProjectStatus.archived ? "secondary" : "blue"
-            }
-            now={100}
-          />
-        </ProgressBar>
-      </Card.Footer>
     </Card>
   );
 };
+
 export default ProjectTile;

@@ -54,13 +54,17 @@ const useApi = <T,>(baseUrl?: string): APIState<T> => {
         method: "GET",
         headers: DEFAULT_GET_API_HEADER(appState.accessJWT),
       });
+
+      if (!response.ok) {
+        throw new Error(`Error fetching data: ${response.status} - ${response.statusText}`);
+      }
+
       const data = await response.json();
       setData(data);
-
-      return Promise.resolve(data);
+      return data;
     } catch (error) {
-      console.error(error);
-      Promise.reject(error);
+      console.error("GET request failed:", error);
+      return undefined; // Propagate the error to the caller
     }
   };
 
@@ -77,13 +81,17 @@ const useApi = <T,>(baseUrl?: string): APIState<T> => {
         body: getEncodedJson(body),
         headers: DEFAULT_POST_API_HEADER(appState.accessJWT),
       });
+
+      if (!response.ok) {
+        throw new Error(`Error posting data: ${response.status} - ${response.statusText}`);
+      }
+
       const data = await response.json();
       setData(data);
-
-      return Promise.resolve(data);
+      return data;
     } catch (error) {
-      console.error(error);
-      Promise.reject(error);
+      console.error("POST request failed:", error);
+      return undefined;
     }
   };
 
@@ -100,13 +108,17 @@ const useApi = <T,>(baseUrl?: string): APIState<T> => {
         body: getEncodedJson(body),
         headers: DEFAULT_POST_API_HEADER(appState.accessJWT),
       });
+
+      if (!response.ok) {
+        throw new Error(`Error updating data: ${response.status} - ${response.statusText}`);
+      }
+
       const data = await response.json();
       setData(data);
-
-      return Promise.resolve(data);
+      return data;
     } catch (error) {
-      console.error(error);
-      Promise.reject(error);
+      console.error("PUT request failed:", error);
+      return undefined;
     }
   };
 
@@ -123,13 +135,17 @@ const useApi = <T,>(baseUrl?: string): APIState<T> => {
         method: "DELETE",
         headers: DEFAULT_POST_API_HEADER(appState.accessJWT),
       });
+
+      if (!response.ok) {
+        throw new Error(`Error deleting data: ${response.status} - ${response.statusText}`);
+      }
+
       const data = await response.json();
       setData(data);
-
-      return Promise.resolve(data);
+      return data;
     } catch (error) {
-      console.error(error);
-      Promise.reject(error);
+      console.error("DELETE request failed:", error);
+      return undefined;
     }
   };
 

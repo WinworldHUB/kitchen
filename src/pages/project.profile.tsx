@@ -1,11 +1,11 @@
 import { useContext, useState } from "react";
-import PageLayout from "../lib/components/app.layout";
 import { AppContext } from "../lib/contexts/appcontext";
 import { getProjectById } from "../lib/utils/project.utils";
-import { Col, Row } from "react-bootstrap";
+import { Row } from "react-bootstrap";
 import { PageRoutes, ProjectStatus } from "../lib/constants";
 import { useNavigate } from "react-router-dom";
-import ProjectProfileSwitcher from "../lib/components/profile.project/profile.project.switcher";
+import ProfileProjectLayout from "../lib/components/profile.project/profile.project.layout";
+import ProjectOverview from "../lib/components/profile.project/project.overview";
 
 const ProjectProfilePage = () => {
   const { appState, updateAppState } = useContext(AppContext);
@@ -29,16 +29,11 @@ const ProjectProfilePage = () => {
   };
 
   return (
-    <PageLayout>
+    <ProfileProjectLayout>
       <Row className="justify-content-center">
-        <Col sm="8">
-          <ProjectProfileSwitcher
-            project={project}
-            onProjectUpdate={updateProject}
-          />
-        </Col>
+        <ProjectOverview project={project}/>
       </Row>
-    </PageLayout>
+    </ProfileProjectLayout>
   );
 };
 

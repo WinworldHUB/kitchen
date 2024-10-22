@@ -17,11 +17,15 @@ export const DEFAULT_USER_STATE: User = {
   address: "",
 };
 
-
 export enum PageRoutes {
   Home = "/",
   Archives = "/archives",
-  ProjectDetails = "/projectDetails",
+  Overview = "/projectDetails/overview/:projectId",
+  Contractors = "/projectDetails/contractors/:projectId",
+  DesignBrief = "/projectDetails/designBrief/:projectId",
+  Payments = "/projectDetails/payments/:projectId",
+  Documents = "/projectDetails/documents/:projectId",
+  ProjectReports = "/projectDetails/projectReports/:projectId",
   Login = "/signIn",
   SignUp = "/signUp",
   UserProfile = "/userProfile",
@@ -46,7 +50,7 @@ export const GBP_SYMBOL = "£";
 export const DEFAULT_KITCHEN_IMAGE =
   "https://images.unsplash.com/photo-1600585152220-90363fe7e115?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
 
-export const enum ProjectStatus {
+export enum ProjectStatus {
   draft = -1,
   designBrief = 0,
   designQuotation = 1,
@@ -107,13 +111,11 @@ export const PROJECT_STATUS_STEPS_DATA = [
   },
 ];
 
-
 export const STYTCH_PROJECT_ID = {
   MINOR: "project-",
   MODE: "test-",
   MAJOR: "bb21c0a2-7d1a-4629-963b-771202ed4ed4",
 };
-
 
 export const STYTCH_SECRET_KEY = {
   MINOR: "secret-",
@@ -121,4 +123,134 @@ export const STYTCH_SECRET_KEY = {
   MAJOR: "BjkyOoedFzPUTvFA3uZx1QlvzeTpONOoqOs=",
 };
 
-export const ENCODER_SECRET_KEY = "2ff493499f93c38bbd00f4a64941dc4e"
+export const ENCODER_SECRET_KEY = "2ff493499f93c38bbd00f4a64941dc4e";
+
+export const architectFormControls = [
+  {
+    controlId: "architectName",
+    label: "Name",
+    placeholder: "John Doe",
+    type: "text",
+  },
+  {
+    controlId: "architectCompany",
+    label: "Company",
+    placeholder: "Example XYZ",
+    type: "text",
+  },
+  {
+    controlId: "architectContact",
+    label: "Contact",
+    placeholder: "123456789",
+    type: "text",
+  },
+  {
+    controlId: "architectWebsite",
+    label: "Website",
+    placeholder: "www.example.com",
+    type: "text",
+
+  },
+  {
+    controlId: "architectEmail",
+    label: "Email",
+    placeholder: "john@example.com",
+    type: "email",
+
+  },
+  {
+    controlId: "architectAddress",
+    label: "Address",
+    placeholder: "XYZ street, XYZ area, 123456",
+    type: "text",
+
+  },
+];
+
+export const builderFormControls = [
+  {
+    controlId: "builderName",
+    label: "Name",
+    placeholder: "John Doe",
+    type: "text",
+  },
+  {
+    controlId: "builderCompany",
+    label: "Company",
+    placeholder: "Example XYZ",
+    type: "text",
+ 
+  },
+  {
+    controlId: "builderContact",
+    label: "Contact",
+    placeholder: "123456789",
+    type: "text",
+
+  },
+  {
+    controlId: "builderWebsite",
+    label: "Website",
+    placeholder: "www.example.com",
+    type: "text",
+
+  },
+  {
+    controlId: "builderEmail",
+    label: "Email",
+    placeholder: "john@example.com",
+    type: "email",
+
+  },
+  {
+    controlId: "builderAddress",
+    label: "Address",
+    placeholder: "XYZ street, XYZ area, 123456",
+    type: "text",
+
+  },
+];
+
+export const interiorDesignerFormControls = [
+  {
+    controlId: "interiorDesignerName",
+    label: "Name",
+    placeholder: "John Doe",
+    type: "text",
+  },
+  {
+    controlId: "interiorDesignerCompany",
+    label: "Company",
+    placeholder: "Example XYZ",
+    type: "text",
+ 
+  },
+  {
+    controlId: "interiorDesignerContact",
+    label: "Contact",
+    placeholder: "123456789",
+    type: "text",
+
+  },
+  {
+    controlId: "interiorDesignerWebsite",
+    label: "Website",
+    placeholder: "www.example.com",
+    type: "text",
+
+  },
+  {
+    controlId: "interiorDesignerEmail",
+    label: "Email",
+    placeholder: "john@example.com",
+    type: "email",
+
+  },
+  {
+    controlId: "interiorDesignerAddress",
+    label: "Address",
+    placeholder: "XYZ street, XYZ area, 123456",
+    type: "text",
+
+  },
+];

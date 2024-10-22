@@ -1,39 +1,41 @@
-import { FC } from "react";
-import { Col, Row } from "react-bootstrap";
+import { FC, useMemo } from "react";
 import ProjectTile from "./projects.tile";
+import CreateProjectButton from "./create.project/create.project.button";
 
 interface ProjectsGridProps {
   projects: Project[];
   onProjectClick: (projectId: string) => void;
   emptyMessage: string;
+  onProjectCreate: VoidFunction;
 }
 
 const ProjectsGrid: FC<ProjectsGridProps> = ({
   projects,
   onProjectClick,
   emptyMessage,
+  onProjectCreate,
 }) => {
+  // Memoize project tiles to prevent unnecessary re-renders
+  const projectTiles = useMemo(() => (
+    projects.map((project) => (
+      <div key={project.id} className="mx-4 mb-4 d-flex flex-grow-1" style={{ width: '350px' }}>
+        <ProjectTile
+          project={project}
+          onClick={() => onProjectClick(project.id)}
+        />
+      </div>
+    ))
+  ), [projects, onProjectClick]);
+
   return (
-    <>
-      {projects?.length > 0 ? (
-        <Row className="g-4">
-          {(projects ?? []).map((project) => (
-            <Col sm="3" key={project.id}>
-              <ProjectTile
-                project={project}
-                onClick={() => onProjectClick(project.id)}
-              />
-            </Col>
-          ))}
-        </Row>
-      ) : (
-        <Row>
-          <Col className="text-center">
-            <label className="text-label">{emptyMessage}</label>
-          </Col>
-        </Row>
+    <div className="d-flex flex-wrap align-items-start justify-content-start">
+      {/* Create New Project Button */}
+      <CreateProjectButton onProjectCreate={onProjectCreate} />
+      {projects.length > 0 && (
+        projectTiles
       )}
-    </>
+    </div>
   );
 };
+
 export default ProjectsGrid;

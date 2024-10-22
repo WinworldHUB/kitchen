@@ -2,8 +2,9 @@ import { FC, useContext } from "react";
 import { Container } from "react-bootstrap";
 import MenuBar from "./app.mainmenu";
 import { PageRoutes } from "../constants";
-import { FaBoxArchive, FaHouse, FaUserGear } from "react-icons/fa6";
+import { FaHouse, FaUserGear } from "react-icons/fa6";
 import { AppContext } from "../contexts/appcontext";
+import { matchPath, useLocation } from "react-router-dom";
 
 const PageLayout: FC<LayoutProps> = ({
   isShowSideMenu = false,
@@ -11,6 +12,11 @@ const PageLayout: FC<LayoutProps> = ({
   username = "",
 }: LayoutProps) => {
   const { appState, updateAppState } = useContext(AppContext);
+  const location = useLocation();
+  
+  // Determine if the current route is ProjectDetails
+  const isProjectDetails = !!matchPath("/projectDetails/*", location.pathname);
+
   return (
     <>
       <MenuBar
@@ -21,7 +27,7 @@ const PageLayout: FC<LayoutProps> = ({
           updateAppState({ ...appState, selectedMenuId: itemId })
         }
       />
-      <Container fluid className="py-3 px-3">
+      <Container fluid className={!isProjectDetails ? "py-3 px-3" : "py-0 px-0"}>
         {children}
       </Container>
     </>
@@ -39,12 +45,6 @@ const APP_MENU: MenuItem[] = [
   },
   {
     id: 1,
-    label: "Archives",
-    route: PageRoutes.Archives,
-    icon: <FaBoxArchive stroke="1" />,
-  },
-  {
-    id: 2,
     label: "User Profile",
     route: PageRoutes.UserProfile,
     icon: <FaUserGear stroke="1" />,
