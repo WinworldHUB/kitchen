@@ -43,10 +43,10 @@ const ProjectReport = () => {
   ];
 
   return (
-    <Container fluid className="my-4">
+    <Container fluid className="my-4 position-relative">
       {/* Vertical Line */}
       <div
-        className="bg-primary mx-2 "
+        className="position-absolute bg-primary mx-2 "
         style={{
           left: "calc(25% - 1px)",
           top: "0",
