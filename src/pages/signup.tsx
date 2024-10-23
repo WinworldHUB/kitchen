@@ -1,5 +1,4 @@
-import { Button, Col, Form, Row } from "react-bootstrap";
-import PageLayout from "../lib/components/app.layout";
+import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import CardSimple from "../lib/components/card.simple";
 import { Link, useNavigate } from "react-router-dom";
 import { PageRoutes } from "../lib/constants";
@@ -23,12 +22,26 @@ const SignUpPage = () => {
   const [error, setError] = useState<string | null>(null);
   const { signInUser } = useAuthentication();
   const { postData: sendSignupData } = useApi<SignUpResponse>();
+  const footer = (
+    <div>
+      Already registered?{" "}
+      <Link to={PageRoutes.Login}>
+        <span style={{ color: "blue" }}>Sign In</span>
+      </Link>
+    </div>
+  );
 
   return (
-    <PageLayout>
-      <Row className="justify-content-center">
+    <Container fluid>
+      <Row className="justify-content-center align-items-center min-vh-100">
         <Col md="8" lg="6" xl="4">
-          <CardSimple title="Sign Up" error={error ?? ""}>
+          <CardSimple
+            title="Sign Up For Free"
+            error={error ?? ""}
+            variant="light"
+            footer={footer}
+            isAuth
+          >
             <Formik
               initialValues={DEFAULT_SIGN_UP_VALUES}
               validationSchema={SIGN_IN_VALIDATION_SCHEME}
@@ -135,20 +148,14 @@ const SignUpPage = () => {
                       }
                     />
                   </Form.Group>
-                  <Row>
-                    <Col xs="8">
-                      Already registered?{" "}
-                      <Link to={PageRoutes.Login}>Sign In</Link>
-                    </Col>
-                    <Col xs="4" className="text-end">
-                      <Button
-                        variant="primary"
-                        type="submit"
-                        disabled={isSubmitting}
-                      >
-                        Sign Up
-                      </Button>
-                    </Col>
+                  <Row className="mx-2">
+                    <Button
+                      variant="primary"
+                      type="submit"
+                      disabled={isSubmitting}
+                    >
+                      Sign Up
+                    </Button>
                   </Row>
                 </Form>
               )}
@@ -156,7 +163,7 @@ const SignUpPage = () => {
           </CardSimple>
         </Col>
       </Row>
-    </PageLayout>
+    </Container>
   );
 };
 export default SignUpPage;

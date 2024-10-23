@@ -1,5 +1,4 @@
-import { Button, Col, Form, Row } from "react-bootstrap";
-import PageLayout from "../lib/components/app.layout";
+import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import CardSimple from "../lib/components/card.simple";
 import { Link, useNavigate } from "react-router-dom";
 import { PageRoutes } from "../lib/constants";
@@ -23,19 +22,31 @@ const SignInPage = () => {
   const { postData: sendSignInData } = useApi<LoginResponse>();
   const [error, setError] = useState<string | null>(null);
   const { signInUser } = useAuthentication();
-
+  const footer = (
+    <div>
+      Not registered yet?{" "}
+      <Link to={PageRoutes.SignUp}>
+        <span style={{ color: "blue" }}>Register now</span>
+      </Link>
+    </div>
+  );
   return (
-    <PageLayout>
-      <Row className="justify-content-center">
+    <Container fluid>
+      <Row className="justify-content-center align-items-center min-vh-100">
         <Col md="8" lg="6" xl="4">
-          <CardSimple title="Sign In" error={error ?? ""}>
+          <CardSimple
+            title="Welcome Back"
+            subTitle="Please login to continue"
+            error={error ?? ""}
+            footer={footer}
+            variant="light"
+            isAuth
+          >
             <Formik
               initialValues={DEFAULT_LOGIN_VALUES}
               validationSchema={SIGN_IN_VALIDATION_SCHEME}
               onSubmit={async (values: LoginRequest, { setSubmitting }) => {
                 try {
-          
-
                   // Send the encrypted data to the API
                   const response = await sendSignInData(
                     USER_APIS.LOGIN_USER_API,
@@ -121,20 +132,14 @@ const SignInPage = () => {
                       }
                     />
                   </Form.Group>
-                  <Row>
-                    <Col xs="8">
-                      Not registered yet?{" "}
-                      <Link to={PageRoutes.SignUp}>Register now</Link>
-                    </Col>
-                    <Col xs="4" className="text-end">
-                      <Button
-                        variant="primary"
-                        type="submit"
-                        disabled={isSubmitting}
-                      >
-                        Sign in
-                      </Button>
-                    </Col>
+                  <Row className="mx-2">
+                    <Button
+                      variant="primary"
+                      type="submit"
+                      disabled={isSubmitting}
+                    >
+                      Sign in
+                    </Button>
                   </Row>
                 </Form>
               )}
@@ -142,7 +147,7 @@ const SignInPage = () => {
           </CardSimple>
         </Col>
       </Row>
-    </PageLayout>
+    </Container>
   );
 };
 
