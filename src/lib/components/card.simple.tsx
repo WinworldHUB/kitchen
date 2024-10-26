@@ -34,8 +34,8 @@ const CardSimple: FC<SimpleCardProps> = ({
           } align-items-center bg-${variant}`}
         >
           <Col className="text-center">
-          <p className="fs-2 fw-semibold m-0 text-center">{title}</p>
-          {subTitle && <p className="fs-6 m-0 card-title">{subTitle}</p>}
+            <p className="fs-2 fw-semibold m-0 text-center">{title}</p>
+            {subTitle && <p className="fs-6 m-0 card-title">{subTitle}</p>}
           </Col>
           {headerAction}
         </Card.Header>
@@ -43,7 +43,11 @@ const CardSimple: FC<SimpleCardProps> = ({
       {children && <Card.Body className={className}>{children}</Card.Body>}
       {(footer || error) && (
         <Card.Footer className={isAuth ? `d-flex justify-content-center` : ""}>
-          {footer ?? <FormFieldError error={error} />}
+          {footer ? (
+            <div className="my-2">{footer}</div>
+          ) : (
+            <FormFieldError error={error} />
+          )}
         </Card.Footer>
       )}
     </Card>

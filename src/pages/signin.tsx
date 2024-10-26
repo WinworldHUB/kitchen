@@ -5,9 +5,7 @@ import { PageRoutes } from "../lib/constants";
 import { Formik } from "formik";
 import FormFieldError from "../lib/components/form.field.error";
 import { SIGN_IN_VALIDATION_SCHEME } from "../lib/constants/validation-constants";
-
 import { USER_APIS } from "../lib/constants/api-constants";
-
 import useApi from "../lib/hooks/useApi";
 import useAuthentication from "../lib/hooks/useAuthentication";
 import { useState } from "react";
@@ -22,6 +20,7 @@ const SignInPage = () => {
   const { postData: sendSignInData } = useApi<LoginResponse>();
   const [error, setError] = useState<string | null>(null);
   const { signInUser } = useAuthentication();
+
   const footer = (
     <div>
       Not registered yet?{" "}
@@ -30,6 +29,7 @@ const SignInPage = () => {
       </Link>
     </div>
   );
+
   return (
     <Container fluid>
       <Row className="justify-content-center align-items-center min-vh-100">
@@ -47,7 +47,6 @@ const SignInPage = () => {
               validationSchema={SIGN_IN_VALIDATION_SCHEME}
               onSubmit={async (values: LoginRequest, { setSubmitting }) => {
                 try {
-                  // Send the encrypted data to the API
                   const response = await sendSignInData(
                     USER_APIS.LOGIN_USER_API,
                     {
@@ -56,15 +55,12 @@ const SignInPage = () => {
                     }
                   );
 
-                  // Handle successful response
                   if (response?.success) {
                     signInUser(
-                      // user data
                       {
                         email: values.email,
                         fullName: response.fullName,
                       },
-                      // app state
                       {
                         isUserLoggedIn: true,
                         user_id: response.user_id,
@@ -74,7 +70,6 @@ const SignInPage = () => {
                     );
                     navigate(PageRoutes.Home);
                   } else {
-                    // Handle error cases with various response types
                     if ("error" in response) {
                       console.error("Error:", response.error);
                       setError(response.error as string);
@@ -83,7 +78,6 @@ const SignInPage = () => {
                     setError(response.message);
                   }
                 } catch (error) {
-                  // Handle network or other errors
                   console.error("Error signing in:", error);
                   setError("Error signing in. Please try again.");
                 } finally {
@@ -110,7 +104,6 @@ const SignInPage = () => {
                       value={values.email}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      required
                     />
                     <FormFieldError
                       error={errors.email && touched.email && errors.email}
@@ -122,15 +115,31 @@ const SignInPage = () => {
                       type="password"
                       name="password"
                       placeholder="password"
-                      required
                       value={values.password}
                       onChange={handleChange}
+                      onBlur={handleBlur}
                     />
                     <FormFieldError
                       error={
                         errors.password && touched.password && errors.password
                       }
                     />
+                    <Row className="justify-content-between align-items-start mt-2">
+                      <Col>
+                        <p className="text-muted" style={{ fontSize: "12px" }}>
+                          It must be a combination of minimum 8 letters,
+                          numbers, and symbols.
+                        </p>
+                      </Col>
+                    </Row>
+                    <div className="text-end">
+                      <a
+                        href={PageRoutes.ForgotPassword}
+                        style={{ fontSize: "12px" }}
+                      >
+                        Forgot password?
+                      </a>
+                    </div>
                   </Form.Group>
                   <Row className="mx-2">
                     <Button
