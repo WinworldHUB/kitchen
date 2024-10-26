@@ -119,27 +119,33 @@ const SignInPage = () => {
                       onChange={handleChange}
                       onBlur={handleBlur}
                     />
-                    <FormFieldError
-                      error={
-                        errors.password && touched.password && errors.password
-                      }
-                    />
-                    <Row className="justify-content-between align-items-start mt-2">
-                      <Col>
-                        <p className="text-muted" style={{ fontSize: "12px" }}>
-                          It must be a combination of minimum 8 letters,
-                          numbers, and symbols.
-                        </p>
+
+                    <Col>
+                      <p className="text-muted" style={{ fontSize: "12px" }}>
+                        It must be a combination of minimum 8 letters, numbers,
+                        and symbols.
+                      </p>
+                    </Col>
+
+                    <Row className="justify-content-between">
+                      <Col lg={6} className="text-start">
+                        <FormFieldError
+                          error={
+                            errors.password &&
+                            touched.password &&
+                            errors.password
+                          }
+                        />
+                      </Col>
+                      <Col lg={6} className="text-end">
+                        <a
+                          href={PageRoutes.ForgotPassword}
+                          style={{ fontSize: "12px" }}
+                        >
+                          Forgot password?
+                        </a>
                       </Col>
                     </Row>
-                    <div className="text-end">
-                      <a
-                        href={PageRoutes.ForgotPassword}
-                        style={{ fontSize: "12px" }}
-                      >
-                        Forgot password?
-                      </a>
-                    </div>
                   </Form.Group>
                   <Row className="mx-2">
                     <Button
