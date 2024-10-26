@@ -47,3 +47,13 @@ export const SIGN_UP_VALIDATION_SCHEME = Yup.object().shape({
     )
     .required("Please provide password"),
 });
+
+export const FORGOT_PASSWORD_VALIDATION_SCHEME = Yup.object().shape({
+  email: Yup.string()
+    .email("Invalid email address")
+    .matches(
+      /^[^@]+@[^@]+\.[^@]+$/,
+      "Email must contain a valid '@' symbol and domain"
+    )
+    .required("Please provide email address"),
+});

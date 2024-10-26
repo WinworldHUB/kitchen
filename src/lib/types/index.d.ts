@@ -153,6 +153,14 @@ type LoginRequest = {
 };
 
 
+type ForgotPasswordRequest = {
+  email: string;
+};
+
+type ForgotPasswordResponse = GeneralAPIResponse & {
+  email: string;
+};
+
 type GeneralAPIResponse = {
   success: boolean;
   message: string;
