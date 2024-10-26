@@ -68,7 +68,7 @@ Forgotten your password?"
 
                   <Row className="mx-2">
                     <Button
-                      variant="primary"
+                      variant="outline-primary"
                       type="submit"
                       disabled={isSubmitting}
                     >

@@ -149,8 +149,8 @@ const SignInPage = () => {
                   </Form.Group>
                   <Row className="mx-2">
                     <Button
-                      variant="primary"
                       type="submit"
+                      variant="outline-primary"
                       disabled={isSubmitting}
                     >
                       Sign in
