@@ -7,7 +7,7 @@ import { FORGOT_PASSWORD_VALIDATION_SCHEME } from "../lib/constants/validation-c
 // import useApi from "../lib/hooks/useApi";
 import { useState } from "react";
 
-const DEFAULT_LOGIN_VALUES: ForgotPasswordRequest = {
+const DEFAULT_FORGOT_PASSWORD_VALUES: ForgotPasswordRequest = {
   email: "",
 };
 
@@ -28,9 +28,9 @@ Forgotten your password?"
             isAuth
           >
             <Formik
-              initialValues={DEFAULT_LOGIN_VALUES}
+              initialValues={DEFAULT_FORGOT_PASSWORD_VALUES}
               validationSchema={FORGOT_PASSWORD_VALIDATION_SCHEME}
-              onSubmit={async (values: LoginRequest, { setSubmitting }) => {
+              onSubmit={async (values: ForgotPasswordRequest, { setSubmitting }) => {
                 try {
                   alert("This is a placeholder for the actual API call");
                 } catch (error) {
@@ -72,7 +72,7 @@ Forgotten your password?"
                       type="submit"
                       disabled={isSubmitting}
                     >
-                      Sign in
+                        Send Reset Link
                     </Button>
                   </Row>
                 </Form>
