@@ -25,7 +25,7 @@ const HomePage = () => {
 
   return (
     <PageLayout>
-      <FlexBox justifyContent="center" className="mx-auto">
+      <FlexBox justifyContent="start">
         <ProjectsGrid
           projects={appState.activeProjects ?? []}
           onProjectClick={handleProjectClick}

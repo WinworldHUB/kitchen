@@ -28,7 +28,7 @@ const ProjectsGrid: FC<ProjectsGridProps> = ({
   ), [projects, onProjectClick]);
 
   return (
-    <div className="d-flex flex-wrap align-items-start justify-content-start mx-auto">
+    <div className="d-flex flex-wrap align-items-start justify-content-start w-100 px-auto">
       {/* Create New Project Button */}
       <CreateProjectButton onProjectCreate={onProjectCreate} />
       {projects.length > 0 && (
