@@ -255,3 +255,27 @@ export const interiorDesignerFormControls = [
 
   },
 ];
+
+export const DATA_TABLE_DEFAULT_STYLE = {
+  rows: {
+    style: {
+      minHeight: "64px", // override the row height
+    },
+  },
+  headCells: {
+    style: {
+      paddingLeft: "8px", // override the cell padding for head cells
+      paddingRight: "8px",
+      backgroundColor: "var(--bs-white)",
+      color: "black",
+      fontWeight: "bold",
+      fontSize: "24px",
+    },
+  },
+  cells: {
+    style: {
+      paddingLeft: "8px", // override the cell padding for data cells
+      paddingRight: "8px",
+    },
+  },
+};

@@ -207,3 +207,10 @@ type Contractor = {
   email: string;
   address: string;
 };
+
+
+type Payment = {
+  paymentSchedule: string;
+  dueDate: string;
+  status: string;
+}

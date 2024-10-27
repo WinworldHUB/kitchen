@@ -12,6 +12,7 @@ import ProjectContractorPage from "./pages/project.contractor.page";
 import ProjectDesignBriefPage from "./pages/project.design.brief.page";
 import ProjectReportPage from "./pages/project.report.page";
 import ForgotPasswordPage from "./pages/forget.password.page";
+import PaymentsPage from "./pages/payments.page";
 
 const App = () => {
   const { appState } = useContext(AppContext);
@@ -50,6 +51,12 @@ const App = () => {
           path={PageRoutes.UserProfile}
           element={
             appState.isUserLoggedIn ? <UserProfilePage /> : <SignInPage />
+          }
+        />
+        <Route
+          path={PageRoutes.Payments}
+          element={
+            appState.isUserLoggedIn ? <PaymentsPage /> : <SignInPage />
           }
         />
         <Route
