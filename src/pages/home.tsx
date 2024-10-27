@@ -39,7 +39,7 @@ const HomePage = () => {
         onCreateClick={(newProject) => {
           const existingProjects = appState.activeProjects ?? [];
           const projectExists = existingProjects.some(
-            (project) => project.id === newProject.id
+            (project) => project.title === newProject.title
           );
 
           if (!projectExists) {

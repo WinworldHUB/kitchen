@@ -18,7 +18,7 @@ const ProjectsGrid: FC<ProjectsGridProps> = ({
   // Memoize project tiles to prevent unnecessary re-renders
   const projectTiles = useMemo(() => (
     projects.map((project) => (
-      <div key={project.id} className="mx-4 mb-4 d-flex flex-grow-1" style={{ width: '350px' }}>
+      <div key={project.id} className="mx-4 mb-4 d-flex" style={{ width: '350px' }}>
         <ProjectTile
           project={project}
           onClick={() => onProjectClick(project.id)}
@@ -28,7 +28,7 @@ const ProjectsGrid: FC<ProjectsGridProps> = ({
   ), [projects, onProjectClick]);
 
   return (
-    <div className="d-flex flex-wrap align-items-start justify-content-start">
+    <div className="d-flex flex-wrap align-items-start justify-content-start mx-auto">
       {/* Create New Project Button */}
       <CreateProjectButton onProjectCreate={onProjectCreate} />
       {projects.length > 0 && (
