@@ -150,21 +150,18 @@ export const architectFormControls = [
     label: "Website",
     placeholder: "www.example.com",
     type: "text",
-
   },
   {
     controlId: "architectEmail",
     label: "Email",
     placeholder: "john@example.com",
     type: "email",
-
   },
   {
     controlId: "architectAddress",
     label: "Address",
     placeholder: "XYZ street, XYZ area, 123456",
     type: "text",
-
   },
 ];
 
@@ -180,35 +177,30 @@ export const builderFormControls = [
     label: "Company",
     placeholder: "Example XYZ",
     type: "text",
- 
   },
   {
     controlId: "builderContact",
     label: "Contact",
     placeholder: "123456789",
     type: "text",
-
   },
   {
     controlId: "builderWebsite",
     label: "Website",
     placeholder: "www.example.com",
     type: "text",
-
   },
   {
     controlId: "builderEmail",
     label: "Email",
     placeholder: "john@example.com",
     type: "email",
-
   },
   {
     controlId: "builderAddress",
     label: "Address",
     placeholder: "XYZ street, XYZ area, 123456",
     type: "text",
-
   },
 ];
 
@@ -224,35 +216,30 @@ export const interiorDesignerFormControls = [
     label: "Company",
     placeholder: "Example XYZ",
     type: "text",
- 
   },
   {
     controlId: "interiorDesignerContact",
     label: "Contact",
     placeholder: "123456789",
     type: "text",
-
   },
   {
     controlId: "interiorDesignerWebsite",
     label: "Website",
     placeholder: "www.example.com",
     type: "text",
-
   },
   {
     controlId: "interiorDesignerEmail",
     label: "Email",
     placeholder: "john@example.com",
     type: "email",
-
   },
   {
     controlId: "interiorDesignerAddress",
     label: "Address",
     placeholder: "XYZ street, XYZ area, 123456",
     type: "text",
-
   },
 ];
 
@@ -264,8 +251,6 @@ export const DATA_TABLE_DEFAULT_STYLE = {
   },
   headCells: {
     style: {
-      paddingLeft: "8px", // override the cell padding for head cells
-      paddingRight: "8px",
       backgroundColor: "var(--bs-white)",
       color: "black",
       fontWeight: "bold",
@@ -274,8 +259,7 @@ export const DATA_TABLE_DEFAULT_STYLE = {
   },
   cells: {
     style: {
-      paddingLeft: "8px", // override the cell padding for data cells
-      paddingRight: "8px",
+      fontSize: "18px",
     },
   },
 };
