@@ -62,6 +62,7 @@ const AddAppliance: React.FC<AddApplianceProps> = ({
               <Form.Label>Appliance Name</Form.Label>
               <Form.Control
                 as="select"
+                required
                 value={applianceName}
                 onChange={(e) => setApplianceName(e.target.value)}
               >
@@ -81,6 +82,7 @@ const AddAppliance: React.FC<AddApplianceProps> = ({
               <Form.Label>Brand</Form.Label>
               <Form.Control
                 type="text"
+                required
                 placeholder="Enter brand"
                 value={applianceDetails.brand || ""}
                 onChange={(e) =>
@@ -92,6 +94,7 @@ const AddAppliance: React.FC<AddApplianceProps> = ({
               <Form.Label>Type</Form.Label>
               <Form.Control
                 type="text"
+                required
                 placeholder="Enter type"
                 value={applianceDetails.type || ""}
                 onChange={(e) =>
