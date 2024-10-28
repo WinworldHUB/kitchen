@@ -6,8 +6,6 @@ import { getStatusColor } from "../../utils/color";
 
 const MembersDataTable: FC<DataTableProps<Payment>> = ({
   data,
-  onDataImport,
-  isEditable = true,
 }) => {
   const columns: TableColumn<Payment>[] = useMemo(() => {
     return [

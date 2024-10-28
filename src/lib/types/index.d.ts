@@ -12,11 +12,7 @@ type ProjectStatusStep = {
 
 interface DataTableProps<T> {
   title?: string;
-  isEditable?: boolean;
   data: T[];
-  onCreateClick?: VoidFunction;
-  onRowClicked?: Dispatch<SetStateAction<Order>>;
-  onDataImport?: (data: T[]) => void;
 }
 
 type MenuItem = {
@@ -152,7 +148,6 @@ type LoginRequest = {
   password: string;
 };
 
-
 type ForgotPasswordRequest = {
   email: string;
 };
@@ -164,7 +159,7 @@ type ForgotPasswordResponse = GeneralAPIResponse & {
 type GeneralAPIResponse = {
   success: boolean;
   message: string;
-  error? : unknown;
+  error?: unknown;
 };
 
 type LoginResponse = GeneralAPIResponse & {
@@ -191,7 +186,7 @@ type User = {
   email: string;
   phoneNo?: string;
   address?: string;
-}
+};
 
 type ResetPasswordRequest = {
   email: string;
@@ -208,9 +203,16 @@ type Contractor = {
   address: string;
 };
 
+type Appliance = {
+  name: string;
+  brand: string;
+  type: string;
+  additionalInfo: string;
+  referenceUrl: string;
+};
 
 type Payment = {
   paymentSchedule: string;
   dueDate: string;
   status: string;
-}
+};

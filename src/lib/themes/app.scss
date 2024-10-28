@@ -133,3 +133,93 @@ a {
   font-style: italic;
   white-space: pre-line;
 }
+
+.custom-accordion-item {
+  background-color: transparent;
+  border: none;
+}
+
+.custom-accordion-item .accordion-header {
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+
+.custom-accordion-item .accordion-body {
+  background-color: transparent;
+  border: none;
+}
+
+.accordion {
+  border: none;
+  outline: none;
+  background-color: transparent;
+}
+
+.accordion-button {
+  border: none;
+  box-shadow: none;
+  background-color: transparent;
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: transparent;
+}
+
+.accordion-button:focus {
+  box-shadow: none;
+  outline: none;
+}
+
+.accordion-button:not(.collapsed):focus {
+  box-shadow: none;
+  outline: none;
+}
+
+.accordion-button:not(.collapsed) {
+  border: none;
+}
+
+.add-appliance-button {
+  background-color: #7f56d9;
+  cursor: pointer;
+  color: white;
+}
+
+.add-appliance-button:hover {
+  background-color: #6c4fc7;
+}
+
+.appliance-delete-button {
+  cursor: pointer;
+  outline: none;
+  border: none;
+  color: #747577;
+  background-color: transparent;
+  box-shadow: none;
+
+}
+
+.appliance-delete-button:hover {
+  color: #4d4d4d;
+  border: 1px solid #747577;
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.appliance-edit-button {
+  cursor: pointer;
+  outline: none;
+  border: none;
+  color: #7f56d9;
+  background-color: transparent;
+  box-shadow: none;
+
+}
+
+.appliance-edit-button:hover {
+  color: #5e35b1;
+  background-color: transparent;
+  border: 1px solid #7f56d9;
+  box-shadow: none;
+}

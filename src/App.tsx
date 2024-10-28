@@ -13,6 +13,7 @@ import ProjectDesignBriefPage from "./pages/project.design.brief.page";
 import ProjectReportPage from "./pages/project.report.page";
 import ForgotPasswordPage from "./pages/forget.password.page";
 import PaymentsPage from "./pages/payments.page";
+import AppliancesPage from "./pages/appliances.page";
 
 const App = () => {
   const { appState } = useContext(AppContext);
@@ -45,6 +46,12 @@ const App = () => {
           path={PageRoutes.DesignBrief}
           element={
             appState.isUserLoggedIn ? <ProjectDesignBriefPage /> : <SignInPage />
+          }
+        />
+        <Route
+          path={PageRoutes.Appliances}
+          element={
+            appState.isUserLoggedIn ? <AppliancesPage /> : <SignInPage />
           }
         />
         <Route
