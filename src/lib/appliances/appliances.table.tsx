@@ -1,9 +1,5 @@
 import React, { useMemo, useState } from "react";
-import {
-  Card,
-  Container,
-  Button,
-} from "react-bootstrap";
+import { Card, Container, Button } from "react-bootstrap";
 import DataTable, { TableColumn } from "react-data-table-component";
 import { DATA_TABLE_DEFAULT_STYLE } from "../constants";
 import AddAppliance from "./app.appliance";
@@ -19,7 +15,9 @@ const AppliancesTable: React.FC<DataTableProps<Appliance>> = ({
 }) => {
   const [data, setData] = useState<Appliance[]>(initialData);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [currentAppliance, setCurrentAppliance] = useState<Appliance | null>(null);
+  const [currentAppliance, setCurrentAppliance] = useState<Appliance | null>(
+    null
+  );
 
   const handleShow = () => setIsModalOpen(true);
   const handleClose = () => {
@@ -38,16 +36,16 @@ const AppliancesTable: React.FC<DataTableProps<Appliance>> = ({
       );
 
       if (existingApplianceIndex !== -1) {
-        const updatedData = [...prevData]; 
-        updatedData[existingApplianceIndex] = newAppliance; 
-        return updatedData; 
+        const updatedData = [...prevData];
+        updatedData[existingApplianceIndex] = newAppliance;
+        return updatedData;
       } else {
-        return [...prevData, newAppliance]; 
+        return [...prevData, newAppliance];
       }
     });
 
     handleClose();
-    console.log("Added/Updated appliance", newAppliance);
+    alert(`Added/Updated appliance: ${newAppliance.name}`);
   };
 
   const handleEdit = (row: ApplianceGroup) => {
@@ -75,7 +73,7 @@ const AppliancesTable: React.FC<DataTableProps<Appliance>> = ({
           details: [],
         };
       }
-      applianceMap[appliance.name].quantity += 1; 
+      applianceMap[appliance.name].quantity += 1;
       applianceMap[appliance.name].details.push(
         `${appliance.type || "N/A"} (${appliance.brand || "N/A"})`
       );
