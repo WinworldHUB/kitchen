@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { Card, Container, Button } from "react-bootstrap";
+import { Card, Container, Button, Accordion } from "react-bootstrap";
 import DataTable, { TableColumn } from "react-data-table-component";
 import { DATA_TABLE_DEFAULT_STYLE } from "../constants";
 import AddAppliance from "./app.appliance";
@@ -90,9 +90,19 @@ const AppliancesTable: React.FC<DataTableProps<Appliance>> = ({
         sortable: true,
         cell: (row) => (
           <Container fluid className="d-flex w-100">
-            <div className="flex-grow-1 mx-4">
-              {row.name} (Quantity: {row.quantity})
-            </div>
+            <Accordion className="flex-grow-1 bg-transparent mx-4">
+              <Accordion.Item
+                eventKey={row.name}
+                className="custom-accordion-item"
+              >
+                <Accordion.Header className="d-flex justify-content-between align-items-center w-100">
+                  <div className="flex-grow-1">
+                    {row.name} (Quantity: {row.quantity})
+                  </div>
+                </Accordion.Header>
+                <Accordion.Body>{row.details.join(", ")}</Accordion.Body>
+              </Accordion.Item>
+            </Accordion>
             <div className="d-flex justify-content-center align-items-center">
               <Button
                 size="sm"
