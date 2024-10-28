@@ -59,6 +59,7 @@ const NewProjectModal: FC<NewProjectModalProps> = ({
             <Form.Label>Title</Form.Label>
             <Form.Control
               type="text"
+              required
               placeholder="Test Project"
               value={project.title}
               onChange={(e) =>
@@ -79,6 +80,7 @@ const NewProjectModal: FC<NewProjectModalProps> = ({
             <Form.Select
               aria-label="Select project type"
               value={projectType}
+              required
               onChange={(e) => setProjectType(e.target.value)}
             >
               <option value="new-extension">New/Extension</option>
@@ -95,6 +97,7 @@ const NewProjectModal: FC<NewProjectModalProps> = ({
             <Form.Select
               aria-label="Select property type"
               value={propertyType}
+              required
               onChange={(e) => setPropertyType(e.target.value)}
             >
               <option value="cottage">Cottage</option>
