@@ -1,5 +1,4 @@
-import { Button, Col, Form, Row } from "react-bootstrap";
-import PageLayout from "../lib/components/app.layout";
+import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import CardSimple from "../lib/components/card.simple";
 import { Link, useNavigate } from "react-router-dom";
 import { PageRoutes } from "../lib/constants";
@@ -9,12 +8,14 @@ import { USER_APIS } from "../lib/constants/api-constants";
 
 import { Formik } from "formik";
 import FormFieldError from "../lib/components/form.field.error";
-import { SIGN_IN_VALIDATION_SCHEME } from "../lib/constants/validation-constants";
+import {  SIGN_UP_VALIDATION_SCHEME } from "../lib/constants/validation-constants";
 import { useState } from "react";
 
 const DEFAULT_SIGN_UP_VALUES: SignUpRequest = {
-  fullName: "",
+  firstName: "",
+  lastName: "",
   email: "",
+  phoneNo: "",
   password: "",
 };
 
@@ -23,36 +24,47 @@ const SignUpPage = () => {
   const [error, setError] = useState<string | null>(null);
   const { signInUser } = useAuthentication();
   const { postData: sendSignupData } = useApi<SignUpResponse>();
+  
+  const footer = (
+    <div>
+      Already registered?{" "}
+      <Link to={PageRoutes.Login}>
+        <span style={{ color: "blue" }}>Sign In</span>
+      </Link>
+    </div>
+  );
 
   return (
-    <PageLayout>
-      <Row className="justify-content-center">
+    <Container fluid>
+      <Row className="justify-content-center align-items-center min-vh-100">
         <Col md="8" lg="6" xl="4">
-          <CardSimple title="Sign Up" error={error ?? ""}>
+          <CardSimple
+            title="Sign Up For Free"
+            error={error ?? ""}
+            variant="light"
+            footer={footer}
+            isAuth
+          >
             <Formik
               initialValues={DEFAULT_SIGN_UP_VALUES}
-              validationSchema={SIGN_IN_VALIDATION_SCHEME}
+              validationSchema={SIGN_UP_VALIDATION_SCHEME}
               onSubmit={async (values: SignUpRequest, { setSubmitting }) => {
                 try {
-                  // Send the encrypted data to the API
                   const response = await sendSignupData(
                     USER_APIS.SIGNUP_USER_API,
                     {
-                      fullName: values.fullName,
+                      fullName: values.firstName + " " + values.lastName,
                       email: values.email,
                       password: values.password,
                     }
                   );
 
-                  // Handle successful response
                   if (response.success) {
                     signInUser(
-                      // user data
                       {
                         email: values.email,
                         fullName: response.fullName,
                       },
-                      // app state
                       {
                         isUserLoggedIn: true,
                         user_id: response.user_id,
@@ -62,18 +74,13 @@ const SignUpPage = () => {
                     );
                     navigate(PageRoutes.Home);
                   } else {
-                    // Handle error cases with various response types
                     if ("error" in response) {
                       setError(response.error as string);
-                      console.error("Error:", response.error);
                     }
-                    console.error("Sign-up failed:", response.message);
                     setError(response.message);
                   }
                 } catch (error) {
-                  // Handle network or other errors
                   setError("Error signing up. Please try again later.");
-                  console.error("Error signing in:", error);
                 } finally {
                   setSubmitting(false);
                 }
@@ -89,21 +96,42 @@ const SignUpPage = () => {
                 isSubmitting,
               }) => (
                 <Form onSubmit={handleSubmit}>
-                  <Form.Group className="mb-3" controlId="signInForm.fullName">
-                    <Form.Label>Full Name</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="fullName"
-                      placeholder="John Doe"
-                      value={values.fullName}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      required
-                    />
-                    <FormFieldError
-                      error={errors.email && touched.email && errors.email}
-                    />
-                  </Form.Group>
+                  <Row className="mb-3">
+                    <Col xs={6}>
+                      <Form.Group controlId="signInForm.firstName">
+                        <Form.Label>First Name</Form.Label>
+                        <Form.Control
+                          type="text"
+                          name="firstName"
+                          placeholder="John"
+                          value={values.firstName}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          
+                        />
+                        <FormFieldError
+                          error={errors.firstName && touched.firstName && errors.firstName}
+                        />
+                      </Form.Group>
+                    </Col>
+                    <Col xs={6}>
+                      <Form.Group controlId="signInForm.lastName">
+                        <Form.Label>Last Name</Form.Label>
+                        <Form.Control
+                          type="text"
+                          name="lastName"
+                          placeholder="Doe"
+                          value={values.lastName}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          
+                        />
+                        <FormFieldError
+                          error={errors.lastName && touched.lastName && errors.lastName}
+                        />
+                      </Form.Group>
+                    </Col>
+                  </Row>
                   <Form.Group className="mb-3" controlId="signInForm.email">
                     <Form.Label>Email address</Form.Label>
                     <Form.Control
@@ -113,10 +141,25 @@ const SignUpPage = () => {
                       value={values.email}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      required
+                      
                     />
                     <FormFieldError
                       error={errors.email && touched.email && errors.email}
+                    />
+                  </Form.Group>
+                  <Form.Group className="mb-3" controlId="signInForm.phoneNo">
+                    <Form.Label>Phone No.</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="phoneNo"
+                      placeholder="+44 12345678"
+                      value={values.phoneNo}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      
+                    />
+                    <FormFieldError
+                      error={errors.phoneNo && touched.phoneNo && errors.phoneNo}
                     />
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="signInForm.password">
@@ -125,30 +168,29 @@ const SignUpPage = () => {
                       type="password"
                       name="password"
                       placeholder="password"
-                      required
+                      
                       value={values.password}
                       onChange={handleChange}
                     />
+                    <Col>
+                      <p className="text-muted" style={{ fontSize: "12px" }}>
+                        It must be a combination of minimum 8 letters, numbers, and symbols.
+                      </p>
+                    </Col>
                     <FormFieldError
                       error={
                         errors.password && touched.password && errors.password
                       }
                     />
                   </Form.Group>
-                  <Row>
-                    <Col xs="8">
-                      Already registered?{" "}
-                      <Link to={PageRoutes.Login}>Sign In</Link>
-                    </Col>
-                    <Col xs="4" className="text-end">
-                      <Button
-                        variant="primary"
-                        type="submit"
-                        disabled={isSubmitting}
-                      >
-                        Sign Up
-                      </Button>
-                    </Col>
+                  <Row className="mx-2">
+                    <Button
+                      variant="outline-primary"
+                      type="submit"
+                      disabled={isSubmitting}
+                    >
+                      Sign Up
+                    </Button>
                   </Row>
                 </Form>
               )}
@@ -156,7 +198,8 @@ const SignUpPage = () => {
           </CardSimple>
         </Col>
       </Row>
-    </PageLayout>
+    </Container>
   );
 };
+
 export default SignUpPage;

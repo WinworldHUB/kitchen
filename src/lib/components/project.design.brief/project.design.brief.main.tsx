@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Card, Col, Container, Modal, Row } from "react-bootstrap";
+import { PageRoutes } from "../../constants";
 
 const ProjectDesignBriefMain = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>();
@@ -42,19 +43,21 @@ const ProjectDesignBriefMain = () => {
           </Card>
         </Col>
         <Col>
-          <Card>
-            <Card.Img
-              variant="top"
-              src="/assets/images/appliances.jpeg"
-              alt="Appliances"
-              style={{ height: "300px", objectFit: "cover" }}
-            />
-            <Card.Body>
-              <Card.Title className="text-center fw-semibold my-4">
-                Appliances
-              </Card.Title>
-            </Card.Body>
-          </Card>
+          <a href={PageRoutes.Appliances}>
+            <Card>
+              <Card.Img
+                variant="top"
+                src="/assets/images/appliances.jpeg"
+                alt="Appliances"
+                style={{ height: "300px", objectFit: "cover" }}
+              />
+              <Card.Body>
+                <Card.Title className="text-center fw-semibold my-4">
+                  Appliances
+                </Card.Title>
+              </Card.Body>
+            </Card>
+          </a>
         </Col>
       </Row>
       <Modal show={isModalOpen} onHide={() => setIsModalOpen(false)} centered>

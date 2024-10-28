@@ -25,7 +25,7 @@ const HomePage = () => {
 
   return (
     <PageLayout>
-      <FlexBox justifyContent="center" className="mx-auto">
+      <FlexBox justifyContent="start">
         <ProjectsGrid
           projects={appState.activeProjects ?? []}
           onProjectClick={handleProjectClick}
@@ -39,7 +39,7 @@ const HomePage = () => {
         onCreateClick={(newProject) => {
           const existingProjects = appState.activeProjects ?? [];
           const projectExists = existingProjects.some(
-            (project) => project.id === newProject.id
+            (project) => project.title === newProject.title
           );
 
           if (!projectExists) {

@@ -1,14 +1,11 @@
-import { Button, Col, Form, Row } from "react-bootstrap";
-import PageLayout from "../lib/components/app.layout";
+import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import CardSimple from "../lib/components/card.simple";
 import { Link, useNavigate } from "react-router-dom";
 import { PageRoutes } from "../lib/constants";
 import { Formik } from "formik";
 import FormFieldError from "../lib/components/form.field.error";
 import { SIGN_IN_VALIDATION_SCHEME } from "../lib/constants/validation-constants";
-
 import { USER_APIS } from "../lib/constants/api-constants";
-
 import useApi from "../lib/hooks/useApi";
 import useAuthentication from "../lib/hooks/useAuthentication";
 import { useState } from "react";
@@ -24,19 +21,32 @@ const SignInPage = () => {
   const [error, setError] = useState<string | null>(null);
   const { signInUser } = useAuthentication();
 
+  const footer = (
+    <div>
+      Not registered yet?{" "}
+      <Link to={PageRoutes.SignUp}>
+        <span style={{ color: "blue" }}>Register now</span>
+      </Link>
+    </div>
+  );
+
   return (
-    <PageLayout>
-      <Row className="justify-content-center">
+    <Container fluid>
+      <Row className="justify-content-center align-items-center min-vh-100">
         <Col md="8" lg="6" xl="4">
-          <CardSimple title="Sign In" error={error ?? ""}>
+          <CardSimple
+            title="Welcome Back"
+            subTitle="Please login to continue"
+            error={error ?? ""}
+            footer={footer}
+            variant="light"
+            isAuth
+          >
             <Formik
               initialValues={DEFAULT_LOGIN_VALUES}
               validationSchema={SIGN_IN_VALIDATION_SCHEME}
               onSubmit={async (values: LoginRequest, { setSubmitting }) => {
                 try {
-          
-
-                  // Send the encrypted data to the API
                   const response = await sendSignInData(
                     USER_APIS.LOGIN_USER_API,
                     {
@@ -45,15 +55,12 @@ const SignInPage = () => {
                     }
                   );
 
-                  // Handle successful response
                   if (response?.success) {
                     signInUser(
-                      // user data
                       {
                         email: values.email,
                         fullName: response.fullName,
                       },
-                      // app state
                       {
                         isUserLoggedIn: true,
                         user_id: response.user_id,
@@ -63,7 +70,6 @@ const SignInPage = () => {
                     );
                     navigate(PageRoutes.Home);
                   } else {
-                    // Handle error cases with various response types
                     if ("error" in response) {
                       console.error("Error:", response.error);
                       setError(response.error as string);
@@ -72,7 +78,6 @@ const SignInPage = () => {
                     setError(response.message);
                   }
                 } catch (error) {
-                  // Handle network or other errors
                   console.error("Error signing in:", error);
                   setError("Error signing in. Please try again.");
                 } finally {
@@ -99,7 +104,6 @@ const SignInPage = () => {
                       value={values.email}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      required
                     />
                     <FormFieldError
                       error={errors.email && touched.email && errors.email}
@@ -111,30 +115,46 @@ const SignInPage = () => {
                       type="password"
                       name="password"
                       placeholder="password"
-                      required
                       value={values.password}
                       onChange={handleChange}
+                      onBlur={handleBlur}
                     />
-                    <FormFieldError
-                      error={
-                        errors.password && touched.password && errors.password
-                      }
-                    />
+
+                    <Col>
+                      <p className="text-muted" style={{ fontSize: "12px" }}>
+                        It must be a combination of minimum 8 letters, numbers,
+                        and symbols.
+                      </p>
+                    </Col>
+
+                    <Row className="justify-content-between">
+                      <Col lg={6} className="text-start">
+                        <FormFieldError
+                          error={
+                            errors.password &&
+                            touched.password &&
+                            errors.password
+                          }
+                        />
+                      </Col>
+                      <Col lg={6} className="text-end">
+                        <a
+                          href={PageRoutes.ForgotPassword}
+                          style={{ fontSize: "12px" }}
+                        >
+                          Forgot password?
+                        </a>
+                      </Col>
+                    </Row>
                   </Form.Group>
-                  <Row>
-                    <Col xs="8">
-                      Not registered yet?{" "}
-                      <Link to={PageRoutes.SignUp}>Register now</Link>
-                    </Col>
-                    <Col xs="4" className="text-end">
-                      <Button
-                        variant="primary"
-                        type="submit"
-                        disabled={isSubmitting}
-                      >
-                        Sign in
-                      </Button>
-                    </Col>
+                  <Row className="mx-2">
+                    <Button
+                      type="submit"
+                      variant="outline-primary"
+                      disabled={isSubmitting}
+                    >
+                      Sign in
+                    </Button>
                   </Row>
                 </Form>
               )}
@@ -142,7 +162,7 @@ const SignInPage = () => {
           </CardSimple>
         </Col>
       </Row>
-    </PageLayout>
+    </Container>
   );
 };
 

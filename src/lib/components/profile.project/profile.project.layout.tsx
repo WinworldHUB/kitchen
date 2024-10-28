@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { Container, Row, Col, Button, Nav } from "react-bootstrap";
-import { useParams } from "react-router-dom"; // Import useParams
+import { useParams, useLocation } from "react-router-dom"; // Import useLocation and useParams
 import PageLayout from "../app.layout";
 import FlexBox from "../app.flex.box";
 import { PageRoutes } from "../../constants";
@@ -16,24 +16,8 @@ interface ProfileProjectLayoutProps {
 }
 
 const ProfileProjectLayout: React.FC<ProfileProjectLayoutProps> = ({ children }) => {
-  const [activeLink, setActiveLink] = useState<string>("");
   const { projectId } = useParams(); // Get the projectId from the URL
-
-  const handleMouseEnter = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.currentTarget.style.backgroundColor = "#ffc000";
-    e.currentTarget.style.fontWeight = "bold";
-  };
-
-  const handleMouseLeave = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    if (e.currentTarget.getAttribute("href") !== activeLink) {
-      e.currentTarget.style.backgroundColor = "transparent";
-      e.currentTarget.style.fontWeight = "normal";
-    }
-  };
-
-  const handleLinkClick = (href: string) => {
-    setActiveLink(href);
-  };
+  const location = useLocation(); // Get the current location
 
   // Define the links, replacing :projectId with the actual projectId
   const linksTop: NavLink[] = [
@@ -85,12 +69,9 @@ const ProfileProjectLayout: React.FC<ProfileProjectLayoutProps> = ({ children })
                     className="text-white"
                     style={{
                       backgroundColor:
-                        activeLink === link.href ? "#ffc000" : "transparent",
-                      fontWeight: activeLink === link.href ? "bold" : "normal",
+                        location.pathname === link.href ? "#ffc000" : "transparent",
+                      fontWeight: location.pathname === link.href ? "bold" : "normal",
                     }}
-                    onMouseEnter={handleMouseEnter}
-                    onMouseLeave={handleMouseLeave}
-                    onClick={() => handleLinkClick(link.href)}
                   >
                     {link.name}
                   </Nav.Link>
@@ -104,12 +85,9 @@ const ProfileProjectLayout: React.FC<ProfileProjectLayoutProps> = ({ children })
                     className="text-white"
                     style={{
                       backgroundColor:
-                        activeLink === link.href ? "#ffc000" : "transparent",
-                      fontWeight: activeLink === link.href ? "bold" : "normal",
+                        location.pathname === link.href ? "#ffc000" : "transparent",
+                      fontWeight: location.pathname === link.href ? "bold" : "normal",
                     }}
-                    onMouseEnter={handleMouseEnter}
-                    onMouseLeave={handleMouseLeave}
-                    onClick={() => handleLinkClick(link.href)}
                   >
                     {link.name}
                   </Nav.Link>

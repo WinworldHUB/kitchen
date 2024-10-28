@@ -11,7 +11,7 @@ const CreateProjectButton: React.FC<CreateProjectButtonProps> = ({
   onProjectCreate,
 }) => {
   return (
-    <div className="mx-4 mb-4 d-flex flex-grow-1">
+    <div className="mb-4 mx-4">
       <Button
         onClick={onProjectCreate}
         style={{

@@ -11,6 +11,9 @@ import ProjectProfilePage from "./pages/project.profile";
 import ProjectContractorPage from "./pages/project.contractor.page";
 import ProjectDesignBriefPage from "./pages/project.design.brief.page";
 import ProjectReportPage from "./pages/project.report.page";
+import ForgotPasswordPage from "./pages/forget.password.page";
+import PaymentsPage from "./pages/payments.page";
+import AppliancesPage from "./pages/appliances.page";
 
 const App = () => {
   const { appState } = useContext(AppContext);
@@ -46,9 +49,21 @@ const App = () => {
           }
         />
         <Route
+          path={PageRoutes.Appliances}
+          element={
+            appState.isUserLoggedIn ? <AppliancesPage /> : <SignInPage />
+          }
+        />
+        <Route
           path={PageRoutes.UserProfile}
           element={
             appState.isUserLoggedIn ? <UserProfilePage /> : <SignInPage />
+          }
+        />
+        <Route
+          path={PageRoutes.Payments}
+          element={
+            appState.isUserLoggedIn ? <PaymentsPage /> : <SignInPage />
           }
         />
         <Route
@@ -59,6 +74,7 @@ const App = () => {
         />
         <Route path={PageRoutes.Login} element={<SignInPage />} />
         <Route path={PageRoutes.SignUp} element={<SignUpPage />} />
+        <Route path={PageRoutes.ForgotPassword} element={<ForgotPasswordPage/>} />
       </Routes>
     </BrowserRouter>
   );
