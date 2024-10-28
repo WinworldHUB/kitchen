@@ -6,7 +6,7 @@ import { DUMMY_PAYMENTS } from "../lib/data/dummy_payments";
 const PaymentsPage = () => {
   return (
     <ProfileProjectLayout>
-      <PaymentsTable data={DUMMY_PAYMENTS} />
+      <PaymentsTable initialData={DUMMY_PAYMENTS} />
     </ProfileProjectLayout>
   );
 };

@@ -6,7 +6,7 @@ import { DUMMY_APPLIANCES } from '../lib/data/dummy_appliances'
 const AppliancesPage = () => {
   return (
     <ProfileProjectLayout>
-        <AppliancesTable data={DUMMY_APPLIANCES}/>
+        <AppliancesTable initialData={DUMMY_APPLIANCES}/>
     </ProfileProjectLayout>
   )
 }

@@ -5,7 +5,7 @@ import { DATA_TABLE_DEFAULT_STYLE } from "../../constants";
 import { getStatusColor } from "../../utils/color";
 
 const MembersDataTable: FC<DataTableProps<Payment>> = ({
-  data,
+  initialData,
 }) => {
   const columns: TableColumn<Payment>[] = useMemo(() => {
     return [
@@ -46,7 +46,7 @@ const MembersDataTable: FC<DataTableProps<Payment>> = ({
       <Card.Body>
         <DataTable
           columns={columns}
-          data={data}
+          data={initialData}
           striped
           highlightOnHover
           pagination

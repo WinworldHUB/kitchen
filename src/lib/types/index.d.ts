@@ -12,7 +12,7 @@ type ProjectStatusStep = {
 
 interface DataTableProps<T> {
   title?: string;
-  data: T[];
+  initialData: T[];
 }
 
 type MenuItem = {
@@ -207,8 +207,8 @@ type Appliance = {
   name: string;
   brand: string;
   type: string;
-  additionalInfo: string;
-  referenceUrl: string;
+  additionalInfo?: string;
+  referenceUrl?: string;
 };
 
 type Payment = {
