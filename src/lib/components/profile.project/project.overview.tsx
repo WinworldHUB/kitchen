@@ -23,7 +23,7 @@ const ProjectOverview: React.FC<ProjectOverviewProps> = ({ project }) => {
             <FlexBox justifyContent="between">
               <Col>
                 <Card.Title className="fw-bold fs-3">
-                  {project.owner}
+                  {project.owner ?? "James Anderson"}
                 </Card.Title>
                 <Card.Text>{project.title}</Card.Text>
                 <Card.Text>{project.address}</Card.Text>
