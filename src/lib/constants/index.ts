@@ -264,3 +264,30 @@ export const DATA_TABLE_DEFAULT_STYLE = {
     },
   },
 };
+
+
+export const APPLIANCE_LIST: string[] = [
+  "Ovens",
+  "Coffee Machine",
+  "Warming Drawer",
+  "Range Cooker",
+  "Hob",
+  "Extractor",
+  "Fridge",
+  "Freezer",
+  "Wine Cooler",
+  "Dishwasher",
+  "Washing Machine",
+  "Tumble Dryer",
+  "Washer/Dryer"
+];
+
+
+export const PROPERTY_LIST: string[] = [
+  "Flat",
+  "Detached",
+  "Semi-detached",
+  "Terraced",
+  "Cottage",
+  "Bungalow"
+];

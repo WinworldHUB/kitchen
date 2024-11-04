@@ -39,6 +39,7 @@ type Project = {
   title: string;
   address?: string;
   phone?: string;
+  owner: string;
 
   isExistingProject?: boolean;
   isKnockDownWall?: boolean;

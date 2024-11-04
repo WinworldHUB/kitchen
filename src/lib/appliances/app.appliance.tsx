@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
+import { APPLIANCE_LIST } from "../constants";
 
 interface AddApplianceProps {
   show: boolean;
@@ -67,12 +68,11 @@ const AddAppliance: React.FC<AddApplianceProps> = ({
                 onChange={(e) => setApplianceName(e.target.value)}
               >
                 <option value="">Select...</option>
-                <option value="fridge">Fridge</option>
-                <option value="extractor">Extractor</option>
-                <option value="tap">Tap</option>
-                <option value="oven">Oven</option>
-                <option value="dishwasher">Dishwasher</option>
-                <option value="hob">Hob</option>
+                {APPLIANCE_LIST.map((appliance, index) => (
+                  <option key={index} value={appliance}>
+                    {appliance}
+                  </option>
+                ))}
               </Form.Control>
             </Form.Group>
           </Form>

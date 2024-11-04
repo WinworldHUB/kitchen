@@ -1,12 +1,21 @@
 import { FC, useMemo } from "react";
-import { Card } from "react-bootstrap";
+import { Card, Col, Container, Row } from "react-bootstrap";
 import DataTable, { TableColumn } from "react-data-table-component";
 import { DATA_TABLE_DEFAULT_STYLE } from "../../constants";
 import { getStatusColor } from "../../utils/color";
 
-const MembersDataTable: FC<DataTableProps<Payment>> = ({
-  initialData,
-}) => {
+type Total = {
+  title: string;
+  amount: number;
+};
+
+const DUMMY_TOTAL: Total[] = [
+  { title: "Total Amount", amount: 10000 },
+  { title: "Total Paid", amount: 5000 },
+  { title: "Total Outstanding", amount: 5000 },
+];
+
+const PaymentsTable: FC<DataTableProps<Payment>> = ({ initialData }) => {
   const columns: TableColumn<Payment>[] = useMemo(() => {
     return [
       {
@@ -25,7 +34,7 @@ const MembersDataTable: FC<DataTableProps<Payment>> = ({
           const { color } = getStatusColor(row.status);
           return (
             <div
-            className=" fw-bold"
+              className="fw-bold"
               style={{
                 color: color,
                 padding: "5px",
@@ -42,19 +51,28 @@ const MembersDataTable: FC<DataTableProps<Payment>> = ({
   }, []);
 
   return (
-    <Card>
-      <Card.Body>
-        <DataTable
-          columns={columns}
-          data={initialData}
-          striped
-          highlightOnHover
-          pagination
-          customStyles={DATA_TABLE_DEFAULT_STYLE}
-        />
-      </Card.Body>
-    </Card>
+    <Container fluid>
+      <Row className="mb-3 mx-2">
+        {DUMMY_TOTAL.map((total, index) => (
+          <Col key={index} className="d-flex align-items-center">
+            <div className="fs-3 fw-light">{`${total.title}: $${total.amount}`}</div>
+          </Col>
+        ))}
+      </Row>
+      <Card>
+        <Card.Body>
+          <DataTable
+            columns={columns}
+            data={initialData}
+            striped
+            highlightOnHover
+            pagination
+            customStyles={DATA_TABLE_DEFAULT_STYLE}
+          />
+        </Card.Body>
+      </Card>
+    </Container>
   );
 };
 
-export default MembersDataTable;
+export default PaymentsTable;

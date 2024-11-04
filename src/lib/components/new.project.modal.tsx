@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import { Button, Form, InputGroup, Modal } from "react-bootstrap";
 import { createProject } from "../utils/project.utils";
-import { DEFAULT_PROJECT_ADDRESS } from "../constants";
+import { DEFAULT_PROJECT_ADDRESS, PROPERTY_LIST } from "../constants";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import useApi from "../hooks/useApi";
 
@@ -16,7 +16,7 @@ const NewProjectModal: FC<NewProjectModalProps> = ({
   onCreateClick,
   onCloseClick,
 }) => {
-  const [project, setProject] = useState<Project>(createProject());
+  const [project, setProject] = useState<Project>(createProject("James Anderson"));
   const { getData: getAddresses, data: addressSummary } =
     useApi<AddressSummary>("https://postcode.apitier.com/v1/postcodes/");
   const [postcode, setPostcode] = useState<string>();
@@ -100,11 +100,12 @@ const NewProjectModal: FC<NewProjectModalProps> = ({
               required
               onChange={(e) => setPropertyType(e.target.value)}
             >
-              <option value="cottage">Cottage</option>
-              <option value="apartment">Apartment</option>
-              <option value="loft-mills">Loft Mills</option>
-              <option value="modern">Modern</option>
-              <option value="period">Period</option>
+              <option disabled>Select the appropriate option</option>
+              {PROPERTY_LIST.map((property, index) => (
+                <option key={index} value={property}>
+                  {property}
+                </option>
+              ))}
             </Form.Select>
           </Form.Group>
 

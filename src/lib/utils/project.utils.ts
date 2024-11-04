@@ -6,12 +6,14 @@ import {
 } from "../constants";
 
 export const createProject = (
+  owner: string,
   title?: string,
   address?: string,
   status?: number
 ): Project => {
   return {
     id: uuidv4(),
+    owner: owner,
     title: title ?? "",
     address: address ?? "",
     featuredImage: DEFAULT_KITCHEN_IMAGE,
@@ -25,6 +27,7 @@ export const dummyProjects = (status?: number): Project[] => {
   for (let index = 0; index < 155; index++) {
     projects.push(
       createProject(
+        `Owner ${index + 1}`,
         `Test Project ${index + 1}`,
         `19 Temple Fortune Parade, Finchley Rd, London NW11 0QS, United Kingdom`,
         status
