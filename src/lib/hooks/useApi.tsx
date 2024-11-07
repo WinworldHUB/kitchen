@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import {
   API_BASE_URL,
+  DEFAULT_FORM_DATA_HEADER,
   DEFAULT_GET_API_HEADER,
   DEFAULT_POST_API_HEADER,
 } from "../constants/api-constants";
@@ -37,6 +38,13 @@ interface APIState<T> {
    * @returns: Deleted record
    */
   deleteData: (url: string) => Promise<T>;
+  /**
+   * API Post Method for form data.
+   * @param url: Url of the endpoint starting with '/'
+   * @param formData: Form data to be passed as parameter for the Post API Method.
+   * @returns: Added object with additional details like id, etc...
+   */
+  postFormData: (url: string, formData: FormData) => Promise<T>;
 }
 
 const useApi = <T,>(baseUrl?: string): APIState<T> => {
@@ -148,8 +156,34 @@ const useApi = <T,>(baseUrl?: string): APIState<T> => {
       return undefined;
     }
   };
+  /**
+   * API Post Method for multipart form data.
+   * @param url: Url of the endpoint starting with '/'
+   * @param formData: FormData object containing files or other form fields
+   * @returns: Response data from server after file upload
+   */
+  const postFormData = async (url: string, formData: FormData) => {
+    try {
+      const response = await fetch(`${baseUrl ?? API_BASE_URL}${url}`, {
+        method: "POST",
+        body: formData,
+        headers: DEFAULT_FORM_DATA_HEADER(appState.accessJWT),
+      });
 
-  return { data, getData, postData, putData, deleteData };
+      if (!response.ok) {
+        throw new Error(`Error posting form data: ${response.status} - ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      setData(data);
+      return data;
+    } catch (error) {
+      console.error("POST form data request failed:", error);
+      return undefined;
+    }
+  };
+
+  return { data, getData, postData, putData, deleteData, postFormData };
 };
 
 export default useApi;

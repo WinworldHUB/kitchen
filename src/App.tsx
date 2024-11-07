@@ -14,6 +14,7 @@ import ProjectReportPage from "./pages/project.report.page";
 import ForgotPasswordPage from "./pages/forget.password.page";
 import PaymentsPage from "./pages/payments.page";
 import AppliancesPage from "./pages/appliances.page";
+import ProjectDocumentPage from "./pages/project.document.page";
 
 const App = () => {
   const { appState } = useContext(AppContext);
@@ -52,6 +53,12 @@ const App = () => {
           path={PageRoutes.Appliances}
           element={
             appState.isUserLoggedIn ? <AppliancesPage /> : <SignInPage />
+          }
+        />
+        <Route
+          path={PageRoutes.Documents}
+          element={
+            appState.isUserLoggedIn ? <ProjectDocumentPage /> : <SignInPage />
           }
         />
         <Route
