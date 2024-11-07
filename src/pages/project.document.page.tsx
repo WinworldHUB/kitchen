@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Alert, ListGroup, Spinner } from "react-bootstrap";
 import useApi from "../lib/hooks/useApi";
 import { PROJECT_APIS } from "../lib/constants/api-constants";
+import ProfileProjectLayout from "../lib/components/profile.project/profile.project.layout";
 
 const ProjectDocumentPage = () => {
   const [documents, setDocuments] = useState<GetDocument[]>([]);
@@ -76,7 +77,7 @@ const ProjectDocumentPage = () => {
   };
 
   return (
-    <div className="container">
+    <ProfileProjectLayout>
       <h1 className="my-4">Project Documents</h1>
 
       {uploadStatus && (
@@ -123,7 +124,7 @@ const ProjectDocumentPage = () => {
       ) : (
         <Alert variant="info">No documents found.</Alert>
       )}
-    </div>
+    </ProfileProjectLayout>
   );
 };
 
