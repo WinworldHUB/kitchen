@@ -15,8 +15,8 @@ export const DEFAULT_FORM_DATA_HEADER = (session_jwt: string) => {
     Authorization: `Bearer ${session_jwt}`,
   };
 };
-// export const API_BASE_URL = "https://main.d7yplbx88vqq4.amplifyapp.com";
-export const API_BASE_URL = "http://localhost:3000";
+export const API_BASE_URL = "https://main.d7yplbx88vqq4.amplifyapp.com";
+// export const API_BASE_URL = "http://localhost:3000";
 
 export const TEST_APIS = {
   GET_API: "https://reqres.in/api/users?page=2",

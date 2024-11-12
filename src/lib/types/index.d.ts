@@ -217,12 +217,10 @@ type Payment = {
   dueDate: string;
   status: string;
 };
-
 interface FileData {
   ETag: string;
   ServerSideEncryption: string;
   Location: string;
-  key: string;
   Key: string;
   Bucket: string;
 }
@@ -231,13 +229,17 @@ type UploadFileResponse = GeneralAPIResponse & {
   data: FileData[];
 };
 
-
 type GetDocument = {
   key: string;
   lastModified: string;
   size: number;
 };
 
+type ProjectDocsData = {
+  userDocs: GetDocument[];
+  moietyDocs: GetDocument[];
+}
+
 type GetProjectDocsResponse = GeneralAPIResponse & {
-  data: GetDocument[];
+  data: ProjectDocsData;
 };
