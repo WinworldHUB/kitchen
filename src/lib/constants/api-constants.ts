@@ -35,7 +35,7 @@ export const USER_APIS = {
 
 export const PROJECT_APIS = {
   CREATE_PROJECT_API: "/project/create",
-  GET_PROJECTS_API: "/project/user",
+  GET_PROJECTS_API: "/project/user/get",
   GET_PROJECT_BY_ID_API: "/project/get",
   DELETE_PROJECT_API: "/project",
   UPDATE_PROJECT_API: "/project",

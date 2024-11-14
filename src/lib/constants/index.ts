@@ -291,3 +291,9 @@ export const PROPERTY_LIST: string[] = [
   "Cottage",
   "Bungalow"
 ];
+
+
+export enum ProjectType {
+  NewExtension = "New/Extension",
+  ExistingRenovation = "Existing/Renovation",
+}

@@ -1,32 +1,32 @@
 import { FC, useState } from "react";
 import { Button, Form, InputGroup, Modal } from "react-bootstrap";
-import { createProject } from "../utils/project.utils";
-import { DEFAULT_PROJECT_ADDRESS, PROPERTY_LIST } from "../constants";
+import { DEFAULT_PROJECT_ADDRESS, ProjectType, PROPERTY_LIST } from "../constants";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import useApi from "../hooks/useApi";
+import { PROJECT_APIS } from "../constants/api-constants";
 
 interface NewProjectModalProps {
   isShow: boolean;
-  onCreateClick: (project: Project) => void;
   onCloseClick: VoidFunction;
 }
 
 const NewProjectModal: FC<NewProjectModalProps> = ({
   isShow,
-  onCreateClick,
   onCloseClick,
 }) => {
-  const [project, setProject] = useState<Project>(createProject("James Anderson"));
+  const { postData: sendProjectData } = useApi<CreateProjectResponse>();  
   const { getData: getAddresses, data: addressSummary } =
     useApi<AddressSummary>("https://postcode.apitier.com/v1/postcodes/");
-  const [postcode, setPostcode] = useState<string>();
-  const [address, setAddress] = useState<string>();
-  const [projectType, setProjectType] = useState<string>("new-extension");
+
+  const [title, setTitle] = useState<string>("");
+  const [postcode, setPostcode] = useState<string>("");
+  const [address, setAddress] = useState<string>(DEFAULT_PROJECT_ADDRESS);
+  const [projectType, setProjectType] = useState<string>(ProjectType.NewExtension);
   const [propertyType, setPropertyType] = useState<string>("cottage");
 
   const searchAddress = async () => {
     await getAddresses(
-      `${postcode ?? ""}?x-api-key=WQjGYGswUwaUAk3lAzF305NcmGLa4Yyh2UYD2w7q`
+      `${postcode}?x-api-key=WQjGYGswUwaUAk3lAzF305NcmGLa4Yyh2UYD2w7q`
     );
   };
 
@@ -34,8 +34,25 @@ const NewProjectModal: FC<NewProjectModalProps> = ({
     setAddress(selectedAddress);
   };
 
-  console.log(address);
-
+  const handleCreateProject = async () => {
+    try {  
+      const newProject:CreateProjectRequest = {
+        title: title,
+        address: address ?? DEFAULT_PROJECT_ADDRESS,
+        propertyType: propertyType,
+        isExistingProject: projectType === ProjectType.ExistingRenovation,
+      };
+  
+      // Send newProject data to backend
+      await sendProjectData(PROJECT_APIS.CREATE_PROJECT_API, newProject);
+  
+      // Close modal on success
+      onCloseClick();
+    } catch (error) {
+      console.error("Error creating project:", error);
+    }
+  };
+  
   return (
     <Modal
       show={isShow}
@@ -60,22 +77,13 @@ const NewProjectModal: FC<NewProjectModalProps> = ({
             <Form.Control
               type="text"
               required
-              placeholder="Test Project"
-              value={project.title}
-              onChange={(e) =>
-                setProject({
-                  ...project,
-                  title: e.target.value,
-                  address: DEFAULT_PROJECT_ADDRESS,
-                })
-              }
+              placeholder="Project Title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
             />
           </Form.Group>
 
-          <Form.Group
-            className="mb-3"
-            controlId="createProjectForm.ProjectType"
-          >
+          <Form.Group className="mb-3" controlId="createProjectForm.ProjectType">
             <Form.Label>Type of Project</Form.Label>
             <Form.Select
               aria-label="Select project type"
@@ -88,11 +96,7 @@ const NewProjectModal: FC<NewProjectModalProps> = ({
             </Form.Select>
           </Form.Group>
 
-          {/* New Dropdown for Type of Property */}
-          <Form.Group
-            className="mb-3"
-            controlId="createProjectForm.PropertyType"
-          >
+          <Form.Group className="mb-3" controlId="createProjectForm.PropertyType">
             <Form.Label>Type of Property</Form.Label>
             <Form.Select
               aria-label="Select property type"
@@ -115,7 +119,6 @@ const NewProjectModal: FC<NewProjectModalProps> = ({
               <Form.Control
                 placeholder="Postcode"
                 aria-label="Postcode"
-                aria-describedby="Postcode"
                 value={postcode}
                 onChange={(e) => setPostcode(e.target.value)}
               />
@@ -124,7 +127,6 @@ const NewProjectModal: FC<NewProjectModalProps> = ({
               </Button>
             </InputGroup>
 
-            {/* Dropdown for Address Selection */}
             {addressSummary?.result?.addresses?.length > 0 && (
               <Form.Group controlId="selectAddressDropdown">
                 <Form.Label>Select Address</Form.Label>
@@ -134,10 +136,7 @@ const NewProjectModal: FC<NewProjectModalProps> = ({
                 >
                   <option>Select an address...</option>
                   {addressSummary.result.addresses.map((addr) => (
-                    <option
-                      key={addr.delivery_point_suffix}
-                      value={addr.address}
-                    >
+                    <option key={addr.delivery_point_suffix} value={addr.address}>
                       {addr.address}
                     </option>
                   ))}
@@ -154,7 +153,7 @@ const NewProjectModal: FC<NewProjectModalProps> = ({
         </Button>
         <Button
           style={{ backgroundColor: "#7F56D9" }}
-          onClick={() => onCreateClick(project)}
+          onClick={handleCreateProject}
         >
           Create
         </Button>

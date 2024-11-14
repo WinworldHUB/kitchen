@@ -34,34 +34,27 @@ interface ComponentProps {
 }
 
 type Project = {
-  id: string;
-  featuredImage?: string;
+  id: string | null;
   title: string;
-  address?: string;
-  phone?: string;
-  owner: string;
+  address: string;  // `notNull` in schema
+  status: number;
+  userId: string;   // Added to match schema
 
-  isExistingProject?: boolean;
-  isKnockDownWall?: boolean;
-  isArchitectAppointed?: boolean;
-  isPlanningApproved?: boolean;
-  isBuilderAppointed?: boolean;
+  propertyType: string;
+
+  isExistingProject: boolean;
   isInteriorDesignerAppointed?: boolean;
   isPitchedCeiling?: boolean;
   isSkylights?: boolean;
   isStepInKitchen?: boolean;
 
-  knockDownWallDetails?: string;
   architectName?: string;
   builderName?: string;
   interiorDesignerName?: string;
   ceilingHeight?: string;
-  numberOfSkylights?: string;
+  numberOfSkylights?: number;
   skylightDetails?: string;
   kitchenStepsDetails?: string;
-
-  propertyType?: string;
-  status: number;
 };
 
 interface ProjectProps {
@@ -243,3 +236,19 @@ type ProjectDocsData = {
 type GetProjectDocsResponse = GeneralAPIResponse & {
   data: ProjectDocsData;
 };
+
+
+type CreateProjectResponse = GeneralAPIResponse & {
+  projectId: string;
+}
+
+type CreateProjectRequest = {
+  title: string;
+  address: string;
+  propertyType: string;
+  isExistingProject: boolean;
+}
+
+type GetProjectResponse = GeneralAPIResponse & {
+  projects: Project[]
+}
