@@ -34,6 +34,11 @@ export const USER_APIS = {
 };
 
 export const PROJECT_APIS = {
-  GET_PROJECT_DOCUMENTS_API: "/project/docs/get",
+  CREATE_PROJECT_API: "/project/create",
+  GET_PROJECTS_API: "/project/user",
+  GET_PROJECT_BY_ID_API: "/project/get",
+  DELETE_PROJECT_API: "/project",
+  UPDATE_PROJECT_API: "/project",
   UPLOAD_PROJECT_DOCUMENT_API: "/project/docs/upload",
+  GET_PROJECT_DOCUMENTS_API: "/project/docs/get",
 };
