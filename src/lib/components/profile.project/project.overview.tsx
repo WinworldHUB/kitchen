@@ -5,10 +5,10 @@ import FlexBox from "../app.flex.box";
 
 interface ProjectOverviewProps {
   project: Project;
+  user: string;
 }
-// Get the key for the designBrief value
-const status = ProjectStatus[ProjectStatus.designBrief];
-const ProjectOverview: React.FC<ProjectOverviewProps> = ({ project }) => {
+
+const ProjectOverview: React.FC<ProjectOverviewProps> = ({ project,user }) => {
   return (
     <>
       <Row className="my-2 p-4">
@@ -23,10 +23,10 @@ const ProjectOverview: React.FC<ProjectOverviewProps> = ({ project }) => {
             <FlexBox justifyContent="between">
               <Col>
                 <Card.Title className="fw-bold fs-3">
-                  {project.userId ?? "James Anderson"}
+                  {user ?? ""}
                 </Card.Title>
-                <Card.Text>{project.title}</Card.Text>
-                <Card.Text>{project.address}</Card.Text>
+                <Card.Text>{project?.title}</Card.Text>
+                <Card.Text>{project?.address}</Card.Text>
               </Col>
               <Col className="d-flex justify-content-end">
               
@@ -36,7 +36,7 @@ const ProjectOverview: React.FC<ProjectOverviewProps> = ({ project }) => {
                     className="bg-warning text-dark border rounded-pill p-2 ms-2"
                     style={{ backgroundColor: "#ffc000" }}
                   >
-                    {status}
+                    {project?.status}
                   </span>
                 </Card.Text>
               </Col>

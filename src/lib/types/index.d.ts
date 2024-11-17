@@ -39,7 +39,7 @@ type Project = {
   address: string;  // `notNull` in schema
   status: number;
   userId: string;   // Added to match schema
-
+  user: string;     // Added to match schema
   propertyType: string;
 
   isExistingProject: boolean;
@@ -249,6 +249,12 @@ type CreateProjectRequest = {
   isExistingProject: boolean;
 }
 
-type GetProjectResponse = GeneralAPIResponse & {
+type GetProjectsResponse = GeneralAPIResponse & {
   projects: Project[]
+  user: string
+}
+
+type GetProjectResponse = GeneralAPIResponse & {
+  project: Project
+  user: string
 }
