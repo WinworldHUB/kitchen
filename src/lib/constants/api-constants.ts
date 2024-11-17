@@ -42,3 +42,10 @@ export const PROJECT_APIS = {
   UPLOAD_PROJECT_DOCUMENT_API: "/project/docs/upload",
   GET_PROJECT_DOCUMENTS_API: "/project/docs/get",
 };
+
+export const APPLIANCE_APIS = {
+  ADD_APPLIANCE_API: "/appliance/project",
+  GET_APPLIANCES_API: "/appliance",
+  DELETE_APPLIANCE_API: "/appliance",
+  UPDATE_APPLIANCE_API: "/appliance",
+};

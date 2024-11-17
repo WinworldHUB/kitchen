@@ -1,8 +1,10 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Card, Container, Button, Accordion } from "react-bootstrap";
 import DataTable, { TableColumn } from "react-data-table-component";
 import { DATA_TABLE_DEFAULT_STYLE } from "../constants";
 import AddAppliance from "./app.appliance";
+import useApi from "../hooks/useApi";
+import { APPLIANCE_APIS } from "../constants/api-constants";
 
 interface ApplianceGroup {
   name: string;
@@ -13,7 +15,11 @@ interface ApplianceGroup {
 const AppliancesTable: React.FC<DataTableProps<Appliance>> = ({
   initialData,
 }) => {
-  const [data, setData] = useState<Appliance[]>(initialData);
+
+
+
+  
+  const { postData: sendApplianceData } = useApi<AddApplicanceRequest>();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [currentAppliance, setCurrentAppliance] = useState<Appliance | null>(
     null
@@ -29,43 +35,30 @@ const AppliancesTable: React.FC<DataTableProps<Appliance>> = ({
     setCurrentAppliance(null);
   };
 
-  const addAppliance = (newAppliance: Appliance) => {
-    setData((prevData) => {
-      const existingApplianceIndex = prevData.findIndex(
-        (appliance) => appliance.name === currentAppliance?.name
-      );
+ 
 
-      if (existingApplianceIndex !== -1) {
-        const updatedData = [...prevData];
-        updatedData[existingApplianceIndex] = newAppliance;
-        return updatedData;
-      } else {
-        return [...prevData, newAppliance];
-      }
-    });
+  const addAppliance = (newAppliance: Appliance) => {
+    addAppliance(newAppliance);
 
     handleClose();
     alert(`Added/Updated appliance: ${newAppliance.name}`);
   };
 
-  const handleEdit = (row: ApplianceGroup) => {
-    const appliance =
-      data.find((appliance) => appliance.name === row.name) || null;
-    setCurrentAppliance(appliance);
-    handleShow();
-  };
+  // const handleEdit = (row: ApplianceGroup) => {
+  //   const appliance =
+  //     data.find((appliance) => appliance.name === row.name) || null;
+  //   setCurrentAppliance(appliance);
+  //   handleShow();
+  // };
 
   const handleDelete = (row: ApplianceGroup) => {
-    setData((prevData) =>
-      prevData.filter((appliance) => appliance.name !== row.name)
-    );
     alert(`Deleted ${row.name}`);
   };
 
   const groupedData: ApplianceGroup[] = useMemo(() => {
     const applianceMap: Record<string, ApplianceGroup> = {};
 
-    data.forEach((appliance) => {
+    initialData?.forEach((appliance) => {
       if (!applianceMap[appliance.name]) {
         applianceMap[appliance.name] = {
           name: appliance.name,
@@ -80,7 +73,7 @@ const AppliancesTable: React.FC<DataTableProps<Appliance>> = ({
     });
 
     return Object.values(applianceMap);
-  }, [data]);
+  }, [initialData]);
 
   const columns: TableColumn<ApplianceGroup>[] = useMemo(() => {
     return [
@@ -114,7 +107,7 @@ const AppliancesTable: React.FC<DataTableProps<Appliance>> = ({
               <Button
                 size="sm"
                 className="appliance-edit-button mx-2"
-                onClick={() => handleEdit(row)}
+                onClick={() => {}}
               >
                 Edit
               </Button>

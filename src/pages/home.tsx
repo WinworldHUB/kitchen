@@ -8,12 +8,11 @@ import { PROJECT_APIS } from "../lib/constants/api-constants";
 import FlexBox from "../lib/components/app.flex.box";
 import { replaceProjectId } from "../lib/utils/replacer";
 import useApi from "../lib/hooks/useApi";
-import useLocalStorage from "../lib/hooks/useLocalStorage";
+
 
 
 
 const HomePage = () => {
-  const {setValue:setProjectId} = useLocalStorage()
   const navigate = useNavigate();
   const [isShowCreateProject, setIsShowCreateProject] = useState(false);
   const { getData: fetchProjects, data: projectsData } = useApi<GetProjectsResponse>();
@@ -34,7 +33,6 @@ const HomePage = () => {
     const selectedProject = projectsData?.projects.find((project) => project.id === projectId);
     if (selectedProject) {
       const url = `${replaceProjectId(PageRoutes.Overview, selectedProject.id)}`;
-      setProjectId("activeProjectId",selectedProject.id)
       navigate(url, { state: { project: selectedProject } });
     } else {
       console.error("Project not found:", projectId);

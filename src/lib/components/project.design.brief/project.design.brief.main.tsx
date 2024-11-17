@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { Card, Col, Container, Modal, Row } from "react-bootstrap";
 import { PageRoutes } from "../../constants";
+import { replaceProjectId } from "../../utils/replacer";
+import { useParams } from "react-router-dom";
 
 const ProjectDesignBriefMain = () => {
+  const { projectId } = useParams();
   const [isModalOpen, setIsModalOpen] = useState<boolean>();
   return (
     <Container className="border border-1 border-black h-100 p-4">
@@ -43,7 +46,7 @@ const ProjectDesignBriefMain = () => {
           </Card>
         </Col>
         <Col>
-          <a href={PageRoutes.Appliances}>
+          <a href={replaceProjectId(PageRoutes.Appliances, projectId)}>
             <Card>
               <Card.Img
                 variant="top"

@@ -198,6 +198,7 @@ type Contractor = {
 };
 
 type Appliance = {
+  id?: string;
   name: string;
   brand: string;
   type: string;
@@ -257,4 +258,16 @@ type GetProjectsResponse = GeneralAPIResponse & {
 type GetProjectResponse = GeneralAPIResponse & {
   project: Project
   user: string
+}
+
+type AddApplicanceRequest = {
+  name: string;
+  brand: string;
+  type: string;
+  additionalInfo?: string;
+  referenceUrl?: string;
+}
+
+type GetProjectAppliancesResponse = GeneralAPIResponse & {
+  appliances: Appliance[]
 }
