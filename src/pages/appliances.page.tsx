@@ -16,7 +16,7 @@ const AppliancesPage = () => {
   useEffect(() => {
     const fetchApplicances = async () => {
       try {
-        const response =  await getAppliances(`${APPLIANCE_APIS.GET_APPLIANCES_API}/${projectId}/add`);
+        const response =  await getAppliances(`${APPLIANCE_APIS.GET_APPLIANCES_API}/${projectId}`);
         if (response.error){
           console.error("Error fetching appliances", response.error);
         }

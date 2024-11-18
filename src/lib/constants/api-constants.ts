@@ -45,7 +45,7 @@ export const PROJECT_APIS = {
 
 export const APPLIANCE_APIS = {
   ADD_APPLIANCE_API: "/appliance/project",
-  GET_APPLIANCES_API: "/appliance",
+  GET_APPLIANCES_API: "/appliance/project",
   DELETE_APPLIANCE_API: "/appliance",
   UPDATE_APPLIANCE_API: "/appliance",
 };

@@ -5,6 +5,7 @@ import { DATA_TABLE_DEFAULT_STYLE } from "../constants";
 import AddAppliance from "./app.appliance";
 import useApi from "../hooks/useApi";
 import { APPLIANCE_APIS } from "../constants/api-constants";
+import { useParams } from "react-router-dom";
 
 interface ApplianceGroup {
   name: string;
@@ -15,11 +16,9 @@ interface ApplianceGroup {
 const AppliancesTable: React.FC<DataTableProps<Appliance>> = ({
   initialData,
 }) => {
+  const { projectId } = useParams();
 
-
-
-  
-  const { postData: sendApplianceData } = useApi<AddApplicanceRequest>();
+  const { postData: sendApplianceData } = useApi<GeneralAPIResponse>();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [currentAppliance, setCurrentAppliance] = useState<Appliance | null>(
     null
@@ -35,10 +34,20 @@ const AppliancesTable: React.FC<DataTableProps<Appliance>> = ({
     setCurrentAppliance(null);
   };
 
- 
-
   const addAppliance = (newAppliance: Appliance) => {
-    addAppliance(newAppliance);
+    const request: AddApplicanceRequest = {
+      ...newAppliance,
+      name: newAppliance.name,
+      brand: newAppliance.brand,
+      type: newAppliance.type,
+      additionalInfo: newAppliance.additionalInfo,
+      referenceUrl: newAppliance.referenceUrl,
+    };
+
+    sendApplianceData(
+      `${APPLIANCE_APIS.ADD_APPLIANCE_API}/${projectId}/add`,
+      request
+    );
 
     handleClose();
     alert(`Added/Updated appliance: ${newAppliance.name}`);
