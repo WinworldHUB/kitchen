@@ -69,8 +69,8 @@ const ProfileProjectLayout: React.FC<ProfileProjectLayoutProps> = ({ children })
                     className="text-white"
                     style={{
                       backgroundColor:
-                        location.pathname === link.href ? "#ffc000" : "transparent",
-                      fontWeight: location.pathname === link.href ? "bold" : "normal",
+                        location.pathname.includes(link.href) ? "#ffc000" : "transparent",
+                      fontWeight: location.pathname.includes(link.href) ? "bold" : "normal",
                     }}
                   >
                     {link.name}
