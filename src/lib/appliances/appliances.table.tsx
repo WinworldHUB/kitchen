@@ -7,6 +7,7 @@ import useApi from "../hooks/useApi";
 import { APPLIANCE_APIS } from "../constants/api-constants";
 import AddAppliance from "./app.appliance";
 import DeleteApplianceModal from "./delete.appliance";
+import EditApplianceModal from "./edit.appliance";
 
 interface AppliancesTableProps {
   initialData: DataTableProps<Appliance>["initialData"];
@@ -19,9 +20,12 @@ const AppliancesTable: React.FC<AppliancesTableProps> = ({
 }) => {
   const { projectId } = useParams();
 
-  const { postData: sendApplianceData } = useApi<GeneralAPIResponse>();
-  const { deleteData: deleteApplianceData } = useApi<GeneralAPIResponse>();
-  const [modalType, setModalType] = useState<"add" | "delete">("add");
+  const {
+    postData: sendApplianceData,
+    deleteData: deleteApplianceData,
+    putData: editApplianceData,
+  } = useApi<GeneralAPIResponse>();
+  const [modalType, setModalType] = useState<"add" | "delete" | "edit">("add");
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [currentAppliance, setCurrentAppliance] = useState<Appliance | null>(
@@ -107,6 +111,46 @@ const AppliancesTable: React.FC<AppliancesTableProps> = ({
     }
   };
 
+  const handleEditModal = (group: ApplianceGroup) => {
+    setModalType("edit");
+    setSelectedGroup(group);
+    setSelectedAppliances(
+      initialData.filter((appliance) => appliance.name === group.name)
+    );
+    setIsModalOpen(true);
+  };
+
+  const handleEdit = async (requestBody: Appliance) => {
+    try {
+      const request: EditApplianceRequest = {
+        ...requestBody,
+        name: requestBody.name,
+        brand: requestBody.brand,
+        type: requestBody.type,
+        additionalInfo: requestBody.additionalInfo,
+        referenceUrl: requestBody.referenceUrl,
+      };
+
+      const applianceID = requestBody.id;
+      console.log("request", applianceID);
+      
+
+      const response = await editApplianceData(
+        `${APPLIANCE_APIS.EDIT_APPLIANCE_API}/${applianceID}/update`,
+        request
+      );
+
+      if (!response.success) {
+        throw new Error(`Error editing appliance: ${response.message}`);
+      }
+
+      setTriggerFetch((prev) => prev + 1);
+      handleClose(); // Close modal after editing
+    } catch (error) {
+      console.error("Error editing appliance: ", error);
+    }
+  };
+
   const groupedData: ApplianceGroup[] = useMemo(() => {
     const applianceMap: Record<string, ApplianceGroup> = {};
 
@@ -164,7 +208,7 @@ const AppliancesTable: React.FC<AppliancesTableProps> = ({
                   <Button
                     size="sm"
                     className="appliance-edit-button mx-2"
-                    onClick={() => {}}
+                    onClick={() => handleEditModal(row)}
                   >
                     Edit
                   </Button>
@@ -207,20 +251,30 @@ const AppliancesTable: React.FC<AppliancesTableProps> = ({
       </Card>
 
       {/* Modal */}
-      {modalType === "add" ? (
+      {modalType === "add" && (
         <AddAppliance
           show={isModalOpen}
           handleClose={handleClose}
           addAppliance={addAppliance}
           currentAppliance={currentAppliance}
         />
-      ) : (
+      )}
+      {modalType === "delete" && (
         <DeleteApplianceModal
           show={isModalOpen}
           onHide={handleClose}
           selectedGroup={selectedGroup}
           selectedAppliances={selectedAppliances}
           handleDelete={handleDelete}
+        />
+      )}
+      {modalType === "edit" && (
+        <EditApplianceModal
+          show={isModalOpen}
+          onHide={handleClose}
+          selectedGroup={selectedGroup}
+          selectedAppliances={selectedAppliances}
+          handleEdit={handleEdit}
         />
       )}
     </Container>

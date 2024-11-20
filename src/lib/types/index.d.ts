@@ -281,3 +281,12 @@ interface ApplianceGroup {
   quantity: number;
   details: string[];
 }
+
+
+type EditApplianceRequest = {
+  name: string;
+  brand: string;
+  type: string;
+  additionalInfo?: string;
+  referenceUrl?: string;
+};
