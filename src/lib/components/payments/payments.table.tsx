@@ -52,7 +52,7 @@ const PaymentsTable: FC<DataTableProps<Payment>> = ({ initialData }) => {
 
   return (
     <Container fluid>
-      <Row className="mb-3 mx-2">
+      <Row className="mb-3  py-2 mx-2 border border-primary rounded-pill">
         {DUMMY_TOTAL.map((total, index) => (
           <Col key={index} className="d-flex align-items-center">
             <div className="fs-3 fw-light">{`${total.title}: $${total.amount}`}</div>
