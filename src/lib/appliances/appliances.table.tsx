@@ -1,77 +1,106 @@
-
 import React, { useMemo, useState } from "react";
-import { Card, Container, Button, Accordion, Modal, Form } from "react-bootstrap";
+import { Card, Container, Button, Accordion } from "react-bootstrap";
 import DataTable, { TableColumn } from "react-data-table-component";
-import Select from 'react-select';  // Import react-select
+import { useParams } from "react-router-dom";
 import { DATA_TABLE_DEFAULT_STYLE } from "../constants";
-import AddAppliance from "./app.appliance";
 import useApi from "../hooks/useApi";
 import { APPLIANCE_APIS } from "../constants/api-constants";
-import { useParams } from "react-router-dom";
+import AddAppliance from "./app.appliance";
+import DeleteApplianceModal from "./delete.appliance";
 
-interface ApplianceGroup {
-  name: string;
-  quantity: number;
-  details: string[];
+
+
+interface AppliancesTableProps {
+  initialData: DataTableProps<Appliance>["initialData"];
+  setTriggerFetch: React.Dispatch<React.SetStateAction<number>>
 }
 
-const AppliancesTable: React.FC<DataTableProps<Appliance>> = ({
+const AppliancesTable: React.FC<AppliancesTableProps> = ({
   initialData,
+  setTriggerFetch,
 }) => {
   const { projectId } = useParams();
 
-  const { postData: sendApplianceData, deleteData: deleteApplianceData } = useApi<GeneralAPIResponse>();
+  const { postData: sendApplianceData } = useApi<GeneralAPIResponse>();
+  const { deleteData: deleteApplianceData } = useApi<GeneralAPIResponse>();
+  const [modalType, setModalType] = useState<"add" | "delete">("add");
+
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [currentAppliance, setCurrentAppliance] = useState<Appliance | null>(null);
-  const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false);
+  const [currentAppliance, setCurrentAppliance] = useState<Appliance | null>(
+    null
+  );
+  const [selectedGroup, setSelectedGroup] = useState<ApplianceGroup | null>(
+    null
+  );
   const [selectedAppliances, setSelectedAppliances] = useState<Appliance[]>([]);
 
-  const handleShow = () => setIsModalOpen(true);
+  const handleDeleteModalShow = (group: ApplianceGroup) => {
+    setModalType("delete");
+    setSelectedGroup(group);
+    setSelectedAppliances(
+      initialData.filter((appliance) => appliance.name === group.name)
+    );
+    setIsModalOpen(true);
+  };
+
+  const handleAddModalShow = () => {
+    setModalType("add");
+    setIsModalOpen(true);
+  };
+
   const handleClose = () => {
     setIsModalOpen(false);
-    resetForm();
-  };
-
-  const handleDeleteModalShow = () => setDeleteModalOpen(true);
-  const handleDeleteModalClose = () => setDeleteModalOpen(false);
-
-  const resetForm = () => {
     setCurrentAppliance(null);
+    setSelectedGroup(null);
+    setSelectedAppliances([]);
   };
 
-  const addAppliance = (newAppliance: Appliance) => {
-    const request: AddApplicanceRequest = {
-      ...newAppliance,
-      name: newAppliance.name,
-      brand: newAppliance.brand,
-      type: newAppliance.type,
-      additionalInfo: newAppliance.additionalInfo,
-      referenceUrl: newAppliance.referenceUrl,
-    };
+  const addAppliance = async (newAppliance: Appliance) => {
+    try {
+      const request: AddApplicanceRequest = {
+        ...newAppliance,
+        name: newAppliance.name,
+        brand: newAppliance.brand,
+        type: newAppliance.type,
+        additionalInfo: newAppliance.additionalInfo,
+        referenceUrl: newAppliance.referenceUrl,
+      };
 
-    sendApplianceData(
-      `${APPLIANCE_APIS.ADD_APPLIANCE_API}/${projectId}/add`,
-      request
-    );
+      const response = await sendApplianceData(
+        `${APPLIANCE_APIS.ADD_APPLIANCE_API}/${projectId}/add`,
+        request
+      );
 
-    handleClose();
-    alert(`Added/Updated appliance: ${newAppliance.name}`);
+      if (!response.success) {
+        throw new Error(`Error adding appliance: ${response.message}`);
+      }
+
+      setTriggerFetch((prev) => prev + 1);
+      handleClose();
+    } catch (error) {
+      console.error("Error adding appliance: ", error);
+    }
   };
 
   const handleDelete = async () => {
     try {
       const request: DeleteAppliancesRequest = {
-        applianceIds: selectedAppliances.map((appliance) => appliance.id),
+        applianceIds: selectedAppliances.map((appliance) => appliance.id!),
       };
-      
-      const response = await deleteApplianceData(APPLIANCE_APIS.DELETE_APPLIANCE_API, request);
+
+      const response = await deleteApplianceData(
+        APPLIANCE_APIS.DELETE_APPLIANCE_API,
+        request
+      );
+
       if (!response.success) {
         throw new Error(`Error deleting appliance: ${response.message}`);
       }
-      alert(`Deleted ${selectedAppliances.map((appliance) => appliance.name).join(", ")}`);
-      handleDeleteModalClose();
-    }
-    catch (error) {
+
+   
+      setTriggerFetch((prev) => prev + 1);
+      handleClose();
+    } catch (error) {
       console.error("Error deleting appliance: ", error);
     }
   };
@@ -89,7 +118,7 @@ const AppliancesTable: React.FC<DataTableProps<Appliance>> = ({
       }
       applianceMap[appliance.name].quantity += 1;
       applianceMap[appliance.name].details.push(
-        `${appliance.type || "N/A"} (${appliance.brand || "N/A"})`
+        `${appliance.brand || "N/A"} - ${appliance.type || "N/A"}`
       );
     });
 
@@ -120,7 +149,7 @@ const AppliancesTable: React.FC<DataTableProps<Appliance>> = ({
             <Button
               size="sm"
               className="appliance-delete-button mx-2"
-              onClick={handleDeleteModalShow}
+              onClick={() => handleDeleteModalShow(row)}
             >
               Delete
             </Button>
@@ -139,8 +168,8 @@ const AppliancesTable: React.FC<DataTableProps<Appliance>> = ({
 
   return (
     <Container fluid>
-      <div className="my-4">
-        <Button size="lg" className="add-appliance-button" onClick={handleShow}>
+       <div className="my-4">
+        <Button size="lg" className="add-appliance-button" onClick={handleAddModalShow}>
           Add Appliance
         </Button>
       </div>
@@ -153,54 +182,24 @@ const AppliancesTable: React.FC<DataTableProps<Appliance>> = ({
           />
         </Card.Body>
       </Card>
-      <AddAppliance
-        show={isModalOpen}
-        handleClose={handleClose}
-        addAppliance={addAppliance}
-        currentAppliance={currentAppliance}
-      />
 
-      {/* Delete Modal */}
-      <Modal show={deleteModalOpen} onHide={handleDeleteModalClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Select Appliances to Delete</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            {groupedData.map((row) => (
-              <div key={row.name}>
-                <h5>{row.name} (Quantity: {row.quantity})</h5>
-                <Select
-                  isMulti
-                  options={initialData
-                    .filter((appliance) => appliance.name === row.name)
-                    .map((appliance) => ({
-                      value: appliance.id,
-                      label: `${appliance.brand} - ${appliance.type}`,
-                    }))}
-                  onChange={(selectedOptions) => {
-                    const selectedIds = selectedOptions.map((option: any) => option.value);
-                    setSelectedAppliances(
-                      initialData.filter((appliance) =>
-                        selectedIds.includes(appliance.id)
-                      )
-                    );
-                  }}
-                  placeholder="Select appliances"
-                />
-              </div>
-            ))}
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleDeleteModalClose}>
-            Cancel
-          </Button>
-          <Button variant="danger" onClick={handleDelete}>
-            Delete Selected
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      {/* Modal */}
+      {modalType === "add" ? (
+        <AddAppliance
+          show={isModalOpen}
+          handleClose={handleClose}
+          addAppliance={addAppliance}
+          currentAppliance={currentAppliance}
+        />
+      ) : (
+        <DeleteApplianceModal
+        show={isModalOpen}
+        onHide={handleClose}
+        selectedGroup={selectedGroup}
+        selectedAppliances={selectedAppliances}
+        handleDelete={handleDelete}
+      />
+      )}
     </Container>
   );
 };

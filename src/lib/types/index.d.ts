@@ -11,7 +11,6 @@ type ProjectStatusStep = {
 };
 
 interface DataTableProps<T> {
-  title?: string;
   initialData: T[];
 }
 
@@ -276,3 +275,9 @@ type GetProjectAppliancesResponse = GeneralAPIResponse & {
 type DeleteAppliancesRequest = {
   applianceIds: string[];
 };
+
+interface ApplianceGroup {
+  name: string;
+  quantity: number;
+  details: string[];
+}
