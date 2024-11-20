@@ -8,11 +8,9 @@ import { APPLIANCE_APIS } from "../constants/api-constants";
 import AddAppliance from "./app.appliance";
 import DeleteApplianceModal from "./delete.appliance";
 
-
-
 interface AppliancesTableProps {
   initialData: DataTableProps<Appliance>["initialData"];
-  setTriggerFetch: React.Dispatch<React.SetStateAction<number>>
+  setTriggerFetch: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const AppliancesTable: React.FC<AppliancesTableProps> = ({
@@ -82,10 +80,15 @@ const AppliancesTable: React.FC<AppliancesTableProps> = ({
     }
   };
 
-  const handleDelete = async () => {
+  const handleDelete = async (selectedApplianceIds: string[]) => {
     try {
+      if (selectedApplianceIds.length === 0) {
+        alert("No appliances selected for deletion.");
+        return;
+      }
+
       const request: DeleteAppliancesRequest = {
-        applianceIds: selectedAppliances.map((appliance) => appliance.id!),
+        applianceIds: selectedApplianceIds,
       };
 
       const response = await deleteApplianceData(
@@ -97,9 +100,8 @@ const AppliancesTable: React.FC<AppliancesTableProps> = ({
         throw new Error(`Error deleting appliance: ${response.message}`);
       }
 
-   
       setTriggerFetch((prev) => prev + 1);
-      handleClose();
+      handleClose(); // Close modal after deletion
     } catch (error) {
       console.error("Error deleting appliance: ", error);
     }
@@ -117,9 +119,16 @@ const AppliancesTable: React.FC<AppliancesTableProps> = ({
         };
       }
       applianceMap[appliance.name].quantity += 1;
-      applianceMap[appliance.name].details.push(
-        `${appliance.brand || "N/A"} - ${appliance.type || "N/A"}`
-      );
+      const applianceDetails = [
+        `Brand: ${appliance.brand || "N/A"}`,
+        `Type: ${appliance.type || "N/A"}`,
+        `Additional Info: ${appliance.additionalInfo || "N/A"}`,
+        `Reference URL: ${appliance.referenceUrl || "N/A"}`,
+      ]
+        .join(" - ")
+        .trim();
+
+      applianceMap[appliance.name].details.push(applianceDetails);
     });
 
     return Object.values(applianceMap);
@@ -137,30 +146,40 @@ const AppliancesTable: React.FC<AppliancesTableProps> = ({
               eventKey={row.name}
               className="custom-accordion-item"
             >
-              <Accordion.Header className="d-flex justify-content-between align-items-center w-100">
-                <div className="flex-grow-1">
-                  {row.name} (Quantity: {row.quantity})
+              <div className="d-flex justify-content-between align-items-center w-100">
+                <Accordion.Header className="d-flex justify-content-between align-items-center flex-grow-1">
+                  <div className="flex-grow-1">
+                    {row.name} (Quantity: {row.quantity})
+                  </div>
+                </Accordion.Header>
+
+                <div className="d-flex justify-content-end align-items-center ml-3">
+                  <Button
+                    size="sm"
+                    className="appliance-delete-button mx-2"
+                    onClick={() => handleDeleteModalShow(row)}
+                  >
+                    Delete
+                  </Button>
+                  <Button
+                    size="sm"
+                    className="appliance-edit-button mx-2"
+                    onClick={() => {}}
+                  >
+                    Edit
+                  </Button>
                 </div>
-              </Accordion.Header>
-              <Accordion.Body>{row.details.join(", ")}</Accordion.Body>
+              </div>
+
+              <Accordion.Body>
+                {row.details.map((detail, index) => (
+                  <div key={index} className="accordion-detail">
+                    {detail}
+                  </div>
+                ))}
+              </Accordion.Body>
             </Accordion.Item>
           </Accordion>
-          <div className="d-flex justify-content-center align-items-center">
-            <Button
-              size="sm"
-              className="appliance-delete-button mx-2"
-              onClick={() => handleDeleteModalShow(row)}
-            >
-              Delete
-            </Button>
-            <Button
-              size="sm"
-              className="appliance-edit-button mx-2"
-              onClick={() => {}}
-            >
-              Edit
-            </Button>
-          </div>
         </Container>
       ),
     },
@@ -168,8 +187,12 @@ const AppliancesTable: React.FC<AppliancesTableProps> = ({
 
   return (
     <Container fluid>
-       <div className="my-4">
-        <Button size="lg" className="add-appliance-button" onClick={handleAddModalShow}>
+      <div className="my-4">
+        <Button
+          size="lg"
+          className="add-appliance-button"
+          onClick={handleAddModalShow}
+        >
           Add Appliance
         </Button>
       </div>
@@ -193,12 +216,12 @@ const AppliancesTable: React.FC<AppliancesTableProps> = ({
         />
       ) : (
         <DeleteApplianceModal
-        show={isModalOpen}
-        onHide={handleClose}
-        selectedGroup={selectedGroup}
-        selectedAppliances={selectedAppliances}
-        handleDelete={handleDelete}
-      />
+          show={isModalOpen}
+          onHide={handleClose}
+          selectedGroup={selectedGroup}
+          selectedAppliances={selectedAppliances}
+          handleDelete={handleDelete}
+        />
       )}
     </Container>
   );

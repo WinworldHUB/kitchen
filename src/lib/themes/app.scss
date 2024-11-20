@@ -223,3 +223,28 @@ a {
   border: 1px solid #7f56d9;
   box-shadow: none;
 }
+
+
+.custom-checkbox .form-check-input {
+  background-color: #f0f0f0; 
+  border-color: #007bff; /* Custom border color */
+}
+
+.custom-checkbox .form-check-input:checked {
+  background-color: #007bff; 
+  border-color: #0056b3;
+}
+
+.custom-checkbox .form-check-input:focus {
+  box-shadow: none; 
+}
+
+
+.appliance-label {
+  font-weight: bold;
+  color: #333;
+  font-size: 1rem;
+}
+.accordion-detail {
+  margin-bottom: 5px;
+}
