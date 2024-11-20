@@ -37,7 +37,7 @@ interface APIState<T> {
    * For example: /api/v1/users/1
    * @returns: Deleted record
    */
-  deleteData: (url: string) => Promise<T>;
+  deleteData: (url: string, body:unknown) => Promise<T>;
   /**
    * API Post Method for form data.
    * @param url: Url of the endpoint starting with '/'
@@ -137,11 +137,12 @@ const useApi = <T,>(baseUrl?: string): APIState<T> => {
    * For example: /api/v1/users/1
    * @returns: Deleted record
    */
-  const deleteData = async (url: string) => {
+  const deleteData = async (url: string, body:unknown) => {
     try {
       const response = await fetch(`${baseUrl ?? API_BASE_URL}${url}`, {
         method: "DELETE",
         headers: DEFAULT_POST_API_HEADER(appState.accessJWT),
+        body: getEncodedJson(body),
       });
 
       if (!response.ok) {

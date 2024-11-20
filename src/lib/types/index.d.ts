@@ -271,3 +271,8 @@ type AddApplicanceRequest = {
 type GetProjectAppliancesResponse = GeneralAPIResponse & {
   appliances: Appliance[]
 }
+
+
+type DeleteAppliancesRequest = {
+  applianceIds: string[];
+};
