@@ -302,3 +302,11 @@ type GetUserResponse = GeneralAPIResponse & {
   phoneNo: string;
   role: string;
 };
+
+type UserProject = {
+  id: string;
+  title: string;
+  address: string;
+  userName: string;
+  status: string;
+}

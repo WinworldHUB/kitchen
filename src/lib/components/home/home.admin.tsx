@@ -1,12 +1,62 @@
-import { FC, useMemo } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 import { Card, Container } from "react-bootstrap";
 import DataTable, { TableColumn } from "react-data-table-component";
-import { DATA_TABLE_DEFAULT_STYLE } from "../../constants";
+import { DATA_TABLE_DEFAULT_STYLE, PageRoutes } from "../../constants";
 import { getProjectStatus } from "../../utils/color";
-import { DUMMY_PROJECTS, projects } from "../../data/dummy_projects";
+import { useNavigate } from "react-router-dom";
+import { PROJECT_APIS } from "../../constants/api-constants";
+import useApi from "../../hooks/useApi";
+import { replaceProjectId } from "../../utils/replacer";
 
 const HomeAdmin: FC = () => {
-  const columns: TableColumn<DUMMY_PROJECTS>[] = useMemo(() => {
+  const navigate = useNavigate();
+  const { getData: fetchProjects, data: projectsData } =
+    useApi<GetProjectsResponse>();
+  const [tableData, setTableData] = useState<UserProject[]>([]);
+  // Fetch projects on component load
+  useEffect(() => {
+    const fetchProjectsData = async () => {
+      try {
+        const response = await fetchProjects(PROJECT_APIS.GET_PROJECTS_API);
+        if (response.error) {
+          console.error("Error fetching projects:", response.error);
+          return;
+        }
+  
+        // Transform API response into UserProject type and set table data
+        const transformedData = response.projects.map((project) => ({
+          id: project.id,
+          title: project.title,
+          address: project.address || "N/A", // Default value if address is missing
+          userName: response.user, // Assuming the `user` field applies to all projects
+          status: project.status.toString(),
+        }));
+        setTableData(transformedData);
+      } catch (error) {
+        console.error("Error fetching projects:", error);
+      }
+    };
+  
+    fetchProjectsData();
+  }, [fetchProjects]);
+  
+
+  const handleProjectClick = (projectId: string) => {
+    // Retrieve the full project details from projectsData
+    const selectedProject = projectsData?.projects.find(
+      (project) => project.id === projectId
+    );
+    if (selectedProject) {
+      const url = `${replaceProjectId(
+        PageRoutes.Overview,
+        selectedProject.id
+      )}`;
+      navigate(url, { state: { project: selectedProject } });
+    } else {
+      console.error("Project not found:", projectId);
+    }
+  };
+  const columns: TableColumn<UserProject>[] = useMemo(() => {
     return [
       {
         name: "Username",
@@ -51,10 +101,11 @@ const HomeAdmin: FC = () => {
         <Card.Body>
           <DataTable
             columns={columns}
-            data={projects}
+            data={tableData}
             striped
             highlightOnHover
             pagination
+            onRowClicked={(row) => handleProjectClick(row.id)}
             customStyles={DATA_TABLE_DEFAULT_STYLE}
           />
         </Card.Body>
