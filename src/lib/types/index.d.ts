@@ -162,6 +162,8 @@ type LoginResponse = GeneralAPIResponse & {
   session_token: string;
   session_jwt: string;
   error: unknown;
+  phoneNo: string;
+  role: string;
 };
 
 type SignUpResponse = GeneralAPIResponse & {
@@ -172,6 +174,8 @@ type SignUpResponse = GeneralAPIResponse & {
   session_token: string;
   session_jwt: string;
   error: unknown;
+  phoneNo: string;
+  role: string;
 };
 
 type User = {
@@ -179,6 +183,7 @@ type User = {
   email: string;
   phoneNo?: string;
   address?: string;
+  role?: string;
 };
 
 type ResetPasswordRequest = {
@@ -289,4 +294,11 @@ type EditApplianceRequest = {
   type: string;
   additionalInfo?: string;
   referenceUrl?: string;
+};
+
+type GetUserResponse = GeneralAPIResponse & {
+  fullName: string;
+  email: string;
+  phoneNo: string;
+  role: string;
 };

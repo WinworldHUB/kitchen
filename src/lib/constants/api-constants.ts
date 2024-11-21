@@ -27,7 +27,7 @@ export const USER_APIS = {
   SIGNUP_USER_API: "/user/signup",
   LOGIN_USER_API: "/user/login",
   GET_USER_BY_EMAIL_API: "/user/email",
-  GET_USER_BY_ID_API: "/user",
+  GET_USER: "/user/get",
   UPDATE_USER_API: "/user",
   CHANGE_PASSWORD_API: "/user/reset-password",
   LOGOUT_USER_API: "/user/logout",

@@ -53,65 +53,14 @@ export const DEFAULT_KITCHEN_IMAGE =
   "https://images.unsplash.com/photo-1600585152220-90363fe7e115?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
 
 export enum ProjectStatus {
-  draft = -1,
-  designBrief = 0,
-  designQuotation = 1,
-  order = 2,
-  install = 3,
-  onHold = 4,
-  completed = 5,
-  archived = 6,
+  draft = "Draft",
+  designBrief = "Design Brief",
+  designQuotation = "Design Quotation",
+  onHold = "On Hold",
+  completed = "Completed",
+
 }
 
-export const PROJECT_FILTERS: ProjectFilter[] = [
-  {
-    title: "Design Brief",
-    value: ProjectStatus.designBrief,
-  },
-  {
-    title: "Design Quotation",
-    value: ProjectStatus.designQuotation,
-  },
-  {
-    title: "Order",
-    value: ProjectStatus.order,
-  },
-  {
-    title: "Install",
-    value: ProjectStatus.install,
-  },
-  {
-    title: "Completed",
-    value: ProjectStatus.completed,
-  },
-];
-
-export const PROJECT_STATUS_STEPS_DATA = [
-  {
-    text: "Brief",
-    isActive: true,
-    isDone: true,
-    status: ProjectStatus.designBrief,
-  },
-  {
-    text: "Quotation",
-    isActive: true,
-    isDone: true,
-    status: ProjectStatus.designQuotation,
-  },
-  {
-    text: "Order",
-    isActive: true,
-    isDone: false,
-    status: ProjectStatus.order,
-  },
-  {
-    text: "Install",
-    isActive: false,
-    isDone: false,
-    status: ProjectStatus.install,
-  },
-];
 
 export const STYTCH_PROJECT_ID = {
   MINOR: "project-",
