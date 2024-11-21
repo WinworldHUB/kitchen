@@ -5,6 +5,7 @@ import PageLayout from "../app.layout";
 import FlexBox from "../app.flex.box";
 import { PageRoutes } from "../../constants";
 import { replaceProjectId } from "../../utils/replacer";
+import { InlineWidget } from "react-calendly";
 
 interface NavLink {
   name: string;
@@ -15,7 +16,9 @@ interface ProfileProjectLayoutProps {
   children: React.ReactNode;
 }
 
-const ProfileProjectLayout: React.FC<ProfileProjectLayoutProps> = ({ children }) => {
+const ProfileProjectLayout: React.FC<ProfileProjectLayoutProps> = ({
+  children,
+}) => {
   const { projectId } = useParams(); // Get the projectId from the URL
   const location = useLocation(); // Get the current location
 
@@ -68,9 +71,12 @@ const ProfileProjectLayout: React.FC<ProfileProjectLayoutProps> = ({ children })
                     href={link.href}
                     className="text-white"
                     style={{
-                      backgroundColor:
-                        location.pathname.includes(link.href) ? "#ffc000" : "transparent",
-                      fontWeight: location.pathname.includes(link.href) ? "bold" : "normal",
+                      backgroundColor: location.pathname.includes(link.href)
+                        ? "#ffc000"
+                        : "transparent",
+                      fontWeight: location.pathname.includes(link.href)
+                        ? "bold"
+                        : "normal",
                     }}
                   >
                     {link.name}
@@ -85,8 +91,11 @@ const ProfileProjectLayout: React.FC<ProfileProjectLayoutProps> = ({ children })
                     className="text-white"
                     style={{
                       backgroundColor:
-                        location.pathname === link.href ? "#ffc000" : "transparent",
-                      fontWeight: location.pathname === link.href ? "bold" : "normal",
+                        location.pathname === link.href
+                          ? "#ffc000"
+                          : "transparent",
+                      fontWeight:
+                        location.pathname === link.href ? "bold" : "normal",
                     }}
                   >
                     {link.name}
@@ -107,7 +116,16 @@ const ProfileProjectLayout: React.FC<ProfileProjectLayoutProps> = ({ children })
           <FlexBox justifyContent="end">
             {/* Footer */}
             <span>Email</span>
-            <Button variant="warning" className="mx-4">
+            <Button
+              variant="warning"
+              className="mx-4"
+              onClick={() =>
+                window.open(
+                  "https://calendly.com/rishimishra0404/30min?name=Moiety%20Name&email=guest@example.com",
+                  "_blank"
+                )
+              }
+            >
               Book a Call
             </Button>
           </FlexBox>
