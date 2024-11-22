@@ -22,7 +22,7 @@ const HomeAdmin: FC = () => {
           console.error("Error fetching projects:", response.error);
           return;
         }
-  
+
         // Transform API response into UserProject type and set table data
         const transformedData = response.projects.map((project) => ({
           id: project.id,
@@ -36,10 +36,9 @@ const HomeAdmin: FC = () => {
         console.error("Error fetching projects:", error);
       }
     };
-  
+
     fetchProjectsData();
-  }, [fetchProjects]);
-  
+  }, []);
 
   const handleProjectClick = (projectId: string) => {
     // Retrieve the full project details from projectsData
@@ -76,14 +75,13 @@ const HomeAdmin: FC = () => {
       {
         name: "Status",
         cell: (row) => {
-          const { color } = getProjectStatus(row.status);
+          const { color, backgroundColor } = getProjectStatus(row.status);
           return (
             <div
-              className="fw-bold"
+              className="fw-bold rounded rounded-2 px-4 py-2"
               style={{
                 color: color,
-                padding: "5px",
-                borderRadius: "4px",
+                backgroundColor: backgroundColor,
               }}
             >
               {row.status}

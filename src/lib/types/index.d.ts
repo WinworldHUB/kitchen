@@ -36,7 +36,7 @@ type Project = {
   id: string | null;
   title: string;
   address: string;  // `notNull` in schema
-  status: number;
+  status: string;
   userId: string;   // Added to match schema
   user: string;     // Added to match schema
   propertyType: string;
@@ -120,6 +120,7 @@ type AppVars = {
   selectedMenuId?: number;
   activeProjects?: Project[];
   selectedProjectId?: string;
+  isAdmin?: boolean;
 };
 
 interface AppState {

@@ -8,6 +8,7 @@ export const DEFAULT_APP_VAR: AppVars = {
   selectedMenuId: 0,
   activeProjects: [],
   selectedProjectId: null,
+  isAdmin: false,
 };
 
 export const DEFAULT_USER_STATE: User = {
