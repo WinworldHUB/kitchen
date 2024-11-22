@@ -41,6 +41,7 @@ export const PROJECT_APIS = {
   UPDATE_PROJECT_API: "/project",
   UPLOAD_PROJECT_DOCUMENT_API: "/project/docs/upload",
   GET_PROJECT_DOCUMENTS_API: "/project/docs/get",
+  UPDATE_PROJECT_STATUS_API: "/project",
 };
 
 export const APPLIANCE_APIS = {

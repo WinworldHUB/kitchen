@@ -1,9 +1,11 @@
 import React, { useContext, useState } from "react";
-import { Card, Col, Row } from "react-bootstrap";
+import { Card, Col, Row, Dropdown } from "react-bootstrap";
 import { ProjectStatus } from "../../constants";
 import FlexBox from "../app.flex.box";
 import { getProjectStatus } from "../../utils/color";
 import { AppContext } from "../../contexts/appcontext";
+import useApi from "../../hooks/useApi";
+import { PROJECT_APIS } from "../../constants/api-constants";
 
 interface ProjectOverviewProps {
   project: Project;
@@ -12,16 +14,18 @@ interface ProjectOverviewProps {
 
 const ProjectOverview: React.FC<ProjectOverviewProps> = ({ project, user }) => {
   const { appState } = useContext(AppContext);
-  const [status, setStatus] = useState<string>(project?.status ?? ProjectStatus.draft);
+  const [status, setStatus] = useState<string>(
+    project?.status ?? ProjectStatus.draft
+  );
+  const { putData: updateProjectStatus } = useApi<GeneralAPIResponse>();
 
-  const handleStatusChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const newStatus = event.target.value;
+  const handleStatusChange = async (newStatus: string) => {
     setStatus(newStatus);
-    console.log("Status changed to:", newStatus);
+    await updateProjectStatus(
+      `${PROJECT_APIS.UPDATE_PROJECT_STATUS_API}/${project.id}/update/status`,
+      { status: newStatus }
+    );
   };
-
-  console.log("is admin: ",appState.isAdmin);
-  
 
   return (
     <>
@@ -41,39 +45,38 @@ const ProjectOverview: React.FC<ProjectOverviewProps> = ({ project, user }) => {
                 <Card.Text>{project?.address}</Card.Text>
               </Col>
               <Col className="d-flex justify-content-end">
-                <Card.Text className="mb-2">
-                  <span className="fw-semibold">Project Status:</span>
+                <Card.Text className="d-flex mb-2">
+                  <span className="fw-semibold mx-2 my-1">Project Status:</span>
                   {appState.isAdmin ? (
-                    <select
-                      value={status}
-                      onChange={handleStatusChange}
-                      style={{
-                        backgroundColor: getProjectStatus(status).backgroundColor,
-                        color: getProjectStatus(status).color,
-                        border: "none",
-                        padding: "0.5rem 1rem",
-                        borderRadius: "999px",
-                        appearance: "none",
-                      }}
-                    >
-                      {Object.values(ProjectStatus).map((projectStatus) => (
-                        <option
-                          key={projectStatus}
-                          value={projectStatus}
-                          style={{
-                            backgroundColor: getProjectStatus(projectStatus).backgroundColor,
-                            color: getProjectStatus(projectStatus).color,
-                          }}
-                        >
-                          {projectStatus}
-                        </option>
-                      ))}
-                    </select>
+                    <Dropdown>
+                      <Dropdown.Toggle
+                        className="border-0 rounded-pill px-4 fs-6"
+                        style={{
+                          backgroundColor:
+                            getProjectStatus(status).backgroundColor,
+                          color: getProjectStatus(status).color,
+                        }}
+                      >
+                        {status}
+                      </Dropdown.Toggle>
+                      <Dropdown.Menu>
+                        {Object.values(ProjectStatus).map((projectStatus) => (
+                          <Dropdown.Item
+                            key={projectStatus}
+                            onClick={() => handleStatusChange(projectStatus)}
+                            className="text-center"
+                          >
+                            {projectStatus}
+                          </Dropdown.Item>
+                        ))}
+                      </Dropdown.Menu>
+                    </Dropdown>
                   ) : (
                     <span
-                      className="fs-6 border rounded-pill px-4 py-2 ms-2"
+                      className="fs-6 border rounded-pill px-4 py-2"
                       style={{
-                        backgroundColor: getProjectStatus(status).backgroundColor,
+                        backgroundColor:
+                          getProjectStatus(status).backgroundColor,
                         color: getProjectStatus(status).color,
                       }}
                     >
