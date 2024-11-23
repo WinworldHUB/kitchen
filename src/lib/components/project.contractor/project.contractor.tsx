@@ -12,17 +12,17 @@ const ProjectContractor = () => {
       <Row>
         <ContractorForm
           title="Architect"
-          imageSrc="/assets/images/arch.jpeg"
+          imageSrc="/assets/images/contractors/01.jpeg"
           formControlIds={architectFormControls}
         />
         <ContractorForm
           title="Builder"
-          imageSrc="/assets/images/builder.jpeg"
+          imageSrc="/assets/images/contractors/02.jpeg"
           formControlIds={builderFormControls}
         />
         <ContractorForm
           title="Interior Designer"
-          imageSrc="/assets/images/interior_designer.jpeg"
+          imageSrc="/assets/images/contractors/03.jpeg"
           formControlIds={interiorDesignerFormControls}
         />
       </Row>

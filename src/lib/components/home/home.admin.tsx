@@ -58,12 +58,12 @@ const HomeAdmin: FC = () => {
   const columns: TableColumn<UserProject>[] = useMemo(() => {
     return [
       {
-        name: "Username",
+        name: "Customer Name",
         selector: (row) => row.userName,
         sortable: true,
       },
       {
-        name: "Title",
+        name: "Project Title",
         selector: (row) => row.title,
         sortable: true,
       },
