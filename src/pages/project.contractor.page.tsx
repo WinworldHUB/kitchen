@@ -37,8 +37,6 @@ const ProjectContractorPage = () => {
     return <Loader />;
   }
 
-  console.log("Contractors:", contractors);
-
   return (
     <ProfileProjectLayout>
       <ProjectContractor

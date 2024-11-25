@@ -8,7 +8,7 @@ import { useParams } from "react-router-dom";
 
 const AppliancesPage = () => {
   const { projectId } = useParams();
-  const [triggerFetch, setTriggerFetch] = useState(0);  // Track fetch trigger
+  const [triggerFetch, setTriggerFetch] = useState(0); 
   
   const {
     getData: getAppliances,
@@ -34,7 +34,7 @@ const AppliancesPage = () => {
     <ProfileProjectLayout>
       <AppliancesTable
         initialData={applianceData?.appliances || []}
-        setTriggerFetch={setTriggerFetch}  // Pass down to child to trigger re-fetch
+        setTriggerFetch={setTriggerFetch} 
       />
     </ProfileProjectLayout>
   );
