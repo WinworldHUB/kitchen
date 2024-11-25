@@ -50,3 +50,10 @@ export const APPLIANCE_APIS = {
   DELETE_APPLIANCE_API: "/appliance/delete",
   EDIT_APPLIANCE_API: "/appliance",
 };
+
+export const CONTRACTOR_APIS = {
+  GET_CONTRACTORS_API: "/contractor",
+  CREATE_CONTRACTOR_API: "/contractor",
+  UPDATE_CONTRACTOR_API: "/contractor",
+  DELETE_CONTRACTOR_API: "/contractor",
+};

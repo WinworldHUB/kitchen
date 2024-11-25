@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
-import { APPLIANCE_LIST } from "../constants";
+import { APPLIANCE_LIST } from "../../constants";
 
 interface AddApplianceProps {
   show: boolean;

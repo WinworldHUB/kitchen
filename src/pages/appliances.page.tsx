@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ProfileProjectLayout from "../lib/components/profile.project/profile.project.layout";
-import AppliancesTable from "../lib/appliances/appliances.table";
+import AppliancesTable from "../lib/components/appliances/appliances.table";
 
 import { APPLIANCE_APIS } from "../lib/constants/api-constants";
 import useApi from "../lib/hooks/useApi";

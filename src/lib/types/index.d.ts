@@ -194,6 +194,7 @@ type ResetPasswordRequest = {
 };
 
 type Contractor = {
+  id?: string;
   name: string;
   company: string;
   contact: string;
@@ -310,4 +311,18 @@ type UserProject = {
   address: string;
   userName: string;
   status: string;
+}
+
+
+
+type AddContractorRequest = {
+  contractors: Contractor[];
+}
+
+type GetContractorsResponse = GeneralAPIResponse & {
+  contractors: Contractor[];
+}
+
+type UpdateContractorRequest = {
+  contractors: Contractor[];
 }

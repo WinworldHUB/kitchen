@@ -2,12 +2,12 @@ import React, { useMemo, useState } from "react";
 import { Card, Container, Button, Accordion } from "react-bootstrap";
 import DataTable, { TableColumn } from "react-data-table-component";
 import { useParams } from "react-router-dom";
-import { DATA_TABLE_DEFAULT_STYLE } from "../constants";
-import useApi from "../hooks/useApi";
-import { APPLIANCE_APIS } from "../constants/api-constants";
 import AddAppliance from "./app.appliance";
 import DeleteApplianceModal from "./delete.appliance";
 import EditApplianceModal from "./edit.appliance";
+import { DATA_TABLE_DEFAULT_STYLE } from "../../constants";
+import { APPLIANCE_APIS } from "../../constants/api-constants";
+import useApi from "../../hooks/useApi";
 
 interface AppliancesTableProps {
   initialData: DataTableProps<Appliance>["initialData"];

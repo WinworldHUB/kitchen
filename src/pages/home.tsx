@@ -4,8 +4,8 @@ import HomeUser from "../lib/components/home/home.user";
 import useApi from "../lib/hooks/useApi";
 import { USER_APIS } from "../lib/constants/api-constants";
 import HomeAdmin from "../lib/components/home/home.admin";
-import { Spinner } from "react-bootstrap";
 import { AppContext } from "../lib/contexts/appcontext";
+import Loader from "../lib/components/Loader";
 
 const HomePage = () => {
   const { updateAppState, appState } = useContext(AppContext);
@@ -24,16 +24,7 @@ const HomePage = () => {
   }, []);
 
   if (loading) {
-    return (
-      <div
-        className="d-flex justify-content-center align-items-center"
-        style={{ height: "100vh" }}
-      >
-        <Spinner animation="border" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </Spinner>
-      </div>
-    );
+    return <Loader />;
   }
 
   return (
