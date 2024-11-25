@@ -77,117 +77,39 @@ export const STYTCH_SECRET_KEY = {
 
 export const ENCODER_SECRET_KEY = "2ff493499f93c38bbd00f4a64941dc4e";
 
-export const architectFormControls = [
+export const formControls = [
   {
-    controlId: "architectName",
+    controlId: "name",
     label: "Name",
     placeholder: "John Doe",
     type: "text",
   },
   {
-    controlId: "architectCompany",
+    controlId: "company",
     label: "Company",
     placeholder: "Example XYZ",
     type: "text",
   },
   {
-    controlId: "architectContact",
+    controlId: "contact",
     label: "Contact",
     placeholder: "123456789",
     type: "text",
   },
   {
-    controlId: "architectWebsite",
+    controlId: "website",
     label: "Website",
     placeholder: "www.example.com",
     type: "text",
   },
   {
-    controlId: "architectEmail",
+    controlId: "email",
     label: "Email",
     placeholder: "john@example.com",
     type: "email",
   },
   {
-    controlId: "architectAddress",
-    label: "Address",
-    placeholder: "XYZ street, XYZ area, 123456",
-    type: "text",
-  },
-];
-
-export const builderFormControls = [
-  {
-    controlId: "builderName",
-    label: "Name",
-    placeholder: "John Doe",
-    type: "text",
-  },
-  {
-    controlId: "builderCompany",
-    label: "Company",
-    placeholder: "Example XYZ",
-    type: "text",
-  },
-  {
-    controlId: "builderContact",
-    label: "Contact",
-    placeholder: "123456789",
-    type: "text",
-  },
-  {
-    controlId: "builderWebsite",
-    label: "Website",
-    placeholder: "www.example.com",
-    type: "text",
-  },
-  {
-    controlId: "builderEmail",
-    label: "Email",
-    placeholder: "john@example.com",
-    type: "email",
-  },
-  {
-    controlId: "builderAddress",
-    label: "Address",
-    placeholder: "XYZ street, XYZ area, 123456",
-    type: "text",
-  },
-];
-
-export const interiorDesignerFormControls = [
-  {
-    controlId: "interiorDesignerName",
-    label: "Name",
-    placeholder: "John Doe",
-    type: "text",
-  },
-  {
-    controlId: "interiorDesignerCompany",
-    label: "Company",
-    placeholder: "Example XYZ",
-    type: "text",
-  },
-  {
-    controlId: "interiorDesignerContact",
-    label: "Contact",
-    placeholder: "123456789",
-    type: "text",
-  },
-  {
-    controlId: "interiorDesignerWebsite",
-    label: "Website",
-    placeholder: "www.example.com",
-    type: "text",
-  },
-  {
-    controlId: "interiorDesignerEmail",
-    label: "Email",
-    placeholder: "john@example.com",
-    type: "email",
-  },
-  {
-    controlId: "interiorDesignerAddress",
+    controlId: "address",
     label: "Address",
     placeholder: "XYZ street, XYZ area, 123456",
     type: "text",
@@ -247,3 +169,14 @@ export enum ProjectType {
   NewExtension = "New/Extension",
   ExistingRenovation = "Existing/Renovation",
 }
+
+export const DEFAULT_CONTRACTOR: Contractor = {
+  id: "",
+  contractorType: "",
+  name: "",
+  company: "",
+  contact: "",
+  website: "",
+  email: "",
+  address: "",
+};

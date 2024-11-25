@@ -1,61 +1,93 @@
 import { Row, Container, Col, Button } from "react-bootstrap";
 import ContractorForm from "./project.contractor.form";
-import { architectFormControls, builderFormControls, interiorDesignerFormControls } from "../../constants";
-import { useEffect, useState } from "react";
+import { DEFAULT_CONTRACTOR, formControls } from "../../constants";
+import { useState } from "react";
 import useApi from "../../hooks/useApi";
-import { useParams } from "react-router-dom";
 import { CONTRACTOR_APIS } from "../../constants/api-constants";
-import Loader from "../Loader";
 
-const ProjectContractor = () => {
-  const { projectId } = useParams();
+interface ProjectContractorProps {
+  contractors: Contractor[];
+  projectId: string;
+  setContractors: React.Dispatch<React.SetStateAction<Contractor[]>>;
+}
+
+const ProjectContractor: React.FC<ProjectContractorProps> = ({
+  contractors,
+  projectId,
+  setContractors,
+}) => {
   const [isEditable, setIsEditable] = useState<boolean>(false);
-  const [contractors, setContractors] = useState<Contractor[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
 
-  const { getData: fetchContractors } = useApi<GetContractorsResponse>();
   const { postData: addContractors } = useApi<GeneralAPIResponse>();
   const { putData: updateContractors } = useApi<GeneralAPIResponse>();
 
+  const toggleEditable = () => setIsEditable(!isEditable);
 
+  const handleFieldChange = (
+    type: string,
+    field: keyof Contractor,
+    value: string
+  ) => {
+    setContractors((prevContractors) => {
+      const contractorIndex = prevContractors.findIndex(
+        (contractor) => contractor.contractorType === type
+      );
 
-  useEffect(() => {
-    const fetchContractorsForProject = async () => {
-      setLoading(true);
-      const response = await fetchContractors(`${CONTRACTOR_APIS.GET_CONTRACTORS_API}/${projectId}`);
-      if (response?.success) {
-        setContractors(response.contractors);
-      } else {
-        setContractors([]); // No contractors found.
+      if (contractorIndex === -1) {
+        // If the contractor does not exist, create a new one with default values
+        return [
+          ...prevContractors,
+          { ...DEFAULT_CONTRACTOR, type, [field]: value },
+        ];
       }
-      setLoading(false);
-    };
-    fetchContractorsForProject();
-  }, [projectId]);
 
-  const toggleEditable = () => {
-    setIsEditable(!isEditable);
+      // Ensure the field exists before updating it
+      const updatedContractor = {
+        ...prevContractors[contractorIndex],
+        [field]: value || "",
+      };
+
+      return prevContractors.map((contractor, index) =>
+        index === contractorIndex ? updatedContractor : contractor
+      );
+    });
   };
 
   const handleSave = async () => {
-    const contractorPayload = {
-      projectId,
-      contractors, // Collect updated or new contractor data here.
-    };
-
-    if (contractors.length > 0) {
-      // Update existing contractors.
-      await updateContractors(`${CONTRACTOR_APIS.GET_CONTRACTORS_API}/${projectId}/update`, contractorPayload);
+    const contractorPayload = { contractors };
+    if (contractors?.length > 0) {
+      await updateContractors(
+        `${CONTRACTOR_APIS.UPDATE_CONTRACTOR_API}/${projectId}/update`,
+        contractorPayload
+      );
     } else {
-      // Add new contractors.
-      await addContractors(`${CONTRACTOR_APIS.GET_CONTRACTORS_API}/${projectId}/add`, contractorPayload);
+      await addContractors(
+        `${CONTRACTOR_APIS.CREATE_CONTRACTOR_API}/${projectId}/add`,
+        contractorPayload
+      );
     }
     toggleEditable();
   };
+  console.log("contractors as props", contractors);
 
-  if (loading) {
-    return <Loader/>;
-  }
+  const architect =
+    contractors.find(
+      (c) => c?.contractorType?.toLowerCase() === "architect".toLowerCase()
+    ) ?? DEFAULT_CONTRACTOR;
+  console.log("architect", architect);
+
+  const builder =
+    contractors.find(
+      (c) => c?.contractorType?.toLowerCase() === "Builder".toLowerCase()
+    ) ?? DEFAULT_CONTRACTOR;
+  console.log("builder", builder);
+
+  const interiorDesigner =
+    contractors.find(
+      (c) =>
+        c?.contractorType?.toLowerCase() === "Interior Designer".toLowerCase()
+    ) ?? DEFAULT_CONTRACTOR;
+  console.log("interiorDesigner", interiorDesigner);
 
   return (
     <Container className="border border-1 border-black h-100 p-4">
@@ -65,25 +97,47 @@ const ProjectContractor = () => {
             isEditable={isEditable}
             title="Architect"
             imageSrc="/assets/images/contractors/01.jpeg"
-            formControlIds={architectFormControls}
+            formControlIds={formControls}
+            contractorData={architect}
+            onFieldChange={(field, value) =>
+              handleFieldChange("Architect", field as keyof Contractor, value)
+            }
           />
+
           <ContractorForm
             isEditable={isEditable}
             title="Builder"
             imageSrc="/assets/images/contractors/02.jpeg"
-            formControlIds={builderFormControls}
+            formControlIds={formControls}
+            contractorData={builder}
+            onFieldChange={(field, value) =>
+              handleFieldChange("Builder", field as keyof Contractor, value)
+            }
           />
+
           <ContractorForm
             isEditable={isEditable}
             title="Interior Designer"
             imageSrc="/assets/images/contractors/03.jpeg"
-            formControlIds={interiorDesignerFormControls}
+            formControlIds={formControls}
+            contractorData={interiorDesigner}
+            onFieldChange={(field, value) =>
+              handleFieldChange(
+                "Interior Designer",
+                field as keyof Contractor,
+                value
+              )
+            }
           />
         </Row>
       </Col>
       <Col className="d-flex justify-content-end">
-        <Button variant="primary" onClick={isEditable ? handleSave : toggleEditable} className="w-25">
-          {isEditable ? "Save" : "Edit"}
+        <Button
+          variant="primary"
+          onClick={isEditable ? handleSave : toggleEditable}
+          className="w-25"
+        >
+          {!isEditable ? "Edit" : "Save"}
         </Button>
       </Col>
     </Container>

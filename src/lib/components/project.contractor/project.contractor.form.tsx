@@ -1,5 +1,4 @@
 import { Col, Form } from "react-bootstrap";
-
 interface ContractorFormProps {
   title: string;
   isEditable: boolean;
@@ -10,6 +9,8 @@ interface ContractorFormProps {
     placeholder: string;
     type: string;
   }[];
+  contractorData: Record<string, string>;
+  onFieldChange: (field: string, value: string) => void;
 }
 
 const ContractorForm: React.FC<ContractorFormProps> = ({
@@ -17,6 +18,8 @@ const ContractorForm: React.FC<ContractorFormProps> = ({
   imageSrc,
   isEditable,
   formControlIds,
+  contractorData,
+  onFieldChange,
 }) => {
   return (
     <Col md={4} className="text-center">
@@ -42,9 +45,11 @@ const ContractorForm: React.FC<ContractorFormProps> = ({
                 {label}:
               </Form.Label>
               <Form.Control
-              disabled={isEditable}
+                disabled={!isEditable}
                 type={type}
                 placeholder={placeholder}
+                value={contractorData[controlId] ?? ""}
+                onChange={(e) => onFieldChange(controlId, e.target.value)}
                 className="flex-grow-1"
                 style={{ maxWidth: "300px" }}
               />
