@@ -75,12 +75,12 @@ const ProjectPlansModal: React.FC<ProjectPlansModalProps> = ({
 
       if (fileFormData.measurements.length > 0) {
         Array.from(fileFormData.measurements).forEach((file) => {
-          formData.append("measurements", file);
+          formData.append("files", file);
         });
       }
       if (fileFormData.siteVideosAndPics.length > 0) {
         Array.from(fileFormData.siteVideosAndPics).forEach((file) => {
-          formData.append("siteVideosAndPics", file);
+          formData.append("files", file);
         });
       }
 
@@ -106,7 +106,7 @@ const ProjectPlansModal: React.FC<ProjectPlansModalProps> = ({
     try {
       // Call the API to save the project plans data
       const plansDataResponse = await postPlansData(
-        `${PROJECT_APIS.UPDATE_PROJECT_API}/${projectid}`,
+        `${PROJECT_APIS.UPDATE_PROJECT_API}/${projectid}/update`,
         projectData // Send the project data object as the request body
       );
       if (plansDataResponse?.error) {
