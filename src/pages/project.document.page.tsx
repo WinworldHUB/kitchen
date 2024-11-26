@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Alert, ListGroup, Spinner, Row, Col } from "react-bootstrap";
 import useApi from "../lib/hooks/useApi";
 import { PROJECT_APIS } from "../lib/constants/api-constants";
 import ProfileProjectLayout from "../lib/components/profile.project/profile.project.layout";
+import { useParams } from "react-router-dom";
+import { AppContext } from "../lib/contexts/appcontext";
 
 const ProjectDocumentPage = () => {
+  const { projectId } = useParams();
+  const { appState } = useContext(AppContext);
   const [userDocuments, setUserDocuments] = useState<GetDocument[]>([]);
   const [moietyDocuments, setMoietyDocuments] = useState<GetDocument[]>([]);
   const [uploadStatus, setUploadStatus] = useState<string | null>(null);
@@ -18,7 +22,7 @@ const ProjectDocumentPage = () => {
     setLoading(true);
     try {
       const response = await getProjectFiles(
-        `${PROJECT_APIS.GET_PROJECT_DOCUMENTS_API}/1`
+        `${PROJECT_APIS.GET_PROJECT_DOCUMENTS_API}/${projectId}`
       );
       if (response.success) {
         const { userDocs, moietyDocs } = response.data;
@@ -99,19 +103,21 @@ const ProjectDocumentPage = () => {
         <Col>
           <h3>From Username</h3>
         </Col>
-        <Col xs="auto">
-          <input
-            type="file"
-            multiple
-            accept="*"
-            onChange={(e) => {
-              const target = e.target as HTMLInputElement;
-              if (target.files) handleFileUpload(target.files);
-            }}
-            className="form-control"
-            style={{ display: "inline-block", width: "auto" }}
-          />
-        </Col>
+        {!appState.isAdmin && (
+          <Col xs="auto">
+            <input
+              type="file"
+              multiple
+              accept="*"
+              onChange={(e) => {
+                const target = e.target as HTMLInputElement;
+                if (target.files) handleFileUpload(target.files);
+              }}
+              className="form-control"
+              style={{ display: "inline-block", width: "auto" }}
+            />
+          </Col>
+        )}
       </Row>
 
       <div className="d-flex flex-row overflow-auto mb-4">
@@ -127,7 +133,26 @@ const ProjectDocumentPage = () => {
         </ListGroup>
       </div>
       <hr className="my-4 w-100 border-primary border-2" />
-      <h3>From Moiety Team</h3>
+      <Row className="mb-4 align-items-center">
+        <Col>
+          <h3>From Moiety Team</h3>
+        </Col>
+        {appState.isAdmin && (
+          <Col xs="auto">
+            <input
+              type="file"
+              multiple
+              accept="*"
+              onChange={(e) => {
+                const target = e.target as HTMLInputElement;
+                if (target.files) handleFileUpload(target.files);
+              }}
+              className="form-control"
+              style={{ display: "inline-block", width: "auto" }}
+            />
+          </Col>
+        )}
+      </Row>
       <div className="d-flex flex-row overflow-auto">
         <ListGroup horizontal>
           {moietyDocuments.map((doc) => (
