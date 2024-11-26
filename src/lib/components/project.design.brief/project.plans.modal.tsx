@@ -1,29 +1,22 @@
 import React, { useState } from "react";
 import { Modal, Row, Col, Form } from "react-bootstrap";
 import { FaFolder } from "react-icons/fa6";
-
+import { CielingType } from "../../constants";
 
 interface ProjectPlansModalProps {
-    isModalOpen: boolean;
-    setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  isModalOpen: boolean;
+  setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const ProjectPlansModal: React.FC<ProjectPlansModalProps> = ({
-    isModalOpen,
-    setIsModalOpen,
+  isModalOpen,
+  setIsModalOpen,
 }) => {
-
   const [fileFormData, setFileFormData] = useState({
     measurement: [],
     siteVideosAndPics: [],
   });
-  const [otherFormData, setOtherFormData] = useState({
-    textField: "",
-    radioOption: "",
-    dropdown: "",
-    numberField: 0,
-    textArea: "", // Added text area state
-  });
+  const [projectData, setProjectData] = useState<Partial<Project>>({});
 
   const [currentSlide, setCurrentSlide] = useState(1); // Track the current slide (step)
 
@@ -41,7 +34,7 @@ const ProjectPlansModal: React.FC<ProjectPlansModalProps> = ({
     >
   ) => {
     const { name, value } = e.target;
-    setOtherFormData((prevData) => ({
+    setProjectData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
@@ -62,7 +55,7 @@ const ProjectPlansModal: React.FC<ProjectPlansModalProps> = ({
   const handleSave = () => {
     console.log("Saving project data...");
     console.log("File Data: ", fileFormData);
-    console.log("Other Data: ", otherFormData);
+    console.log("Other Data: ", projectData);
     setIsModalOpen(false);
   };
 
@@ -126,18 +119,41 @@ const ProjectPlansModal: React.FC<ProjectPlansModalProps> = ({
                 <Row>
                   {/* Form Fields */}
                   <div className="mb-3 d-flex justify-content-between align-items-center">
-                    <label htmlFor="textField">Text Field</label>
+                    <label htmlFor="textField">
+                      What's Your Cieling Height
+                    </label>
                     <Form.Control
                       type="text"
                       name="textField"
-                      value={otherFormData.textField}
+                      value={projectData.ceilingHeight}
                       className="w-75"
                       onChange={handleFormInputChange}
                     />
                   </div>
                   <hr />
+                  <Row>
+                    <div className="mb-3 d-flex justify-content-between align-items-center">
+                      <label htmlFor="dropdown">What's Your Cieling Type</label>
+                      <Form.Control
+                        as="select"
+                        name="dropdown"
+                        value={
+                          projectData.isPitchedCeiling
+                            ? CielingType.Pitched
+                            : CielingType.Flat
+                        }
+                        className="w-75"
+                        onChange={handleFormInputChange}
+                      >
+                        <option value="">Select an option</option>
+                        <option value="Option 1">{CielingType.Pitched}</option>
+                        <option value="Option 2">{CielingType.Flat}</option>
+                      </Form.Control>
+                    </div>
+                  </Row>
+                  <hr />
                   <div className="mb-3 d-flex justify-content-between align-items-center">
-                    <label>Radio Option</label>
+                    <label>Do You have Sky Lights</label>
                     <div className="d-flex">
                       <Form.Check
                         type="radio"
@@ -145,7 +161,7 @@ const ProjectPlansModal: React.FC<ProjectPlansModalProps> = ({
                         name="radioOption"
                         value="Option 1"
                         className="mx-2"
-                        checked={otherFormData.radioOption === "Option 1"}
+                        checked={projectData.isPitchedCeiling}
                         onChange={handleFormInputChange}
                       />
                       <Form.Check
@@ -154,40 +170,23 @@ const ProjectPlansModal: React.FC<ProjectPlansModalProps> = ({
                         name="radioOption"
                         value="Option 2"
                         className="mx-2"
-                        checked={otherFormData.radioOption === "Option 2"}
+                        checked={!projectData.isPitchedCeiling}
                         onChange={handleFormInputChange}
                       />
                     </div>
                   </div>
                   <hr />
                 </Row>
-                <Row>
-                  <div className="mb-3 d-flex justify-content-between align-items-center">
-                    <label htmlFor="dropdown">Dropdown</label>
-                    <Form.Control
-                      as="select"
-                      name="dropdown"
-                      value={otherFormData.dropdown}
-                      className="w-75"
-                      onChange={handleFormInputChange}
-                    >
-                      <option value="">Select an option</option>
-                      <option value="Option 1">Option 1</option>
-                      <option value="Option 2">Option 2</option>
-                    </Form.Control>
-                  </div>
-                  <hr />
-                  <div className="mb-3 d-flex justify-content-between align-items-center">
-                    <label htmlFor="numberField">Number Field</label>
-                    <Form.Control
-                      type="number"
-                      name="numberField"
-                      value={otherFormData.numberField}
-                      className="w-75"
-                      onChange={handleFormInputChange}
-                    />
-                  </div>
-                </Row>
+                <div className="mb-3 d-flex justify-content-between align-items-center">
+                  <label htmlFor="numberField">Number Of Skylights</label>
+                  <Form.Control
+                    type="number"
+                    name="numberField"
+                    value={projectData.skylightDetails}
+                    className="w-75"
+                    onChange={handleFormInputChange}
+                  />
+                </div>
               </div>
             </div>
           )}
@@ -197,14 +196,17 @@ const ProjectPlansModal: React.FC<ProjectPlansModalProps> = ({
               {/* Added Text Area field */}
               <Row>
                 <div className="mb-3 d-flex justify-content-between align-items-center">
-                  <label>Radio Option</label>
+                  <label>
+                    Are there any changes in floor levels in the kitchen area,
+                    i.e steps
+                  </label>
                   <div className="d-flex">
                     <Form.Check
                       type="radio"
                       label="Option 1"
                       name="radioOption"
                       value="Option 1"
-                      checked={otherFormData.radioOption === "Option 1"}
+                      checked={projectData.isStepInKitchen}
                       onChange={handleFormInputChange}
                       className="mx-2"
                     />
@@ -214,7 +216,7 @@ const ProjectPlansModal: React.FC<ProjectPlansModalProps> = ({
                       name="radioOption"
                       value="Option 2"
                       className="mx-2"
-                      checked={otherFormData.radioOption === "Option 2"}
+                      checked={!projectData.isStepInKitchen}
                       onChange={handleFormInputChange}
                     />
                   </div>
@@ -227,7 +229,7 @@ const ProjectPlansModal: React.FC<ProjectPlansModalProps> = ({
                   <Form.Control
                     as="textarea"
                     name="textArea"
-                    value={otherFormData.textArea}
+                    value={projectData.kitchenStepsDetails}
                     rows={3}
                     onChange={handleFormInputChange}
                     className="w-75"

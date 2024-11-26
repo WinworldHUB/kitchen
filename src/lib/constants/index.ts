@@ -1,5 +1,3 @@
-export const EMPTY_STRING = "";
-
 export const DEFAULT_APP_VAR: AppVars = {
   isUserLoggedIn: false,
   accessToken: "",
@@ -59,9 +57,7 @@ export enum ProjectStatus {
   designQuotation = "Design Quotation",
   onHold = "On Hold",
   completed = "Completed",
-
 }
-
 
 export const STYTCH_PROJECT_ID = {
   MINOR: "project-",
@@ -137,7 +133,6 @@ export const DATA_TABLE_DEFAULT_STYLE = {
   },
 };
 
-
 export const APPLIANCE_LIST: string[] = [
   "Ovens",
   "Coffee Machine",
@@ -151,9 +146,8 @@ export const APPLIANCE_LIST: string[] = [
   "Dishwasher",
   "Washing Machine",
   "Tumble Dryer",
-  "Washer/Dryer"
+  "Washer/Dryer",
 ];
-
 
 export const PROPERTY_LIST: string[] = [
   "Flat",
@@ -161,13 +155,17 @@ export const PROPERTY_LIST: string[] = [
   "Semi-detached",
   "Terraced",
   "Cottage",
-  "Bungalow"
+  "Bungalow",
 ];
-
 
 export enum ProjectType {
   NewExtension = "New/Extension",
   ExistingRenovation = "Existing/Renovation",
+}
+
+export enum CielingType {
+  Pitched = "Pitched",
+  Flat = "Flat",
 }
 
 export const DEFAULT_CONTRACTOR: Contractor = {
