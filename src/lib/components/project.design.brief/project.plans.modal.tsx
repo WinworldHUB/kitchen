@@ -157,7 +157,7 @@ const ProjectPlansModal: React.FC<ProjectPlansModalProps> = ({
                     name="measurement"
                     onChange={handleFileInputChange}
                     multiple
-                    accept=".jpg, .jpeg, .png, .mp4, .mov, .pdf, .txt, .docx, .xlsx"
+                    accept=".jpg, .jpeg, .png, .mp4, .mov, .pdf"
                     className="visually-hidden"
                   />
                 </Col>
@@ -176,7 +176,7 @@ const ProjectPlansModal: React.FC<ProjectPlansModalProps> = ({
                     name="siteVideosAndPics"
                     onChange={handleFileInputChange}
                     multiple
-                    accept=".jpg, .jpeg, .png, .mp4, .mov, .pdf, .txt, .docx, .xlsx"
+                    accept=".jpg, .jpeg, .png, .mp4, .mov, .pdf"
                     className="visually-hidden"
                   />
                 </Col>

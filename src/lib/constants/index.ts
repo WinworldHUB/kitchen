@@ -30,6 +30,7 @@ export enum PageRoutes {
   UserProfile = "/userProfile",
   ForgotPassword = "/forgotPassword",
   Appliances = "/projectDetails/designBrief/:projectId/appliances",
+  DocsDetails = "/projectDetails/documents/:projectId/docsDetails",
 }
 
 export const DEFAULT_LOCAL_STORAGE_KEY_FOR_APP_STATE = "MOIETY_APP_STATE";

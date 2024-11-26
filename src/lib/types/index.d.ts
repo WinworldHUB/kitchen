@@ -35,10 +35,10 @@ interface ComponentProps {
 type Project = {
   id: string | null;
   title: string;
-  address: string;  // `notNull` in schema
+  address: string; // `notNull` in schema
   status: string;
-  userId: string;   // Added to match schema
-  user: string;     // Added to match schema
+  userId: string; // Added to match schema
+  user: string; // Added to match schema
   propertyType: string;
 
   isExistingProject: boolean;
@@ -234,38 +234,42 @@ type GetDocument = {
   key: string;
   lastModified: string;
   size: number;
+  downloadUrl: string;
 };
 
-type ProjectDocsData = {
-  userDocs: GetDocument[];
-  moietyDocs: GetDocument[];
-}
+type FolderData = {
+  folderName: string;
+  files: GetDocument[];
+};
 
 type GetProjectDocsResponse = GeneralAPIResponse & {
-  data: ProjectDocsData;
+  data: {
+    user: FolderData[];
+    moiety: FolderData[];
+  };
 };
 
 
 type CreateProjectResponse = GeneralAPIResponse & {
   projectId: string;
-}
+};
 
 type CreateProjectRequest = {
   title: string;
   address: string;
   propertyType: string;
   isExistingProject: boolean;
-}
+};
 
 type GetProjectsResponse = GeneralAPIResponse & {
-  projects: Project[]
-  user: string
-}
+  projects: Project[];
+  user: string;
+};
 
 type GetProjectResponse = GeneralAPIResponse & {
-  project: Project
-  user: string
-}
+  project: Project;
+  user: string;
+};
 
 type AddApplicanceRequest = {
   name: string;
@@ -273,12 +277,11 @@ type AddApplicanceRequest = {
   type: string;
   additionalInfo?: string;
   referenceUrl?: string;
-}
+};
 
 type GetProjectAppliancesResponse = GeneralAPIResponse & {
-  appliances: Appliance[]
-}
-
+  appliances: Appliance[];
+};
 
 type DeleteAppliancesRequest = {
   applianceIds: string[];
@@ -289,7 +292,6 @@ interface ApplianceGroup {
   quantity: number;
   details: string[];
 }
-
 
 type EditApplianceRequest = {
   name: string;
@@ -312,21 +314,19 @@ type UserProject = {
   address: string;
   userName: string;
   status: string;
-}
-
-
+};
 
 type AddContractorRequest = {
   contractors: Contractor[];
-}
+};
 
 type GetContractorsResponse = GeneralAPIResponse & {
   contractors: Contractor[];
-}
+};
 
 type UpdateContractorRequest = {
   contractors: Contractor[];
-}
+};
 
 type FileFormData = {
   measurements: File[];

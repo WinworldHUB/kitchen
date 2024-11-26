@@ -14,6 +14,7 @@ import ForgotPasswordPage from "./pages/forget.password.page";
 import PaymentsPage from "./pages/payments.page";
 import AppliancesPage from "./pages/appliances.page";
 import ProjectDocumentPage from "./pages/project.document.page";
+import ProjectDocsDetailsPage from "./lib/components/project.document/project.docs.details";
 
 const App = () => {
   const { appState } = useContext(AppContext);
@@ -54,6 +55,7 @@ const App = () => {
             appState.isUserLoggedIn ? <ProjectDocumentPage /> : <SignInPage />
           }
         />
+
         <Route
           path={PageRoutes.UserProfile}
           element={
