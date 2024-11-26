@@ -12,12 +12,6 @@ interface ProjectPlansModalProps {
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-
-type FileFormData = {
-  measurements: File[];
-  siteVideosAndPics: File[];
-}
-
 const ProjectPlansModal: React.FC<ProjectPlansModalProps> = ({
   projectid,
   isModalOpen,
@@ -46,11 +40,20 @@ const ProjectPlansModal: React.FC<ProjectPlansModalProps> = ({
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
     >
   ) => {
-    const { name, value } = e.target;
-    setProjectData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    const { name, value, type } = e.target;
+
+    if (type === "radio") {
+      // Handle radio button logic
+      setProjectData((prevData) => ({
+        ...prevData,
+        [name]: value === "Yes" ? true : false, // assuming boolean state
+      }));
+    } else {
+      setProjectData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
   };
 
   const handleNextSlide = () => {
@@ -65,11 +68,11 @@ const ProjectPlansModal: React.FC<ProjectPlansModalProps> = ({
     }
   };
 
-  const handleSave = async () => {
+  const handleFormSave = async () => {
     try {
       // Create a new FormData instance
       const formData = new FormData();
-  
+
       if (fileFormData.measurements.length > 0) {
         Array.from(fileFormData.measurements).forEach((file) => {
           formData.append("measurements", file);
@@ -80,30 +83,48 @@ const ProjectPlansModal: React.FC<ProjectPlansModalProps> = ({
           formData.append("siteVideosAndPics", file);
         });
       }
-  
+
       // Add the uploader (either 'user' or 'admin') to the form data
       formData.append("uploader", appState.isAdmin ? "admin" : "user");
-  
+
       // Call the API to upload the files
       const fileDataResponse = await postFileData(
         `${PROJECT_APIS.UPLOAD_PROJECT_DOCUMENT_API}/${projectid}`,
         formData // Send FormData as the request body
       );
-  
-      // Check for the response status or handle success
-      if (fileDataResponse.success) {
-        console.log("Files uploaded successfully", fileDataResponse.data);
-      } else {
-        console.error("File upload failed:", fileDataResponse.message);
+
+      if (fileDataResponse?.error) {
+        console.error("Error in file upload:", fileDataResponse.error);
       }
-  
-      // Optionally, close the modal after saving
       setIsModalOpen(false);
     } catch (error) {
       console.error("Error in file upload:", error);
     }
   };
-  
+
+  const handleProjectPlansSave = async () => {
+    try {
+      // Call the API to save the project plans data
+      const plansDataResponse = await postPlansData(
+        `${PROJECT_APIS.UPDATE_PROJECT_API}/${projectid}`,
+        projectData // Send the project data object as the request body
+      );
+      if (plansDataResponse?.error) {
+        console.error(
+          "Error in saving project plans data:",
+          plansDataResponse.error
+        );
+      }
+      setIsModalOpen(false);
+    } catch (error) {
+      console.error("Error in saving project plans data:", error);
+    }
+  };
+
+  const handleSave = async () => {
+    handleFormSave();
+    handleProjectPlansSave();
+  };
 
   return (
     <Modal
@@ -179,44 +200,47 @@ const ProjectPlansModal: React.FC<ProjectPlansModalProps> = ({
                   <hr />
                   <Row>
                     <div className="mb-3 d-flex justify-content-between align-items-center">
-                      <label htmlFor="dropdown">What's Your Cieling Type</label>
+                      <label htmlFor="ceilingType">
+                        What's Your Cieling Type
+                      </label>
                       <Form.Control
                         as="select"
-                        name="dropdown"
+                        name="ceilingType"
                         value={
                           projectData.isPitchedCeiling
                             ? CielingType.Pitched
                             : CielingType.Flat
                         }
-                        className="w-75"
                         onChange={handleFormInputChange}
+                        className="w-75"
                       >
-                        <option value="">Select an option</option>
-                        <option value="Option 1">{CielingType.Pitched}</option>
-                        <option value="Option 2">{CielingType.Flat}</option>
+                        <option value={CielingType.Pitched}>
+                          {CielingType.Pitched}
+                        </option>
+                        <option value={CielingType.Flat}>
+                          {CielingType.Flat}
+                        </option>
                       </Form.Control>
                     </div>
                   </Row>
                   <hr />
                   <div className="mb-3 d-flex justify-content-between align-items-center">
-                    <label>Do You have Sky Lights</label>
+                    <label htmlFor="hasSkyLights">Do You have Sky Lights</label>
                     <div className="d-flex">
                       <Form.Check
                         type="radio"
-                        label="Option 1"
-                        name="radioOption"
-                        value="Option 1"
-                        className="mx-2"
-                        checked={projectData.isPitchedCeiling}
+                        label="Yes"
+                        name="hasSkyLights" // Unique name for skylight radio
+                        value="Yes"
+                        checked={projectData.isSkylights}
                         onChange={handleFormInputChange}
                       />
                       <Form.Check
                         type="radio"
-                        label="Option 2"
-                        name="radioOption"
-                        value="Option 2"
-                        className="mx-2"
-                        checked={!projectData.isPitchedCeiling}
+                        label="No"
+                        name="hasSkyLights" // Unique name for skylight radio
+                        value="No"
+                        checked={!projectData.isSkylights}
                         onChange={handleFormInputChange}
                       />
                     </div>
@@ -224,10 +248,10 @@ const ProjectPlansModal: React.FC<ProjectPlansModalProps> = ({
                   <hr />
                 </Row>
                 <div className="mb-3 d-flex justify-content-between align-items-center">
-                  <label htmlFor="numberField">Number Of Skylights</label>
+                  <label htmlFor="numberOfSkyLights">Number Of Skylights</label>
                   <Form.Control
                     type="number"
-                    name="numberField"
+                    name="numberOfSkyLights"
                     value={projectData.skylightDetails}
                     className="w-75"
                     onChange={handleFormInputChange}
@@ -242,25 +266,25 @@ const ProjectPlansModal: React.FC<ProjectPlansModalProps> = ({
               {/* Added Text Area field */}
               <Row>
                 <div className="mb-3 d-flex justify-content-between align-items-center">
-                  <label>
+                  <label htmlFor="isStepInKitchen">
                     Are there any changes in floor levels in the kitchen area,
                     i.e steps
                   </label>
                   <div className="d-flex">
                     <Form.Check
                       type="radio"
-                      label="Option 1"
-                      name="radioOption"
-                      value="Option 1"
+                      label="isStepInKitchen"
+                      name="isStepInKitchen"
+                      value="Yes"
                       checked={projectData.isStepInKitchen}
                       onChange={handleFormInputChange}
                       className="mx-2"
                     />
                     <Form.Check
                       type="radio"
-                      label="Option 2"
-                      name="radioOption"
-                      value="Option 2"
+                      label="isStepInKitchen"
+                      name="isStepInKitchen"
+                      value="No"
                       className="mx-2"
                       checked={!projectData.isStepInKitchen}
                       onChange={handleFormInputChange}

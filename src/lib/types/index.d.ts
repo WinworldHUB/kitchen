@@ -327,3 +327,8 @@ type GetContractorsResponse = GeneralAPIResponse & {
 type UpdateContractorRequest = {
   contractors: Contractor[];
 }
+
+type FileFormData = {
+  measurements: File[];
+  siteVideosAndPics: File[];
+};
