@@ -12,13 +12,19 @@ interface ProjectPlansModalProps {
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+
+type FileFormData = {
+  measurements: File[];
+  siteVideosAndPics: File[];
+}
+
 const ProjectPlansModal: React.FC<ProjectPlansModalProps> = ({
   projectid,
   isModalOpen,
   setIsModalOpen,
 }) => {
-  const [fileFormData, setFileFormData] = useState({
-    measurement: [],
+  const [fileFormData, setFileFormData] = useState<FileFormData>({
+    measurements: [],
     siteVideosAndPics: [],
   });
   const [projectData, setProjectData] = useState<Partial<Project>>({});
@@ -63,39 +69,41 @@ const ProjectPlansModal: React.FC<ProjectPlansModalProps> = ({
     try {
       // Create a new FormData instance
       const formData = new FormData();
-
-      if (fileFormData.measurement.length > 0) {
-        Array.from(fileFormData.measurement).forEach((file) => {
-          formData.append("files", file);
+  
+      if (fileFormData.measurements.length > 0) {
+        Array.from(fileFormData.measurements).forEach((file) => {
+          formData.append("measurements", file);
         });
       }
       if (fileFormData.siteVideosAndPics.length > 0) {
         Array.from(fileFormData.siteVideosAndPics).forEach((file) => {
-          formData.append("files", file);
+          formData.append("siteVideosAndPics", file);
         });
       }
+  
+      // Add the uploader (either 'user' or 'admin') to the form data
       formData.append("uploader", appState.isAdmin ? "admin" : "user");
-
+  
       // Call the API to upload the files
       const fileDataResponse = await postFileData(
         `${PROJECT_APIS.UPLOAD_PROJECT_DOCUMENT_API}/${projectid}`,
         formData // Send FormData as the request body
       );
-
+  
       // Check for the response status or handle success
       if (fileDataResponse.success) {
         console.log("Files uploaded successfully", fileDataResponse.data);
       } else {
         console.error("File upload failed:", fileDataResponse.message);
       }
-
+  
       // Optionally, close the modal after saving
       setIsModalOpen(false);
     } catch (error) {
       console.error("Error in file upload:", error);
-      
     }
   };
+  
 
   return (
     <Modal
