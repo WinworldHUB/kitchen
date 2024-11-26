@@ -1,14 +1,19 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Modal, Row, Col, Form } from "react-bootstrap";
 import { FaFolder } from "react-icons/fa6";
 import { CielingType } from "../../constants";
+import useApi from "../../hooks/useApi";
+import { PROJECT_APIS } from "../../constants/api-constants";
+import { AppContext } from "../../contexts/appcontext";
 
 interface ProjectPlansModalProps {
+  projectid: string;
   isModalOpen: boolean;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const ProjectPlansModal: React.FC<ProjectPlansModalProps> = ({
+  projectid,
   isModalOpen,
   setIsModalOpen,
 }) => {
@@ -17,7 +22,9 @@ const ProjectPlansModal: React.FC<ProjectPlansModalProps> = ({
     siteVideosAndPics: [],
   });
   const [projectData, setProjectData] = useState<Partial<Project>>({});
-
+  const { postFormData: postFileData } = useApi<UploadFileResponse>();
+  const { postData: postPlansData } = useApi<GeneralAPIResponse>();
+  const { appState } = useContext(AppContext);
   const [currentSlide, setCurrentSlide] = useState(1); // Track the current slide (step)
 
   const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -52,11 +59,42 @@ const ProjectPlansModal: React.FC<ProjectPlansModalProps> = ({
     }
   };
 
-  const handleSave = () => {
-    console.log("Saving project data...");
-    console.log("File Data: ", fileFormData);
-    console.log("Other Data: ", projectData);
-    setIsModalOpen(false);
+  const handleSave = async () => {
+    try {
+      // Create a new FormData instance
+      const formData = new FormData();
+
+      if (fileFormData.measurement.length > 0) {
+        Array.from(fileFormData.measurement).forEach((file) => {
+          formData.append("files", file);
+        });
+      }
+      if (fileFormData.siteVideosAndPics.length > 0) {
+        Array.from(fileFormData.siteVideosAndPics).forEach((file) => {
+          formData.append("files", file);
+        });
+      }
+      formData.append("uploader", appState.isAdmin ? "admin" : "user");
+
+      // Call the API to upload the files
+      const fileDataResponse = await postFileData(
+        `${PROJECT_APIS.UPLOAD_PROJECT_DOCUMENT_API}/${projectid}`,
+        formData // Send FormData as the request body
+      );
+
+      // Check for the response status or handle success
+      if (fileDataResponse.success) {
+        console.log("Files uploaded successfully", fileDataResponse.data);
+      } else {
+        console.error("File upload failed:", fileDataResponse.message);
+      }
+
+      // Optionally, close the modal after saving
+      setIsModalOpen(false);
+    } catch (error) {
+      console.error("Error in file upload:", error);
+      
+    }
   };
 
   return (

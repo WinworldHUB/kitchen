@@ -63,6 +63,7 @@ const ProjectDesignBriefMain: React.FC = () => {
         </Col>
       </Row>
       <ProjectPlansModal 
+        projectid={projectId}
         isModalOpen={isModalOpen} 
         setIsModalOpen={setIsModalOpen}
       />
