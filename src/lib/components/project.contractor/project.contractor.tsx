@@ -68,26 +68,22 @@ const ProjectContractor: React.FC<ProjectContractorProps> = ({
     }
     toggleEditable();
   };
-  console.log("contractors as props", contractors);
 
   const architect =
     contractors.find(
       (c) => c?.contractorType?.toLowerCase() === "architect".toLowerCase()
     ) ?? DEFAULT_CONTRACTOR;
-  console.log("architect", architect);
 
   const builder =
     contractors.find(
       (c) => c?.contractorType?.toLowerCase() === "Builder".toLowerCase()
     ) ?? DEFAULT_CONTRACTOR;
-  console.log("builder", builder);
 
   const interiorDesigner =
     contractors.find(
       (c) =>
         c?.contractorType?.toLowerCase() === "Interior Designer".toLowerCase()
     ) ?? DEFAULT_CONTRACTOR;
-  console.log("interiorDesigner", interiorDesigner);
 
   return (
     <Container className="border border-1 border-black h-100 p-4">
