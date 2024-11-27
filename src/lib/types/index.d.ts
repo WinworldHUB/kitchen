@@ -52,7 +52,6 @@ type Project = {
   interiorDesignerName?: string;
   ceilingHeight?: string;
   numberOfSkylights?: number;
-  skylightDetails?: string;
   kitchenStepsDetails?: string;
 };
 
@@ -331,4 +330,17 @@ type UpdateContractorRequest = {
 type FileFormData = {
   measurements: File[];
   siteVideosAndPics: File[];
+};
+
+
+type UpdateProjectRequest = {
+
+  isExistingProject?: boolean;
+  isPitchedCeiling?: boolean;
+  isSkylights?: boolean;
+  isStepInKitchen?: boolean;
+  ceilingHeight?: string;
+  numberOfSkylights?: number;
+  kitchenStepsDetails?: string;
+
 };

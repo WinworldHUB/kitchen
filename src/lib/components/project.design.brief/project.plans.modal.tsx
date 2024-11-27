@@ -23,7 +23,7 @@ const ProjectPlansModal: React.FC<ProjectPlansModalProps> = ({
   });
   const [projectData, setProjectData] = useState<Partial<Project>>({});
   const { postFormData: postFileData } = useApi<UploadFileResponse>();
-  const { postData: postPlansData } = useApi<GeneralAPIResponse>();
+  const { putData: postPlansData } = useApi<GeneralAPIResponse>();
   const { appState } = useContext(AppContext);
   const [currentSlide, setCurrentSlide] = useState(1); // Track the current slide (step)
 
@@ -46,7 +46,13 @@ const ProjectPlansModal: React.FC<ProjectPlansModalProps> = ({
       // Handle radio button logic
       setProjectData((prevData) => ({
         ...prevData,
-        [name]: value === "Yes" ? true : false, // assuming boolean state
+        [name]: value === "Yes",
+      }));
+    } else if (type === "select-one") {
+      // Handle select input change (e.g., for ceiling type)
+      setProjectData((prevData) => ({
+        ...prevData,
+        [name]: value === CielingType.Pitched,
       }));
     } else {
       setProjectData((prevData) => ({
@@ -104,11 +110,30 @@ const ProjectPlansModal: React.FC<ProjectPlansModalProps> = ({
 
   const handleProjectPlansSave = async () => {
     try {
-      // Call the API to save the project plans data
+      // Prepare the data to match the UpdateProjectRequest type
+      const data: UpdateProjectRequest = {
+        isExistingProject: projectData.isExistingProject,
+        isPitchedCeiling: projectData.isPitchedCeiling,
+        isSkylights: projectData.isSkylights,
+        isStepInKitchen: projectData.isStepInKitchen,
+
+        ceilingHeight: projectData.ceilingHeight,
+        numberOfSkylights: projectData.numberOfSkylights,
+        kitchenStepsDetails: projectData.kitchenStepsDetails,
+      };
+
+      // Remove undefined values from the object before sending it to the API
+      const cleanData: UpdateProjectRequest = Object.fromEntries(
+        Object.entries(data).filter(([_, value]) => value !== undefined)
+      ) as UpdateProjectRequest;
+
+      // Call the API to update the project with the clean data
       const plansDataResponse = await postPlansData(
         `${PROJECT_APIS.UPDATE_PROJECT_API}/${projectid}/update`,
-        projectData // Send the project data object as the request body
+        cleanData // Send the updated project data as the request body
       );
+      console.log("data", cleanData);
+
       if (plansDataResponse?.error) {
         console.error(
           "Error in saving project plans data:",
@@ -186,12 +211,12 @@ const ProjectPlansModal: React.FC<ProjectPlansModalProps> = ({
                 <Row>
                   {/* Form Fields */}
                   <div className="mb-3 d-flex justify-content-between align-items-center">
-                    <label htmlFor="textField">
+                    <label htmlFor="ceilingHeight">
                       What's Your Cieling Height
                     </label>
                     <Form.Control
                       type="text"
-                      name="textField"
+                      name="ceilingHeight"
                       value={projectData.ceilingHeight}
                       className="w-75"
                       onChange={handleFormInputChange}
@@ -200,12 +225,12 @@ const ProjectPlansModal: React.FC<ProjectPlansModalProps> = ({
                   <hr />
                   <Row>
                     <div className="mb-3 d-flex justify-content-between align-items-center">
-                      <label htmlFor="ceilingType">
+                      <label htmlFor="isPitchedCeiling">
                         What's Your Cieling Type
                       </label>
                       <Form.Control
                         as="select"
-                        name="ceilingType"
+                        name="isPitchedCeiling"
                         value={
                           projectData.isPitchedCeiling
                             ? CielingType.Pitched
@@ -225,36 +250,39 @@ const ProjectPlansModal: React.FC<ProjectPlansModalProps> = ({
                   </Row>
                   <hr />
                   <div className="mb-3 d-flex justify-content-between align-items-center">
-                    <label htmlFor="hasSkyLights">Do You have Sky Lights</label>
+                    <label htmlFor="isSkylights">Do You have Sky Lights</label>
                     <div className="d-flex">
                       <Form.Check
                         type="radio"
                         label="Yes"
-                        name="hasSkyLights" // Unique name for skylight radio
+                        name="isSkylights"
                         value="Yes"
-                        checked={projectData.isSkylights}
+                        checked={projectData.isSkylights === true}
                         onChange={handleFormInputChange}
+                        className="mx-2"
                       />
                       <Form.Check
                         type="radio"
                         label="No"
-                        name="hasSkyLights" // Unique name for skylight radio
+                        name="isSkylights"
                         value="No"
-                        checked={!projectData.isSkylights}
+                        checked={!projectData.isSkylights === true}
                         onChange={handleFormInputChange}
+                        className="mx-2"
                       />
                     </div>
                   </div>
                   <hr />
                 </Row>
                 <div className="mb-3 d-flex justify-content-between align-items-center">
-                  <label htmlFor="numberOfSkyLights">Number Of Skylights</label>
+                  <label htmlFor="numberOfSkylights">Number Of Skylights</label>
                   <Form.Control
                     type="number"
-                    name="numberOfSkyLights"
-                    value={projectData.skylightDetails}
-                    className="w-75"
+                    name="numberOfSkylights"
+                    value={projectData.numberOfSkylights}
                     onChange={handleFormInputChange}
+                    className="w-75"
+                    disabled={!projectData.isSkylights}
                   />
                 </div>
               </div>
@@ -273,7 +301,7 @@ const ProjectPlansModal: React.FC<ProjectPlansModalProps> = ({
                   <div className="d-flex">
                     <Form.Check
                       type="radio"
-                      label="isStepInKitchen"
+                      label="Yes"
                       name="isStepInKitchen"
                       value="Yes"
                       checked={projectData.isStepInKitchen}
@@ -282,12 +310,12 @@ const ProjectPlansModal: React.FC<ProjectPlansModalProps> = ({
                     />
                     <Form.Check
                       type="radio"
-                      label="isStepInKitchen"
+                      label="No"
                       name="isStepInKitchen"
                       value="No"
-                      className="mx-2"
                       checked={!projectData.isStepInKitchen}
                       onChange={handleFormInputChange}
+                      className="mx-2"
                     />
                   </div>
                 </div>
@@ -295,14 +323,17 @@ const ProjectPlansModal: React.FC<ProjectPlansModalProps> = ({
               </Row>
               <Row>
                 <div className="mb-3 d-flex justify-content-between align-items-center">
-                  <label htmlFor="textArea">Text Area</label>
+                  <label htmlFor="kitchenStepsDetails">
+                    If Yes, let us know where
+                  </label>
                   <Form.Control
                     as="textarea"
-                    name="textArea"
+                    name="kitchenStepsDetails"
                     value={projectData.kitchenStepsDetails}
                     rows={3}
                     onChange={handleFormInputChange}
                     className="w-75"
+                    disabled={!projectData.isStepInKitchen}
                   />
                 </div>
               </Row>
