@@ -60,6 +60,12 @@ export enum ProjectStatus {
   completed = "Completed",
 }
 
+export enum PaymentStatus{
+  Completed = "Completed",
+  Pending = "Pending",
+  PaymentDue = "Payment Due",
+}
+
 export const STYTCH_PROJECT_ID = {
   MINOR: "project-",
   MODE: "test-",

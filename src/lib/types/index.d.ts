@@ -213,6 +213,7 @@ type Appliance = {
 };
 
 type Payment = {
+  id: string;
   title: string;
   dueDate: string;
   amount: number;

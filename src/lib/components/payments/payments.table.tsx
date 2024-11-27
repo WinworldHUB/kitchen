@@ -7,9 +7,10 @@ import {
   Modal,
   Row,
   Form,
+  Dropdown,
 } from "react-bootstrap";
 import DataTable, { TableColumn } from "react-data-table-component";
-import { DATA_TABLE_DEFAULT_STYLE } from "../../constants";
+import { DATA_TABLE_DEFAULT_STYLE, PaymentStatus } from "../../constants";
 import { getStatusColor } from "../../utils/color";
 import { AppContext } from "../../contexts/appcontext";
 import useApi from "../../hooks/useApi";
@@ -25,17 +26,20 @@ interface PaymentsTableProps {
   projectId: string;
   initialData: Payment[];
   paymentStat: PaymentStat[];
+  setTriggerFetch: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const PaymentsTable: FC<PaymentsTableProps> = ({
   projectId,
   initialData,
   paymentStat,
+  setTriggerFetch,
 }) => {
   const { appState } = useContext(AppContext);
   const { postData: postPaymentData } = useApi<GeneralAPIResponse>();
   const { putData: updatePaymentStatus } = useApi<GeneralAPIResponse>();
   const [showModal, setShowModal] = useState<boolean>(false);
+  const [status, setStatus] = useState<string>(PaymentStatus.Pending);
   const [paymentForm, setPaymentForm] = useState<CreatePaymentRequest>({
     title: "",
     amount: 0,
@@ -67,6 +71,20 @@ const PaymentsTable: FC<PaymentsTableProps> = ({
     );
     if (response.success) {
       toggleModal();
+      setTriggerFetch((prevState) => prevState + 1);
+    }
+  };
+
+  const handleStatusChange = async (paymentId:string, newStatus: string) => {
+    try {
+      setStatus(newStatus);
+      await updatePaymentStatus(
+        `${PAYMENT_APIS.UPDATE_PAYMENT_API}/${paymentId}/update/status`,
+        { status: newStatus }
+      );
+      setTriggerFetch((prevState) => prevState + 1);
+    } catch (error) {
+      console.error("Error updating payment status:", error);
     }
   };
 
@@ -90,12 +108,38 @@ const PaymentsTable: FC<PaymentsTableProps> = ({
       {
         name: "Status",
         cell: (row) => {
-          const { color } = getStatusColor(row.status);
-          return (
+          
+          return appState.isAdmin ? (
+            <Dropdown>
+              <Dropdown.Toggle
+                className="px-4 fs-6 outline-0 border border-primary shadow-none"
+                style={{
+                  backgroundColor: "transparent",
+                  color: getStatusColor(row.status).color,
+                }}
+              >
+                {row.status}
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                {Object.values(PaymentStatus).map((projectStatus) => (
+                  <Dropdown.Item
+                    key={projectStatus}
+                    onClick={() => handleStatusChange(row.id,projectStatus)}
+                    className="text-center"
+                    style={{
+                      color: getStatusColor(projectStatus).color,
+                    }}
+                  >
+                    {projectStatus}
+                  </Dropdown.Item>
+                ))}
+              </Dropdown.Menu>
+            </Dropdown>
+          ) : (
             <div
               className="fw-bold"
               style={{
-                color: color,
+                color: getStatusColor(row.status).color,
                 padding: "5px",
                 borderRadius: "4px",
               }}

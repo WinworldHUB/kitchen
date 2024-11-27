@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PaymentsTable from "../lib/components/payments/payments.table";
 import ProfileProjectLayout from "../lib/components/profile.project/profile.project.layout";
 import { useParams } from "react-router-dom";
@@ -10,6 +10,8 @@ const PaymentsPage = () => {
   const { getData: getPayments, data: paymentsData } =
     useApi<GetPaymentsResponse>();
 
+  const [triggerFetch, setTriggerFetch] = useState<number>(0);
+
   useEffect(() => {
     const getPaymentData = async () => {
       try {
@@ -19,7 +21,7 @@ const PaymentsPage = () => {
       }
     };
     getPaymentData();
-  }, [projectId]);
+  }, [projectId, triggerFetch]);
 
   return (
     <ProfileProjectLayout>
@@ -27,6 +29,7 @@ const PaymentsPage = () => {
         paymentStat={paymentsData?.paymentStat}
         projectId={projectId}
         initialData={paymentsData?.payments}
+        setTriggerFetch={setTriggerFetch}
       />
     </ProfileProjectLayout>
   );
