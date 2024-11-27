@@ -57,3 +57,10 @@ export const CONTRACTOR_APIS = {
   UPDATE_CONTRACTOR_API: "/contractor",
   DELETE_CONTRACTOR_API: "/contractor",
 };
+
+export const PAYMENT_APIS = {
+  CREATE_PAYMENT_API: "/payment",
+  GET_PAYMENTS_API: "/payment",
+  DELETE_PAYMENT_API: "/payment",
+  UPDATE_PAYMENT_API: "/payment",
+}
