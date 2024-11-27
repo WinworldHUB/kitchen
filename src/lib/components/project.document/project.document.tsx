@@ -1,4 +1,4 @@
-import { ListGroup, Row, Col, Card, Button } from "react-bootstrap";
+import { ListGroup, Row, Col, Card } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { FaFolder } from "react-icons/fa6";
 
@@ -18,8 +18,10 @@ const ProjectDocument: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [selectedFolderKey, setSelectedFolderKey] = useState<string | null>(
     null
-  ); 
-  const [selectedFolderData, setSelectedFolderData] = useState<GetDocument[]>([]);
+  );
+  const [selectedFolderData, setSelectedFolderData] = useState<GetDocument[]>(
+    []
+  );
 
   const { postFormData: uploadProjectFiles } = useApi<UploadFileResponse>();
   const { getData: getProjectFiles } = useApi<GetProjectDocsResponse>();
@@ -55,11 +57,11 @@ const ProjectDocument: React.FC = () => {
       Array.from(files).forEach((file) => {
         formData.append("files", file);
       });
-
+      formData.append("uploader", appState.isAdmin ? "admin" : "user");
       setLoading(true);
       try {
         const response = await uploadProjectFiles(
-          `${PROJECT_APIS.UPLOAD_PROJECT_DOCUMENT_API}/1`,
+          `${PROJECT_APIS.UPLOAD_PROJECT_DOCUMENT_API}/${projectId}`,
           formData
         );
 
@@ -79,6 +81,9 @@ const ProjectDocument: React.FC = () => {
   };
 
   const getFolderName = (folderName: string) => {
+    if (folderName === "files") {
+      return "Miscellaneous Files";
+    }
     if (folderName === "siteVideosAndPics") {
       return "Site Videos And Pics";
     }
@@ -94,19 +99,16 @@ const ProjectDocument: React.FC = () => {
   };
 
   const handleFolderClick = (folderKey: string) => {
-
     setSelectedFolderKey(folderKey);
-  
+
     // Flatten all folders into one array
-    const flatFolders = [...userDocuments, ...moietyDocuments].flatMap((folder) => folder.files);
+    const flatFolders = [...userDocuments, ...moietyDocuments].flatMap(
+      (folder) => folder.files
+    );
     const folderData = flatFolders.filter((doc) => doc.key.includes(folderKey));
-  
-  
+
     setSelectedFolderData(folderData); // Set the filtered folder data
   };
-  
-  
-  
 
   if (loading) {
     return <Loader />;
@@ -134,20 +136,25 @@ const ProjectDocument: React.FC = () => {
         </Col>
         {!appState.isAdmin && (
           <Col xs="auto">
-            <label htmlFor="file-input" style={{ cursor: "pointer" }}>
-              <Button variant="primary" className="rounded-pill px-4">
+            <label
+              htmlFor="fileUpload"
+              className="d-flex flex-column align-items-center cursor-pointer"
+              style={{ cursor: "pointer" }}
+            >
+              <div className="rounded-pill px-4 bg-primary text-light fs-5 py-2">
                 Upload File
-              </Button>
+              </div>
             </label>
             <input
-              id="file-input"
+              id="fileUpload"
               type="file"
-              multiple
-              accept="*"
+              name="fileUpload"
               onChange={(e) => {
                 const target = e.target;
                 if (target.files) handleFileUpload(target.files);
               }}
+              multiple
+              accept=".jpg, .jpeg, .png, .mp4, .mov, .pdf"
               className="visually-hidden"
             />
           </Col>
@@ -157,60 +164,8 @@ const ProjectDocument: React.FC = () => {
       {/* List of user documents */}
       <div className="d-flex flex-row overflow-auto mb-4">
         <ListGroup horizontal>
-          {userDocuments.map((folder) =>
-            folder.files.map((doc) => (
-              <ListGroup.Item key={folder.folderName} className="p-3 border-0">
-                <Card
-                  className="d-flex flex-column align-items-center justify-content-center shadow-sm border"
-                  onClick={() => handleFolderClick(folder.folderName)} // Handle folder click
-                >
-                  <Card.Body className="text-center">
-                    <Card.Title>
-                      <FaFolder size={100} className="text-primary" />
-                    </Card.Title>
-                    <Card.Text className="text-dark fs-4 fw-semibold">
-                      {getFolderName(folder.folderName)}
-                    </Card.Text>
-                  </Card.Body>
-                </Card>
-              </ListGroup.Item>
-            ))
-          )}
-        </ListGroup>
-      </div>
-
-      {/* Section for moiety documents */}
-      <Row className="mb-4 align-items-center">
-        <Col>
-          <h3>From Moiety Team</h3>
-        </Col>
-        {appState.isAdmin && (
-          <Col xs="auto">
-            <label htmlFor="file-input" style={{ cursor: "pointer" }}>
-              <Button variant="primary" className="rounded-pill px-4">
-                Upload File
-              </Button>
-            </label>
-            <input
-              id="file-input"
-              type="file"
-              multiple
-              accept="*"
-              onChange={(e) => {
-                const target = e.target;
-                if (target.files) handleFileUpload(target.files);
-              }}
-              className="visually-hidden"
-            />
-          </Col>
-        )}
-      </Row>
-
-      {/* List of moiety documents */}
-      <div className="d-flex flex-row overflow-auto">
-        {moietyDocuments.map((folder) =>
-          folder.files.map((doc) => (
-            <ListGroup.Item key={folder.folderName} className="p-3 border-0">
+          {userDocuments.map((folder, index) => (
+            <ListGroup.Item key={index} className="p-3 border-0">
               <Card
                 className="d-flex flex-column align-items-center justify-content-center shadow-sm border"
                 onClick={() => handleFolderClick(folder.folderName)} // Handle folder click
@@ -225,8 +180,63 @@ const ProjectDocument: React.FC = () => {
                 </Card.Body>
               </Card>
             </ListGroup.Item>
-          ))
+          ))}
+        </ListGroup>
+      </div>
+
+      <hr />
+
+      {/* Section for moiety documents */}
+      <Row className="mb-4 align-items-center">
+        <Col>
+          <h3>From Moiety Team</h3>
+        </Col>
+        {appState.isAdmin && (
+          <Col xs="auto">
+            <label
+              htmlFor="fileUpload"
+              className="d-flex flex-column align-items-center cursor-pointer"
+              style={{ cursor: "pointer" }}
+            >
+              <div className="rounded-pill px-4 bg-primary text-light fs-5 py-2">
+                Upload File
+              </div>
+            </label>
+            <input
+              id="fileUpload"
+              type="file"
+              name="fileUpload"
+              onChange={(e) => {
+                const target = e.target;
+                if (target.files) handleFileUpload(target.files);
+              }}
+              multiple
+              accept=".jpg, .jpeg, .png, .mp4, .mov, .pdf"
+              className="visually-hidden"
+            />
+          </Col>
         )}
+      </Row>
+
+      {/* List of moiety documents */}
+      <div className="d-flex flex-row overflow-auto">
+        {moietyDocuments.map((folder, index) => (
+          <ListGroup.Item key={index} className="p-3 border-0">
+            <Card
+              className="d-flex flex-column align-items-center justify-content-center shadow-sm border"
+              onClick={() => handleFolderClick(folder.folderName)} // Handle folder click
+            >
+              <Card.Body className="text-center">
+                <Card.Title>
+                  <FaFolder size={100} className="text-primary" />
+                </Card.Title>
+                <Card.Text className="text-dark fs-4 fw-semibold">
+                  {getFolderName(folder.folderName)}
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </ListGroup.Item>
+        ))}
       </div>
     </ProfileProjectLayout>
   );
