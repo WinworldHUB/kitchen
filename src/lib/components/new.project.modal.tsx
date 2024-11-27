@@ -8,11 +8,13 @@ import { PROJECT_APIS } from "../constants/api-constants";
 interface NewProjectModalProps {
   isShow: boolean;
   onCloseClick: VoidFunction;
+  setTriggerFetch: React.Dispatch<React.SetStateAction<number>>
 }
 
 const NewProjectModal: FC<NewProjectModalProps> = ({
   isShow,
   onCloseClick,
+  setTriggerFetch
 }) => {
   const { postData: sendProjectData } = useApi<CreateProjectResponse>();  
   const { getData: getAddresses, data: addressSummary } =
@@ -22,7 +24,7 @@ const NewProjectModal: FC<NewProjectModalProps> = ({
   const [postcode, setPostcode] = useState<string>("");
   const [address, setAddress] = useState<string>(DEFAULT_PROJECT_ADDRESS);
   const [projectType, setProjectType] = useState<string>(ProjectType.NewExtension);
-  const [propertyType, setPropertyType] = useState<string>("cottage");
+  const [propertyType, setPropertyType] = useState<string>(PROPERTY_LIST[0]); 
 
   const searchAddress = async () => {
     await getAddresses(
@@ -44,9 +46,11 @@ const NewProjectModal: FC<NewProjectModalProps> = ({
       };
   
       // Send newProject data to backend
-      await sendProjectData(PROJECT_APIS.CREATE_PROJECT_API, newProject);
-  
-      // Close modal on success
+      const response = await sendProjectData(PROJECT_APIS.CREATE_PROJECT_API, newProject);
+      if(response?.error){
+        console.error("Error creating project:", response.error);
+      }
+      setTriggerFetch((prev) => prev + 1);
       onCloseClick();
     } catch (error) {
       console.error("Error creating project:", error);

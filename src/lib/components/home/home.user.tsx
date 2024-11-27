@@ -12,13 +12,14 @@ const HomeUser = () => {
     const navigate = useNavigate();
     const [isShowCreateProject, setIsShowCreateProject] = useState(false);
     const { getData: fetchProjects, data: projectsData } = useApi<GetProjectsResponse>();
-  
+    const [triggerFetch, setTriggerFetch] = useState<number>(0);
     // Fetch projects on component load
     useEffect(() => {
-      fetchProjects(PROJECT_APIS.GET_PROJECTS_API).catch((error) => {
-        console.error("Error fetching projects:", error);
-      });
-    }, []);
+      const fetchData = async () => {
+      await fetchProjects(PROJECT_APIS.GET_PROJECTS_API);
+      }
+      fetchData();
+    }, [triggerFetch]);
   
     const handleCreateProject = () => {
       setIsShowCreateProject(true);
@@ -46,6 +47,7 @@ const HomeUser = () => {
         />
       </FlexBox>
       <NewProjectModal
+        setTriggerFetch={setTriggerFetch}
         isShow={isShowCreateProject}
         onCloseClick={() => setIsShowCreateProject(false)}
       />
