@@ -200,7 +200,7 @@ type Contractor = {
   website: string;
   email: string;
   address: string;
-  contractorType: string;
+  contractorType?: string;
 };
 
 type Appliance = {

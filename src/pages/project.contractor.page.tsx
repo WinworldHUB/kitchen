@@ -19,11 +19,43 @@ const ProjectContractorPage = () => {
           `${CONTRACTOR_APIS.GET_CONTRACTORS_API}/${projectId}`
         );
 
-        if (!response.success || !response.contractors) {
-          return;
+        if (response?.error) {
+          console.error("Error fetching contractors:", response.error);
         }
 
-        setContractors(response.contractors);
+        if (response?.success) {
+          setContractors(response.contractors);
+        } else {
+          setContractors([
+            {
+              contractorType: "Architect",
+              name: "",
+              company: "",
+              contact: "",
+              website: "",
+              email: "",
+              address: "",
+            },
+            {
+              contractorType: "Builder",
+              name: "",
+              company: "",
+              contact: "",
+              website: "",
+              email: "",
+              address: "",
+            },
+            {
+              contractorType: "Interior Designer",
+              name: "",
+              company: "",
+              contact: "",
+              website: "",
+              email: "",
+              address: "",
+            },
+          ]);
+        }
         console.log("Contractors Fetched:", response.contractors);
       } catch (error) {
         console.error("Error fetching contractors:", error);
