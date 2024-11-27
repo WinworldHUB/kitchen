@@ -15,7 +15,6 @@ import { AppContext } from "../../contexts/appcontext";
 import useApi from "../../hooks/useApi";
 import { PAYMENT_APIS } from "../../constants/api-constants";
 
-
 type CreatePaymentRequest = {
   title: string;
   amount: number;
@@ -110,6 +109,8 @@ const PaymentsTable: FC<PaymentsTableProps> = ({
     ];
   }, []);
 
+  console.log("Payment Stats Logged:", paymentStat);
+
   return (
     <Container fluid>
       <Row className="mb-3 px-2">
@@ -123,12 +124,23 @@ const PaymentsTable: FC<PaymentsTableProps> = ({
         </Col>
       </Row>
       <Row className="mb-3 py-2 mx-2 border border-primary rounded-pill">
-        {paymentStat.map((total, index) => (
-          <Col key={index} className="d-flex align-items-center">
-            <div className="fs-3 fw-light">{`${total.title}: $${total.amount}`}</div>
+        {paymentStat?.length > 0 ? (
+          paymentStat.map((total, index) => (
+            <Col key={index} className="d-flex align-items-center">
+              <div className="fs-3 fw-light">
+                {total.title
+                  ? `${total.title}: $${total.amount ?? "0"}`
+                  : "No data available"}
+              </div>
+            </Col>
+          ))
+        ) : (
+          <Col>
+            <div className="fs-3 fw-light">No payment data available</div>
           </Col>
-        ))}
+        )}
       </Row>
+
       <Card>
         <Card.Body>
           <DataTable
