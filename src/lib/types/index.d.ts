@@ -213,8 +213,9 @@ type Appliance = {
 };
 
 type Payment = {
-  paymentSchedule: string;
+  title: string;
   dueDate: string;
+  amount: number;
   status: string;
 };
 interface FileData {
@@ -247,7 +248,6 @@ type GetProjectDocsResponse = GeneralAPIResponse & {
     moiety: FolderData[];
   };
 };
-
 
 type CreateProjectResponse = GeneralAPIResponse & {
   projectId: string;
@@ -332,9 +332,7 @@ type FileFormData = {
   siteVideosAndPics: File[];
 };
 
-
 type UpdateProjectRequest = {
-
   isExistingProject?: boolean;
   isPitchedCeiling?: boolean;
   isSkylights?: boolean;
@@ -342,5 +340,22 @@ type UpdateProjectRequest = {
   ceilingHeight?: string;
   numberOfSkylights?: number;
   kitchenStepsDetails?: string;
-
 };
+
+type CreatePaymentRequest = {
+  title: string;
+  amount: number;
+  dueDate: string;
+};
+
+
+type PaymentStat = {
+  title: string;
+  amount: number;
+};
+
+type GetPaymentsResponse = GeneralAPIResponse & {
+  payments: Payment[];
+  paymentStat: PaymentStat[];
+};
+
