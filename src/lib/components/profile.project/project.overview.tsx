@@ -14,9 +14,7 @@ interface ProjectOverviewProps {
 
 const ProjectOverview: React.FC<ProjectOverviewProps> = ({ project, user }) => {
   const { appState } = useContext(AppContext);
-  const [status, setStatus] = useState<string>(
-    project?.status ?? ProjectStatus.draft
-  );
+  const [status, setStatus] = useState<string>(project?.status);
   const { putData: updateProjectStatus } = useApi<GeneralAPIResponse>();
 
   const handleStatusChange = async (newStatus: string) => {
@@ -46,7 +44,7 @@ const ProjectOverview: React.FC<ProjectOverviewProps> = ({ project, user }) => {
               </Col>
               <Col className="d-flex justify-content-end">
                 <Card.Text className="d-flex mb-2">
-                  <span className="fw-semibold mx-2 my-1">Project Status:</span>
+                  <span className="fw-semibold mx-2 mt-2">Project Status:</span>
                   {appState.isAdmin ? (
                     <Dropdown>
                       <Dropdown.Toggle
@@ -76,11 +74,11 @@ const ProjectOverview: React.FC<ProjectOverviewProps> = ({ project, user }) => {
                       className="fs-6 border rounded-pill px-4 py-2"
                       style={{
                         backgroundColor:
-                          getProjectStatus(status).backgroundColor,
-                        color: getProjectStatus(status).color,
+                          getProjectStatus(project?.status).backgroundColor,
+                        color: getProjectStatus(project?.status).color,
                       }}
                     >
-                      {status}
+                      {project?.status}
                     </span>
                   )}
                 </Card.Text>
