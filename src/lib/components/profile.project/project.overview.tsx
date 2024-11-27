@@ -14,7 +14,7 @@ interface ProjectOverviewProps {
 
 const ProjectOverview: React.FC<ProjectOverviewProps> = ({ project, user }) => {
   const { appState } = useContext(AppContext);
-  const [status, setStatus] = useState<string>(project?.status);
+  const [status, setStatus] = useState<string>(project?.status ?? ProjectStatus.draft);
   const { putData: updateProjectStatus } = useApi<GeneralAPIResponse>();
 
   const handleStatusChange = async (newStatus: string) => {
@@ -73,8 +73,8 @@ const ProjectOverview: React.FC<ProjectOverviewProps> = ({ project, user }) => {
                     <span
                       className="fs-6 border rounded-pill px-4 py-2"
                       style={{
-                        backgroundColor:
-                          getProjectStatus(project?.status).backgroundColor,
+                        backgroundColor: getProjectStatus(project?.status)
+                          .backgroundColor,
                         color: getProjectStatus(project?.status).color,
                       }}
                     >

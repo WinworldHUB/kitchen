@@ -33,7 +33,8 @@ const PaymentsTable: FC<PaymentsTableProps> = ({
   paymentStat,
 }) => {
   const { appState } = useContext(AppContext);
-  const { postData } = useApi<GeneralAPIResponse>();
+  const { postData: postPaymentData } = useApi<GeneralAPIResponse>();
+  const { putData: updatePaymentStatus } = useApi<GeneralAPIResponse>();
   const [showModal, setShowModal] = useState<boolean>(false);
   const [paymentForm, setPaymentForm] = useState<CreatePaymentRequest>({
     title: "",
@@ -60,13 +61,12 @@ const PaymentsTable: FC<PaymentsTableProps> = ({
       dueDate: paymentForm.dueDate,
     };
 
-    const response = await postData(
+    const response = await postPaymentData(
       `${PAYMENT_APIS.CREATE_PAYMENT_API}/${projectId}/add`,
       payment
     );
     if (response.success) {
       toggleModal();
-      // Optionally, you can reset the form or trigger a data refresh here
     }
   };
 
@@ -117,11 +117,13 @@ const PaymentsTable: FC<PaymentsTableProps> = ({
         <Col>
           <h1 className="fs-2">Payments</h1>
         </Col>
-        <Col className="d-flex justify-content-end">
-          <Button variant="primary" onClick={toggleModal}>
-            Add Payment
-          </Button>
-        </Col>
+        {appState?.isAdmin && (
+          <Col className="d-flex justify-content-end">
+            <Button variant="primary" onClick={toggleModal}>
+              Add Payment
+            </Button>
+          </Col>
+        )}
       </Row>
       <Row className="mb-3 py-2 mx-2 border border-primary rounded-pill">
         {paymentStat?.length > 0 ? (
