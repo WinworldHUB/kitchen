@@ -26,16 +26,13 @@ const ProjectReport: React.FC<ProjectReportProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setTriggerFetch((prev) => prev + 1); 
+    setTriggerFetch((prev) => prev + 1);
     console.log("Added report");
-    
+
     setIsModalOpen(false);
   };
 
-  const formatDate = (date: string) => {
-    // Use Luxon to format the date in "12th Oct 2024" format
-    return DateTime.fromISO(date).toFormat("d MMM yyyy");
-  };
+  console.log("timelineData", timelineData);
 
   return (
     <Container fluid className="d-flex flex-column align-items-start">
@@ -56,9 +53,9 @@ const ProjectReport: React.FC<ProjectReportProps> = ({
       <div className="my-4 position-relative">
         {/* Vertical Line */}
         <div
-          className="position-absolute bg-primary"
+          className="position-absolute bg-primary mx-2"
           style={{
-            left: "calc(25% - 1px)",
+            left: "calc(25% - 2px)",
             top: "0",
             bottom: "0",
             width: "2px",
@@ -67,9 +64,8 @@ const ProjectReport: React.FC<ProjectReportProps> = ({
         />
         {timelineData?.map((event, index) => (
           <Row key={index} className="d-flex align-items-start mb-4">
-            <Col xs={4} md={3} className="text-end">
-              <div className="fw-bold">{formatDate(event.date)}</div>{" "}
-              {/* Format date here */}
+            <Col md={3} className="text-start">
+              <div className="fw-bold text-nowrap">{event.date}</div>
             </Col>
             <Col
               xs={8}
@@ -82,6 +78,7 @@ const ProjectReport: React.FC<ProjectReportProps> = ({
           </Row>
         ))}
       </div>
+
 
       <Modal
         show={isModalOpen}
