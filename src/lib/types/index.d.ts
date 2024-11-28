@@ -360,3 +360,21 @@ type GetPaymentsResponse = GeneralAPIResponse & {
   paymentStat: PaymentStat[];
 };
 
+
+
+interface TimelineData {
+  id?: string
+  date: string;
+  title: string;
+  isCustom?: boolean;
+}
+
+type AddTimelineRequest = {
+  date: string;
+  title: string;
+  isCustom: boolean;
+};
+
+type GetTimelineResponse = GeneralAPIResponse & {
+  timeline: TimelineData[];
+};

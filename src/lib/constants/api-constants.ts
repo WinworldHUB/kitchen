@@ -64,3 +64,9 @@ export const PAYMENT_APIS = {
   DELETE_PAYMENT_API: "/payment",
   UPDATE_PAYMENT_API: "/payment",
 }
+export const LOG_APIS = {
+  CREATE_LOG_API: "/log",
+  GET_PAYMENTS_API: "/log",
+  DELETE_LOG_API: "/log",
+  UPDATE_LOG_API: "/log",
+}

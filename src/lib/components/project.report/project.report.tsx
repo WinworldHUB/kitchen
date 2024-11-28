@@ -2,68 +2,22 @@ import React, { useState } from "react";
 import { Container, Row, Col, Button, Modal, Form } from "react-bootstrap";
 import { DateTime } from "luxon"; // Importing Luxon
 
-interface TimelineData {
-  date: string;
-  title: string;
+interface ProjectReportProps {
+  timelineData?: TimelineData[];
+  setTriggerFetch: React.Dispatch<React.SetStateAction<number>>;
+  activeIndex: number;
 }
-let timelineData: TimelineData[] = [
-  {
-    date: DateTime.fromFormat("October 1, 2024", "MMMM d, yyyy").toISO(), // Correctly parse the date
-    title: "Site Survey",
-  },
-  {
-    date: DateTime.fromFormat("October 3, 2024", "MMMM d, yyyy").toISO(),
-    title: "Services and annotated drawings being created",
-  },
-  {
-    date: DateTime.fromFormat("October 7, 2024", "MMMM d, yyyy").toISO(),
-    title: "Client to approve annotated drawings",
-  },
-  {
-    date: DateTime.fromFormat("October 10, 2024", "MMMM d, yyyy").toISO(),
-    title: "Kitchen is being ordered",
-  },
-  {
-    date: DateTime.fromFormat("October 12, 2024", "MMMM d, yyyy").toISO(),
-    title: "Pre-installation site survey",
-  },
-  {
-    date: DateTime.fromFormat("October 15, 2024", "MMMM d, yyyy").toISO(),
-    title: "Kitchen/Appliance delivery",
-  },
-  {
-    date: DateTime.fromFormat("October 17, 2024", "MMMM d, yyyy").toISO(),
-    title: "Kitchen installation",
-  },
-  {
-    date: DateTime.fromFormat("October 20, 2024", "MMMM d, yyyy").toISO(),
-    title: "1st fix sign off",
-  },
-  {
-    date: DateTime.fromFormat("October 22, 2024", "MMMM d, yyyy").toISO(),
-    title: "Remaining installation",
-  },
-  {
-    date: DateTime.fromFormat("October 24, 2024", "MMMM d, yyyy").toISO(),
-    title: "Remedial installation",
-  },
-  {
-    date: DateTime.fromFormat("October 26, 2024", "MMMM d, yyyy").toISO(),
-    title: "Cleaning/Final sign off",
-  },
-  {
-    date: DateTime.fromFormat("October 28, 2024", "MMMM d, yyyy").toISO(),
-    title: "Project Completed",
-  },
-] as const;
 
-const ProjectReport = () => {
+const ProjectReport: React.FC<ProjectReportProps> = ({
+  timelineData,
+  activeIndex,
+  setTriggerFetch,
+}) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [formData, setFormData] = useState<TimelineData>({
     date: "",
     title: "",
   });
-  const activeIndex = 6; // Index of the active timeline item
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -72,20 +26,10 @@ const ProjectReport = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    // Add the new event to the timeline
-    const updatedTimeline = [...timelineData, formData];
-
-    // Sort the timeline by date
-    updatedTimeline.sort(
-      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
-    );
-
-    // Replace the original array with the updated and sorted one
-    timelineData = updatedTimeline;
-
-    console.log("Updated Timeline Data:", timelineData);
-    setIsModalOpen(false); // Close the modal after submission
+    setTriggerFetch((prev) => prev + 1); 
+    console.log("Added report");
+    
+    setIsModalOpen(false);
   };
 
   const formatDate = (date: string) => {
@@ -121,10 +65,11 @@ const ProjectReport = () => {
             zIndex: 0,
           }}
         />
-        {timelineData.map((event, index) => (
+        {timelineData?.map((event, index) => (
           <Row key={index} className="d-flex align-items-start mb-4">
             <Col xs={4} md={3} className="text-end">
-              <div className="fw-bold">{formatDate(event.date)}</div> {/* Format date here */}
+              <div className="fw-bold">{formatDate(event.date)}</div>{" "}
+              {/* Format date here */}
             </Col>
             <Col
               xs={8}
