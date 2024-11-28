@@ -377,4 +377,5 @@ type AddTimelineRequest = {
 
 type GetTimelineResponse = GeneralAPIResponse & {
   logs: TimelineData[];
+  activeLog: TimelineData;
 };

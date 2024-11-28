@@ -1,16 +1,15 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Button, Modal, Form } from "react-bootstrap";
-import { DateTime } from "luxon"; // Importing Luxon
 
 interface ProjectReportProps {
   timelineData?: TimelineData[];
   setTriggerFetch: React.Dispatch<React.SetStateAction<number>>;
-  activeIndex: number;
+  activeLog: TimelineData;
 }
 
 const ProjectReport: React.FC<ProjectReportProps> = ({
   timelineData,
-  activeIndex,
+  activeLog,
   setTriggerFetch,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -71,14 +70,13 @@ const ProjectReport: React.FC<ProjectReportProps> = ({
               xs={8}
               md={7}
               className="mx-4"
-              style={activeIndex === index ? { color: "#ffc000" } : {}}
+              style={activeLog ? { color: "#ffc000" } : {}}
             >
               <h5 className="text-nowrap">{event.title}</h5>
             </Col>
           </Row>
         ))}
       </div>
-
 
       <Modal
         show={isModalOpen}
