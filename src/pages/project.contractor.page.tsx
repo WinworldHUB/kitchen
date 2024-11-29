@@ -7,10 +7,10 @@ import { Loader } from "react-bootstrap-typeahead";
 import { useParams } from "react-router-dom";
 
 const ProjectContractorPage = () => {
-  const [contractors, setContractors] = useState<Contractor[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const { projectId } = useParams();
-  const { getData: fetchContractors } = useApi<GetContractorsResponse>();
+  const { getData: fetchContractors, data: contractorsData } =
+    useApi<GetContractorsResponse>();
   useEffect(() => {
     const getContractors = async () => {
       setLoading(true);
@@ -23,39 +23,6 @@ const ProjectContractorPage = () => {
           console.error("Error fetching contractors:", response.error);
         }
 
-        if (response?.success) {
-          setContractors(response.contractors);
-        } else {
-          setContractors([
-            {
-              contractorType: "Architect",
-              name: "",
-              company: "",
-              contact: "",
-              website: "",
-              email: "",
-              address: "",
-            },
-            {
-              contractorType: "Builder",
-              name: "",
-              company: "",
-              contact: "",
-              website: "",
-              email: "",
-              address: "",
-            },
-            {
-              contractorType: "Interior Designer",
-              name: "",
-              company: "",
-              contact: "",
-              website: "",
-              email: "",
-              address: "",
-            },
-          ]);
-        }
         console.log("Contractors Fetched:", response.contractors);
       } catch (error) {
         console.error("Error fetching contractors:", error);
@@ -72,9 +39,8 @@ const ProjectContractorPage = () => {
   return (
     <ProfileProjectLayout>
       <ProjectContractor
-        contractors={contractors ?? []}
+        contractors={contractorsData?.contractors ?? []}
         projectId={projectId}
-        setContractors={setContractors}
       />
     </ProfileProjectLayout>
   );
