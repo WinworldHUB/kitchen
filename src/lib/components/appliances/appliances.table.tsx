@@ -200,14 +200,14 @@ const AppliancesTable: React.FC<AppliancesTableProps> = ({
                 <div className="d-flex justify-content-end align-items-center ml-3">
                   <Button
                     size="sm"
-                    className="appliance-delete-button mx-2"
+                    className="delete-button mx-2"
                     onClick={() => handleDeleteModalShow(row)}
                   >
                     Delete
                   </Button>
                   <Button
                     size="sm"
-                    className="appliance-edit-button mx-2"
+                    className="edit-button mx-2"
                     onClick={() => handleEditModal(row)}
                   >
                     Edit

@@ -190,7 +190,7 @@ a {
   background-color: #6c4fc7;
 }
 
-.appliance-delete-button {
+.delete-button {
   cursor: pointer;
   outline: none;
   border: none;
@@ -200,14 +200,14 @@ a {
 
 }
 
-.appliance-delete-button:hover {
+.delete-button:hover {
   color: #4d4d4d;
   border: 1px solid #747577;
   background-color: transparent;
   box-shadow: none;
 }
 
-.appliance-edit-button {
+.edit-button {
   cursor: pointer;
   outline: none;
   border: none;
@@ -217,7 +217,7 @@ a {
 
 }
 
-.appliance-edit-button:hover {
+.edit-button:hover {
   color: #5e35b1;
   background-color: transparent;
   border: 1px solid #7f56d9;
